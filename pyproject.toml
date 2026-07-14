@@ -1,0 +1,29 @@
+[project]
+name = "gcqa"
+version = "0.1.0"
+description = "SafeGuard grass-cut QA agent (POC) — see Agent Docs/ORCHESTRATION.md"
+requires-python = ">=3.10"
+dependencies = [
+    "claude-agent-sdk==0.2.116",
+    "httpx",
+    "pillow",
+    "pyyaml",
+    "jinja2",
+    "pypdf",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-asyncio", "ruff"]
+batch = ["anthropic"]   # Message Batches comparison lane (gcqa/batch/compare.py)
+
+[tool.pytest.ini_options]
+markers = ["live: hits the real Safeguard API (needs .env credentials)"]
+addopts = "-m 'not live'"
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.setuptools]
+packages = ["gcqa", "gcqa.eval", "gcqa.batch"]
+
+[tool.setuptools.package-data]
+gcqa = ["templates/*.j2"]

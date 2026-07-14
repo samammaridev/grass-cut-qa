@@ -1,0 +1,850 @@
+{
+ "order_number": "500119024",
+ "review_stage": "final",
+ "flag": "gcfu",
+ "anomaly": true,
+ "fraud_indicators": [
+  "deterministic: staged_documentation",
+  "staged before/after timestamp pairs on 4 stations (Front Lawn, Side Lawn 1, Side Lawn 2, Rear Lawn)",
+  "one After photo (bccd8804) is 1,541,853m from the property medoid, watermarked CDT vs EDT elsewhere, with metadata/watermark clock mismatch beyond a timezone offset",
+  "'Rear Lawn' Before photo (92c1af49) shows the front porch, not a lawn - station content mismatch",
+  "reported time_on_site (623 min) matches exactly the gap between the outlier photo's anomalous timestamp and the rest of the cluster, while the on-property photos themselves span only a few minutes",
+  "Staged before/after pairs with gaps too short; Rear Lawn After (ac1c88a2) taken 53s before its Before (92c1af49)",
+  "All work-documentation photos cluster within ~4 minutes (15:49-15:53)",
+  "Wrong-property photo bccd8804 filed as 'Clippings and Yard Debris Removed', GPS outlier 1,541 km, CDT watermark",
+  "Front Lawn After (07ae2d1f) shows only a shadow, no lawn"
+ ],
+ "disposition": "human_review",
+ "outcome": "gcfu",
+ "confidence": 0.55,
+ "verifier_flag": "gcfu",
+ "fraud_confirmed": null,
+ "adjudication": [
+  "reviewer requested human confirmation",
+  "confidence 0.55 below auto_decide[gcfu]=0.75"
+ ],
+ "drafter": {
+  "role": "drafter",
+  "outcome": "gcfu",
+  "needs_human": true,
+  "confidence": 0.55,
+  "evidence": [
+   {
+    "claim": "Mattress/debris under the deck remains visible after the cut, unaddressed by the impediment to remove debris/trash.",
+    "source_type": "photo",
+    "photo_guid": "2812f240",
+    "observation": "After - Behind Outbuilding/Garage shows a mattress and debris under the deck."
+   },
+   {
+    "claim": "Same mattress still visible in a second After photo of the same area.",
+    "source_type": "photo",
+    "photo_guid": "0dd9a1ba",
+    "observation": "After - Under Deck/Stairwell shows the mattress still present under the deck."
+   },
+   {
+    "claim": "Mattress was present before the visit in the same spot, confirming it was never removed.",
+    "source_type": "photo",
+    "photo_guid": "f6643092",
+    "observation": "Before - Side Lawn 1 of 2 shows the mattress under the deck before work began."
+   },
+   {
+    "claim": "Vendor did not perform debris removal, consistent with visible debris left behind.",
+    "source_type": "document",
+    "field_key": "Update",
+    "observation": "'Was exterior debris/trash removed?': No, matching the mattress still visible in After photos."
+   },
+   {
+    "claim": "'Rear Lawn' Before photo does not actually depict a lawn.",
+    "source_type": "photo",
+    "photo_guid": "92c1af49",
+    "observation": "Labeled Grass Recut - Rear Lawn (Before) but shows the boarded front porch, same scene as other Condition photos."
+   },
+   {
+    "claim": "'Rear Lawn' After photo also doesn't clearly correspond and is timestamped before its own 'Before' photo.",
+    "source_type": "photo",
+    "photo_guid": "ac1c88a2",
+    "observation": "Shows a narrow side driveway strip with a car, taken 15:50:07, earlier than the paired 'Before' (92c1af49) taken 15:51:00 per photo_integrity.after_precedes_before."
+   },
+   {
+    "claim": "Side lawn areas show genuine mowing difference.",
+    "source_type": "photo",
+    "photo_guid": "8ba85aef",
+    "observation": "Before - Side Lawn 2 shows longer grass; After (e8625bd9) shows mowed grass with clippings, a real visible difference."
+   },
+   {
+    "claim": "Staged/too-short before-after gaps undermine documentation reliability on 4 stations.",
+    "source_type": "signal",
+    "observation": "photo_integrity.staged_pairs lists Front Lawn (26s), Side Lawn 1 (155s), Side Lawn 2 (85s) gap_too_short, and Rear Lawn after_precedes_before (-53s)."
+   },
+   {
+    "claim": "One After photo is from an entirely different, distant location and time zone.",
+    "source_type": "photo",
+    "photo_guid": "bccd8804",
+    "observation": "GPS outlier at 1,541,853m from medoid; watermark reads CDT vs EDT elsewhere; metadata/watermark clock mismatch beyond a normal timezone offset."
+   },
+   {
+    "claim": "Property location for the remaining 26 photos matches the order address.",
+    "source_type": "signal",
+    "observation": "medoid_to_property_m=26, location_match=pass."
+   }
+  ],
+  "checks": {
+   "location_match": "pass",
+   "time_on_site": "unclear",
+   "four_sides": "unclear",
+   "before_after_diff": "unclear",
+   "extraordinary_conditions": false
+  },
+  "fraud_indicators": [
+   "staged before/after timestamp pairs on 4 stations (Front Lawn, Side Lawn 1, Side Lawn 2, Rear Lawn)",
+   "one After photo (bccd8804) is 1,541,853m from the property medoid, watermarked CDT vs EDT elsewhere, with metadata/watermark clock mismatch beyond a timezone offset",
+   "'Rear Lawn' Before photo (92c1af49) shows the front porch, not a lawn - station content mismatch",
+   "reported time_on_site (623 min) matches exactly the gap between the outlier photo's anomalous timestamp and the rest of the cluster, while the on-property photos themselves span only a few minutes"
+  ],
+  "flag_reasons": [
+   "Mattress/debris under the deck is visible in After photos (2812f240, 0dd9a1ba), violating the impediment to remove debris/trash",
+   "Rear Lawn station photos are content-mismatched and out of timestamp order, leaving true rear-lawn completion unproven",
+   "Photo integrity flags staged/too-short before-after gaps on 4 stations, weakening before/after proof",
+   "A stray After photo (bccd8804) is over 1,500km away in a different timezone with a clock mismatch, though it is a single anomaly within an otherwise consistent 26-photo on-site cluster"
+  ],
+  "review_items": [
+   "Confirm whether the mattress/debris under the deck (2812f240, 0dd9a1ba, f6643092) was ever removed or requires vendor follow-up",
+   "Verify bccd8804 (1,541,853m away, CDT timestamp) belongs to a different order/vendor visit and was misfiled",
+   "Compare 92c1af49 (labeled Rear Lawn Before, shows porch) against ac1c88a2 (labeled Rear Lawn After, shows driveway strip, timestamped earlier) to resolve true rear-lawn documentation",
+   "Review the 4 staged before/after pairs flagged in photo_integrity for possible timestamp manipulation before releasing payment"
+  ],
+  "recommended_actions": [
+   "Hold payment pending vendor clarification on debris removal (mattress) and Rear Lawn photo mismatch",
+   "Request vendor confirm bccd8804 is misfiled from another job",
+   "Route to Quality Review given photo_integrity staged_documentation signal"
+  ],
+  "rationale_plain": "The property location matches for the main photo cluster, and side-lawn areas show real before/after mowing differences (e.g., 8ba85aef to e8625bd9). However, a mattress and debris remain visible under the deck in After photos (2812f240, 0dd9a1ba), the same mattress seen in a Before photo (f6643092), which conflicts with the debris-removal impediment. The \"Rear Lawn\" Before photo (92c1af49) actually shows the front porch, not a lawn, and its paired After photo (ac1c88a2) is timestamped earlier than the Before, per photo_integrity. Several stations also show staged, too-short before/after gaps, and one After photo (bccd8804) is far outside the property's GPS cluster with a mismatched timezone watermark.",
+  "notes_for_human": null,
+  "subtype": "success",
+  "cost_usd": 0.2944,
+  "session_id": "91752a0c-d9a8-496a-9b86-8ab5c8f33704",
+  "gate_events": [
+   {
+    "class": "accepted",
+    "kind": "audit",
+    "action": "accepted",
+    "reason": "verdict accepted by gates"
+   }
+  ],
+  "error": null,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 22667,
+   "cache_read_input_tokens": 0,
+   "output_tokens": 13398,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 0,
+    "ephemeral_5m_input_tokens": 22667
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 13398,
+     "cache_read_input_tokens": 0,
+     "cache_creation_input_tokens": 22667,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 22667,
+      "ephemeral_1h_input_tokens": 0
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "num_turns": 2
+ },
+ "verifier": {
+  "role": "verifier",
+  "outcome": "gcfu",
+  "needs_human": true,
+  "confidence": 0.62,
+  "evidence": [
+   {
+    "claim": "Property location verified by medoid 26m from parcel and visible house number 51",
+    "source_type": "photo",
+    "photo_guid": "92c1af49",
+    "field_key": null,
+    "observation": "Boarded front door area with '51' visible on siding; matches 51 SMITH ST; medoid_to_property_m=26."
+   },
+   {
+    "claim": "Real mowing performed on front lawn",
+    "source_type": "photo",
+    "photo_guid": "593def72",
+    "field_key": null,
+    "observation": "During photo shows red zero-turn mower mid-cut with clear cut/uncut boundary; before (16b4c025) shows overgrown weedy front."
+   },
+   {
+    "claim": "Front lawn After photo is unusable to prove completion",
+    "source_type": "photo",
+    "photo_guid": "07ae2d1f",
+    "field_key": null,
+    "observation": "After-Front Lawn shows only the photographer's shadow on gravel; no lawn visible."
+   },
+   {
+    "claim": "Debris (mattress) remains visible in After photos",
+    "source_type": "photo",
+    "photo_guid": "2812f240",
+    "field_key": null,
+    "observation": "After-Behind Outbuilding and Under Deck (0dd9a1ba) both show a discarded mattress still present."
+   },
+   {
+    "claim": "Debris-removal service not performed",
+    "source_type": "document",
+    "photo_guid": null,
+    "field_key": "Update: Was exterior debris/trash removed?",
+    "observation": "Answer = No, consistent with mattress still visible in After photos."
+   },
+   {
+    "claim": "Fence-line/foundation tall weeds remain",
+    "source_type": "photo",
+    "photo_guid": "d84ee4f6",
+    "field_key": null,
+    "observation": "After-Rear Edging/Fence Line shows a patch of uncut tall dried weeds at the fence base; 22763e5a shows dried overgrowth along front fence line."
+   },
+   {
+    "claim": "Staged before/after documentation",
+    "source_type": "signal",
+    "photo_guid": null,
+    "field_key": "photo_integrity.staged_pairs",
+    "observation": "Multiple before/after pairs seconds apart; Rear Lawn After (ac1c88a2) precedes its Before (92c1af49) by 53s."
+   },
+   {
+    "claim": "One photo belongs elsewhere",
+    "source_type": "photo",
+    "photo_guid": "bccd8804",
+    "field_key": null,
+    "observation": "Filed as 'Clippings and Yard Debris Removed' but shows a different house/garage, GPS outlier 1,541 km away, CDT watermark 01:30 PM vs EDT set."
+   },
+   {
+    "claim": "Property is boarded up / vacant",
+    "source_type": "photo",
+    "photo_guid": "a6044b79",
+    "field_key": null,
+    "observation": "Windows and door boarded with OSB panels; audit flagged broken door slat and boarded openings."
+   }
+  ],
+  "checks": {
+   "location_match": "pass",
+   "time_on_site": "pass",
+   "four_sides": "unclear",
+   "before_after_diff": "unclear",
+   "extraordinary_conditions": true
+  },
+  "fraud_indicators": [
+   "Staged before/after pairs with gaps too short; Rear Lawn After (ac1c88a2) taken 53s before its Before (92c1af49)",
+   "All work-documentation photos cluster within ~4 minutes (15:49-15:53)",
+   "Wrong-property photo bccd8804 filed as 'Clippings and Yard Debris Removed', GPS outlier 1,541 km, CDT watermark",
+   "Front Lawn After (07ae2d1f) shows only a shadow, no lawn"
+  ],
+  "flag_reasons": [
+   "Front Lawn After (07ae2d1f) shows only a shadow \u2014 front completion not visually proven",
+   "Mattress debris still visible in After photos (2812f240, 0dd9a1ba) against 'remove debris' impediment",
+   "Uncut tall weeds remain along fence line/foundation (d84ee4f6, 22763e5a)",
+   "Staged before/after pairings void the pairing proof; visible work present but coverage incomplete"
+  ],
+  "review_items": [
+   "Confirm front lawn was fully cut \u2014 After photo 07ae2d1f is unusable (shadow only); cross-check with during 593def72 and address 66fde59e",
+   "Verify mattress debris under deck (2812f240, 0dd9a1ba) \u2014 is removal in scope for this order",
+   "Inspect fence-line/foundation weeds in d84ee4f6 and 22763e5a \u2014 overgrowth remaining per impediment",
+   "Confirm bccd8804 belongs to another order (different house, 1,541 km GPS outlier, CDT watermark)",
+   "Note staged before/after timestamps across stations; boarded-up vacant property condition"
+  ],
+  "recommended_actions": [
+   "Return to vendor for front-lawn completion proof and fence-line/foundation weed cleanup",
+   "Clarify debris (mattress) removal responsibility",
+   "Have Quality Review examine staged documentation and misfiled wrong-property photo"
+  ],
+  "rationale_plain": "Photos place the visit at 51 SMITH ST (house number 51 visible, medoid 26m from parcel). During photo 593def72 shows a mower actively cutting, and side/rear After photos show cut grass, so real work occurred. However completion is not fully proven: the Front Lawn After (07ae2d1f) is only a shadow on gravel, a mattress remains under the deck in After photos 2812f240 and 0dd9a1ba, and tall weeds still line the fence/foundation in d84ee4f6 and 22763e5a. Integrity signals show staged before/after pairs (ac1c88a2 precedes its Before), and photo bccd8804 shows a different house 1,541 km away. These gaps and remaining out-of-standard areas support follow-up, with a human confirming the staged documentation and misfiled photo.",
+  "notes_for_human": null,
+  "subtype": "success",
+  "cost_usd": 0.2745,
+  "session_id": "256bb4b1-1157-4f28-98bd-d1864817af9f",
+  "gate_events": [
+   {
+    "class": "accepted",
+    "kind": "audit",
+    "action": "accepted",
+    "reason": "verdict accepted by gates"
+   }
+  ],
+  "error": null,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 17111,
+   "cache_read_input_tokens": 5698,
+   "output_tokens": 6248,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 0,
+    "ephemeral_5m_input_tokens": 17111
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 6248,
+     "cache_read_input_tokens": 5698,
+     "cache_creation_input_tokens": 17111,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 17111,
+      "ephemeral_1h_input_tokens": 0
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "num_turns": 2
+ },
+ "agreement": true,
+ "thresholds_applied": {
+  "auto_decide": {
+   "good_to_pay": 0.75,
+   "gcfu": 0.75,
+   "potential_fraud": 0.95
+  },
+  "verifier_below_confidence": 0.85
+ },
+ "gate_events": [
+  {
+   "class": "accepted",
+   "kind": "audit",
+   "action": "accepted",
+   "reason": "verdict accepted by gates"
+  },
+  {
+   "class": "accepted",
+   "kind": "audit",
+   "action": "accepted",
+   "reason": "verdict accepted by gates"
+  }
+ ],
+ "signals": {
+  "identity_ok": true,
+  "work_code_ok": true,
+  "in_season": true,
+  "photo_count": 27,
+  "photo_count_ok": true,
+  "gps": {
+   "medoid": [
+    41.704089,
+    -73.918422
+   ],
+   "medoid_guid": "07ae2d1f-ec08-4d58-932c-87d7619bf3fa",
+   "valid": 27,
+   "unknown": 0,
+   "outlier_fraction": 0.037,
+   "outliers": [
+    {
+     "guid": "bccd8804-0828-4a84-90e3-56d821a2834c",
+     "dist_m": 1541853,
+     "descPrefix": "After",
+     "descText": "Grass Recut - Clippings and Yard Debris Removed"
+    }
+   ],
+   "mixed_clusters": false,
+   "property_geocode": {
+    "lat": 41.703889527659,
+    "lon": -73.918584634785,
+    "source": "census",
+    "quality": "exact",
+    "cached": true
+   },
+   "medoid_to_property_m": 26,
+   "location_match": "pass",
+   "notes": [],
+   "api_distance_fields": {
+    "door_knock": -1,
+    "farthest_to_property": -1,
+    "farthest_between": -1
+   }
+  },
+  "time_on_site_min": 623,
+  "time_on_site_ok": true,
+  "photo_time_span_min": 623,
+  "date_skew_days": 0,
+  "documents": {
+   "listed": 7,
+   "unique": 3,
+   "kinds": [
+    "Audit Property Assistant",
+    "Invoice",
+    "Update"
+   ],
+   "invoice_present": true,
+   "update_present": true
+  },
+  "photo_integrity": {
+   "reused_pairs": [],
+   "staged_pairs": [
+    {
+     "station": "Grass Recut - Front Lawn",
+     "before": {
+      "guid": "16b4c025",
+      "taken": "2026-07-08 15:52:44"
+     },
+     "after": {
+      "guid": "07ae2d1f",
+      "taken": "2026-07-08 15:53:10"
+     },
+     "gap_seconds": 26,
+     "issue": "gap_too_short"
+    },
+    {
+     "station": "Grass Recut - Side Lawn 1 of 2",
+     "before": {
+      "guid": "f6643092",
+      "taken": "2026-07-08 15:50:28"
+     },
+     "after": {
+      "guid": "f3471277",
+      "taken": "2026-07-08 15:53:03"
+     },
+     "gap_seconds": 155,
+     "issue": "gap_too_short"
+    },
+    {
+     "station": "Grass Recut - Side Lawn 2 of 2",
+     "before": {
+      "guid": "8ba85aef",
+      "taken": "2026-07-08 15:51:50"
+     },
+     "after": {
+      "guid": "e8625bd9",
+      "taken": "2026-07-08 15:53:15"
+     },
+     "gap_seconds": 85,
+     "issue": "gap_too_short"
+    },
+    {
+     "station": "Grass Recut - Rear Lawn",
+     "before": {
+      "guid": "92c1af49",
+      "taken": "2026-07-08 15:51:00"
+     },
+     "after": {
+      "guid": "ac1c88a2",
+      "taken": "2026-07-08 15:50:07"
+     },
+     "gap_seconds": -53,
+     "issue": "after_precedes_before"
+    }
+   ],
+   "same_stage_dupes": [],
+   "adjacent_cross_station_pairs": [
+    {
+     "a": {
+      "guid": "d84ee4f6",
+      "stage": "After",
+      "station": "Grass Recut - Rear - Edging, Fence Line and Foundations Free of Tall Grass and Weeds",
+      "taken": "2026-07-08 15:49:56"
+     },
+     "b": {
+      "guid": "22763e5a",
+      "stage": "After",
+      "station": "Grass Recut - Front - Edging, Fence Line and Foundations Free of Tall Grass and Weeds",
+      "taken": "2026-07-08 15:50:03"
+     },
+     "gap_seconds": 7
+    },
+    {
+     "a": {
+      "guid": "22763e5a",
+      "stage": "After",
+      "station": "Grass Recut - Front - Edging, Fence Line and Foundations Free of Tall Grass and Weeds",
+      "taken": "2026-07-08 15:50:03"
+     },
+     "b": {
+      "guid": "ac1c88a2",
+      "stage": "After",
+      "station": "Grass Recut - Rear Lawn",
+      "taken": "2026-07-08 15:50:07"
+     },
+     "gap_seconds": 4
+    },
+    {
+     "a": {
+      "guid": "ac1c88a2",
+      "stage": "After",
+      "station": "Grass Recut - Rear Lawn",
+      "taken": "2026-07-08 15:50:07"
+     },
+     "b": {
+      "guid": "88caa043",
+      "stage": "After",
+      "station": "Grass Recut - Ruler Measurement of 2 Inches or Less",
+      "taken": "2026-07-08 15:50:16"
+     },
+     "gap_seconds": 9
+    },
+    {
+     "a": {
+      "guid": "88caa043",
+      "stage": "After",
+      "station": "Grass Recut - Ruler Measurement of 2 Inches or Less",
+      "taken": "2026-07-08 15:50:16"
+     },
+     "b": {
+      "guid": "f6643092",
+      "stage": "Before",
+      "station": "Grass Recut - Side Lawn 1 of 2",
+      "taken": "2026-07-08 15:50:28"
+     },
+     "gap_seconds": 12
+    },
+    {
+     "a": {
+      "guid": "f6643092",
+      "stage": "Before",
+      "station": "Grass Recut - Side Lawn 1 of 2",
+      "taken": "2026-07-08 15:50:28"
+     },
+     "b": {
+      "guid": "593def72",
+      "stage": "During",
+      "station": "Grass Recut - Front Lawn Mowing",
+      "taken": "2026-07-08 15:50:49"
+     },
+     "gap_seconds": 21
+    },
+    {
+     "a": {
+      "guid": "593def72",
+      "stage": "During",
+      "station": "Grass Recut - Front Lawn Mowing",
+      "taken": "2026-07-08 15:50:49"
+     },
+     "b": {
+      "guid": "b026dafc",
+      "stage": "Condition",
+      "station": "Front Of House",
+      "taken": "2026-07-08 15:50:55"
+     },
+     "gap_seconds": 6
+    },
+    {
+     "a": {
+      "guid": "b026dafc",
+      "stage": "Condition",
+      "station": "Front Of House",
+      "taken": "2026-07-08 15:50:55"
+     },
+     "b": {
+      "guid": "92c1af49",
+      "stage": "Before",
+      "station": "Grass Recut - Rear Lawn",
+      "taken": "2026-07-08 15:51:00"
+     },
+     "gap_seconds": 5
+    },
+    {
+     "a": {
+      "guid": "92c1af49",
+      "stage": "Before",
+      "station": "Grass Recut - Rear Lawn",
+      "taken": "2026-07-08 15:51:00"
+     },
+     "b": {
+      "guid": "a6044b79",
+      "stage": "Condition",
+      "station": "Securing Sticker",
+      "taken": "2026-07-08 15:51:05"
+     },
+     "gap_seconds": 5
+    },
+    {
+     "a": {
+      "guid": "a6044b79",
+      "stage": "Condition",
+      "station": "Securing Sticker",
+      "taken": "2026-07-08 15:51:05"
+     },
+     "b": {
+      "guid": "b401cc24",
+      "stage": "Condition",
+      "station": "Property Address",
+      "taken": "2026-07-08 15:51:10"
+     },
+     "gap_seconds": 5
+    },
+    {
+     "a": {
+      "guid": "b401cc24",
+      "stage": "Condition",
+      "station": "Property Address",
+      "taken": "2026-07-08 15:51:10"
+     },
+     "b": {
+      "guid": "27500299",
+      "stage": "Condition",
+      "station": "Close-up of Securing Sticker Phone Number",
+      "taken": "2026-07-08 15:51:15"
+     },
+     "gap_seconds": 5
+    },
+    {
+     "a": {
+      "guid": "27500299",
+      "stage": "Condition",
+      "station": "Close-up of Securing Sticker Phone Number",
+      "taken": "2026-07-08 15:51:15"
+     },
+     "b": {
+      "guid": "523c7be6",
+      "stage": "Before",
+      "station": "Grass Recut - Ruler Grass Height",
+      "taken": "2026-07-08 15:51:22"
+     },
+     "gap_seconds": 7
+    },
+    {
+     "a": {
+      "guid": "523c7be6",
+      "stage": "Before",
+      "station": "Grass Recut - Ruler Grass Height",
+      "taken": "2026-07-08 15:51:22"
+     },
+     "b": {
+      "guid": "ab008215",
+      "stage": "After",
+      "station": "Grass Recut - Top-down View of Flower Beds",
+      "taken": "2026-07-08 15:51:31"
+     },
+     "gap_seconds": 9
+    },
+    {
+     "a": {
+      "guid": "ab008215",
+      "stage": "After",
+      "station": "Grass Recut - Top-down View of Flower Beds",
+      "taken": "2026-07-08 15:51:31"
+     },
+     "b": {
+      "guid": "e1d914fe",
+      "stage": "During",
+      "station": "Grass Recut - Rear Lawn Mowing",
+      "taken": "2026-07-08 15:51:39"
+     },
+     "gap_seconds": 8
+    },
+    {
+     "a": {
+      "guid": "e1d914fe",
+      "stage": "During",
+      "station": "Grass Recut - Rear Lawn Mowing",
+      "taken": "2026-07-08 15:51:39"
+     },
+     "b": {
+      "guid": "70f78601",
+      "stage": "After",
+      "station": "Grass Recut - Top-down View of Flower Beds",
+      "taken": "2026-07-08 15:51:40"
+     },
+     "gap_seconds": 1
+    },
+    {
+     "a": {
+      "guid": "70f78601",
+      "stage": "After",
+      "station": "Grass Recut - Top-down View of Flower Beds",
+      "taken": "2026-07-08 15:51:40"
+     },
+     "b": {
+      "guid": "8ba85aef",
+      "stage": "Before",
+      "station": "Grass Recut - Side Lawn 2 of 2",
+      "taken": "2026-07-08 15:51:50"
+     },
+     "gap_seconds": 10
+    },
+    {
+     "a": {
+      "guid": "8ba85aef",
+      "stage": "Before",
+      "station": "Grass Recut - Side Lawn 2 of 2",
+      "taken": "2026-07-08 15:51:50"
+     },
+     "b": {
+      "guid": "81bc4643",
+      "stage": "During",
+      "station": "Grass Recut - Edging Hard Surfaces",
+      "taken": "2026-07-08 15:52:06"
+     },
+     "gap_seconds": 16
+    },
+    {
+     "a": {
+      "guid": "81bc4643",
+      "stage": "During",
+      "station": "Grass Recut - Edging Hard Surfaces",
+      "taken": "2026-07-08 15:52:06"
+     },
+     "b": {
+      "guid": "9a5d114e",
+      "stage": "During",
+      "station": "Grass Recut - Weed Whacking",
+      "taken": "2026-07-08 15:52:11"
+     },
+     "gap_seconds": 5
+    },
+    {
+     "a": {
+      "guid": "9a5d114e",
+      "stage": "During",
+      "station": "Grass Recut - Weed Whacking",
+      "taken": "2026-07-08 15:52:11"
+     },
+     "b": {
+      "guid": "2812f240",
+      "stage": "After",
+      "station": "Grass Recut - Behind Outbuilding/Garage",
+      "taken": "2026-07-08 15:52:38"
+     },
+     "gap_seconds": 27
+    },
+    {
+     "a": {
+      "guid": "2812f240",
+      "stage": "After",
+      "station": "Grass Recut - Behind Outbuilding/Garage",
+      "taken": "2026-07-08 15:52:38"
+     },
+     "b": {
+      "guid": "16b4c025",
+      "stage": "Before",
+      "station": "Grass Recut - Front Lawn",
+      "taken": "2026-07-08 15:52:44"
+     },
+     "gap_seconds": 6
+    },
+    {
+     "a": {
+      "guid": "16b4c025",
+      "stage": "Before",
+      "station": "Grass Recut - Front Lawn",
+      "taken": "2026-07-08 15:52:44"
+     },
+     "b": {
+      "guid": "0dd9a1ba",
+      "stage": "After",
+      "station": "Grass Recut - Under Deck/Stairwell",
+      "taken": "2026-07-08 15:52:49"
+     },
+     "gap_seconds": 5
+    },
+    {
+     "a": {
+      "guid": "0dd9a1ba",
+      "stage": "After",
+      "station": "Grass Recut - Under Deck/Stairwell",
+      "taken": "2026-07-08 15:52:49"
+     },
+     "b": {
+      "guid": "ec28b8db",
+      "stage": "Condition",
+      "station": "Rear of House",
+      "taken": "2026-07-08 15:52:54"
+     },
+     "gap_seconds": 5
+    },
+    {
+     "a": {
+      "guid": "ec28b8db",
+      "stage": "Condition",
+      "station": "Rear of House",
+      "taken": "2026-07-08 15:52:54"
+     },
+     "b": {
+      "guid": "f3471277",
+      "stage": "After",
+      "station": "Grass Recut - Side Lawn 1 of 2",
+      "taken": "2026-07-08 15:53:03"
+     },
+     "gap_seconds": 9
+    },
+    {
+     "a": {
+      "guid": "f3471277",
+      "stage": "After",
+      "station": "Grass Recut - Side Lawn 1 of 2",
+      "taken": "2026-07-08 15:53:03"
+     },
+     "b": {
+      "guid": "07ae2d1f",
+      "stage": "After",
+      "station": "Grass Recut - Front Lawn",
+      "taken": "2026-07-08 15:53:10"
+     },
+     "gap_seconds": 7
+    },
+    {
+     "a": {
+      "guid": "07ae2d1f",
+      "stage": "After",
+      "station": "Grass Recut - Front Lawn",
+      "taken": "2026-07-08 15:53:10"
+     },
+     "b": {
+      "guid": "e8625bd9",
+      "stage": "After",
+      "station": "Grass Recut - Side Lawn 2 of 2",
+      "taken": "2026-07-08 15:53:15"
+     },
+     "gap_seconds": 5
+    },
+    {
+     "a": {
+      "guid": "e8625bd9",
+      "stage": "After",
+      "station": "Grass Recut - Side Lawn 2 of 2",
+      "taken": "2026-07-08 15:53:15"
+     },
+     "b": {
+      "guid": "66fde59e",
+      "stage": "After",
+      "station": "Grass Recut - Address",
+      "taken": "2026-07-08 15:53:36"
+     },
+     "gap_seconds": 21
+    }
+   ],
+   "taken_dates_unreliable": false
+  },
+  "documentation_gaps": [],
+  "fraud_signals": [
+   "staged_documentation"
+  ],
+  "short_circuit": null,
+  "short_circuit_reason": null
+ },
+ "models": {
+  "drafter": "claude-sonnet-5",
+  "verifier": "claude-opus-4-8"
+ },
+ "cost_usd": 0.5689,
+ "session_ids": [
+  "91752a0c-d9a8-496a-9b86-8ab5c8f33704",
+  "256bb4b1-1157-4f28-98bd-d1864817af9f"
+ ],
+ "config_version": "sha256:2a6fa47a1e585ee8",
+ "decided_at": "2026-07-14T14:02:22+00:00",
+ "run_id": "final-brief",
+ "latency_s": 243.7,
+ "audit_path": "experiments/final-brief/500119024.json",
+ "report_path": "experiments/final-brief/500119024.md"
+}

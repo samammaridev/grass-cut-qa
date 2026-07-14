@@ -1,0 +1,419 @@
+{
+ "order_number": "500119020",
+ "review_stage": "final",
+ "flag": "gcfu",
+ "anomaly": true,
+ "fraud_indicators": [
+  "Only GPS-valid photo (20565839) sits 1,124,949m from the property and shows an unrelated urban scene (chain-link fence, graffiti wall, different worker, different mower)",
+  "That photo's watermark reads EDT while all other 46 photos read CDT despite same claimed date/site",
+  "Vendor answered 'shrubs present: No' though multiple Before photos show clear shrub/hedge/tree overgrowth",
+  "Watermark timestamps show Before/After station labels out of true chronological order (e.g., 'Before Left Side' timestamped after multiple 'After' photos)",
+  "All capture times are upload-stamped, so metadata timestamps are unreliable and watermark is the only capture record",
+  "Photo 20565839 filed as After Front Edging shows a different urban property (graffiti mural, chain-link fence)",
+  "Photo 20565839 watermark reads EDT while all other photos read CDT",
+  "20565839 is the only GPS-tagged photo; its medoid is ~1,124,949 m from the property geocode",
+  "Watermarks compress Before/During/After into an ~18-minute window, implausibly short to mow a 29,929 sq ft lot",
+  "All capture times are upload-stamped and unreliable"
+ ],
+ "disposition": "human_review",
+ "outcome": "gcfu",
+ "confidence": 0.55,
+ "verifier_flag": "gcfu",
+ "fraud_confirmed": null,
+ "adjudication": [
+  "reviewer requested human confirmation",
+  "confidence 0.55 below auto_decide[gcfu]=0.75"
+ ],
+ "drafter": {
+  "role": "drafter",
+  "outcome": "gcfu",
+  "needs_human": true,
+  "confidence": 0.55,
+  "evidence": [
+   {
+    "claim": "House number 4168 matches order address, confirming correct property",
+    "source_type": "photo",
+    "photo_guid": "6bfcbcca",
+    "observation": "Address plaque '4168' visible on porch column, matching '4168 E STATE ROAD 55'"
+   },
+   {
+    "claim": "Rear lawn shows genuine before/after mowing improvement",
+    "source_type": "photo",
+    "photo_guid": "8434678d",
+    "observation": "Before Rear Lawn shows taller grass/vegetation at treeline"
+   },
+   {
+    "claim": "Rear lawn after shows mowed striped lawn",
+    "source_type": "photo",
+    "photo_guid": "49d78a48",
+    "observation": "After Rear Lawn shows freshly cut, striped short grass"
+   },
+   {
+    "claim": "Side lawn 1 shows before/after change",
+    "source_type": "photo",
+    "photo_guid": "86c1fad0",
+    "observation": "Before shows dense brush/tall grass blocking view"
+   },
+   {
+    "claim": "Side lawn 1 after shows mowed grass",
+    "source_type": "photo",
+    "photo_guid": "28c69532",
+    "observation": "After shows mowed grass with treeline boundary remaining (acceptable natural boundary)"
+   },
+   {
+    "claim": "The only photo with real captured GPS is 1,124,949m from the property and shows a mismatched scene",
+    "source_type": "photo",
+    "photo_guid": "20565839",
+    "observation": "Labeled 'After-Front-Edging/Fence/Foundation' but shows urban chain-link fence, graffiti wall, a different worker, and a Troy-Bilt push mower unlike the Bad Boy zero-turn seen elsewhere; watermark reads EDT vs CDT on all other photos"
+   },
+   {
+    "claim": "GPS deterministic signal confirms this photo is not at the property",
+    "source_type": "signal",
+    "observation": "medoid_to_property_m: 1124949; medoid_guid matches 20565839; only 1 valid GPS point in the whole set"
+   },
+   {
+    "claim": "No After photo exists for the Entry Gates / hedge fence-line area shown heavily overgrown Before",
+    "source_type": "photo",
+    "photo_guid": "4cef65ab",
+    "observation": "Before Entry Gates shows dense, tall hedge/brush blocking the gate; no corresponding After Entry Gates photo is present in the labeled image list"
+   },
+   {
+    "claim": "Vendor answered no shrubs present despite visible shrub growth",
+    "source_type": "document",
+    "field_key": "Update - Are shrubs present?",
+    "observation": "Answer 'No', but Before photos (bd24a986, 86c1fad0, 4cef65ab, d6bdb19d) show substantial shrub/hedge/tree growth"
+   },
+   {
+    "claim": "Audit flagged tree/vegetation touching house",
+    "source_type": "document",
+    "field_key": "Audit Property Assistant",
+    "observation": "Flags overgrown trees/vegetation contacting siding near Before Right Side (bd24a986); no After Right Side photo exists to confirm resolution"
+   },
+   {
+    "claim": "Before/After label ordering is inconsistent with watermark chronology",
+    "source_type": "photo",
+    "photo_guid": "006fca1f",
+    "observation": "Labeled 'Before Left Side' but watermark reads 05:30 PM CDT, later than several After photos (28c69532, 25ebd1e4 at 05:19 PM CDT)"
+   }
+  ],
+  "checks": {
+   "location_match": "pass",
+   "time_on_site": "pass",
+   "four_sides": "fail",
+   "before_after_diff": "unclear",
+   "extraordinary_conditions": false
+  },
+  "fraud_indicators": [
+   "Only GPS-valid photo (20565839) sits 1,124,949m from the property and shows an unrelated urban scene (chain-link fence, graffiti wall, different worker, different mower)",
+   "That photo's watermark reads EDT while all other 46 photos read CDT despite same claimed date/site",
+   "Vendor answered 'shrubs present: No' though multiple Before photos show clear shrub/hedge/tree overgrowth",
+   "Watermark timestamps show Before/After station labels out of true chronological order (e.g., 'Before Left Side' timestamped after multiple 'After' photos)",
+   "All capture times are upload-stamped, so metadata timestamps are unreliable and watermark is the only capture record"
+  ],
+  "flag_reasons": [
+   "Front elevation 'After' documentation (20565839) is a mismatched/wrong-location photo, leaving front foundation/edging completion unproven",
+   "No After photo exists for the Entry Gates/hedge fence-line area shown heavily overgrown in Before photos, despite the impediment requiring fence-line overgrowth checks",
+   "Rear and both side lawns show clear, location-verified (house #4168) before/after mowing improvement supporting genuine work at the correct property",
+   "Vendor's 'shrubs present: No' answer conflicts with visible heavy shrub/hedge growth in several Before photos"
+  ],
+  "review_items": [
+   "Confirm photo 20565839 (labeled After-Front-Edging/Fence/Foundation) \u2014 it shows an urban chain-link fence/graffiti scene, not the rural farmhouse seen in the rest of the set; verify it wasn't misfiled from another order before crediting front-yard completion",
+   "Confirm whether the Entry Gates/hedge area (heavily overgrown in Before photo 4cef65ab) was actually cleared \u2014 no After photo of this area exists",
+   "Reconcile vendor's 'shrubs present: No' answer against photos clearly showing shrub/hedge growth (bd24a986, 86c1fad0, d6bdb19d)"
+  ],
+  "recommended_actions": [
+   "Request a valid After photo of the front elevation/foundation taken at this property before crediting that station",
+   "Request an After photo of the Entry Gates/hedge fence-line area",
+   "Hold final payment pending human confirmation that photo 20565839 is not misfiled from a different order",
+   "Pay is otherwise supportable for the rear and side lawn work, which shows genuine, location-consistent completion"
+  ],
+  "rationale_plain": "House number 4168 is clearly visible in several photos (6bfcbcca, 25ebd1e4), confirming the correct property, and before/after comparisons of the rear lawn (8434678d vs 49d78a48) and side lawns (86c1fad0 vs 28c69532) show genuine mowing with visible improvement. However, the only 'After-Front' photo (20565839) shows an unrelated urban scene with a chain-link fence, graffiti, a different worker, a different mower, and an EDT watermark versus CDT elsewhere, leaving front-yard completion unproven. No After photo exists for the Entry Gates/hedge area shown badly overgrown Before (4cef65ab). The vendor also answered 'shrubs present: No' despite visibly heavy shrub growth in multiple Before photos.",
+  "notes_for_human": null,
+  "subtype": "success",
+  "cost_usd": 0.3794,
+  "session_id": "09f5475a-4ae6-4c4a-b126-ca23603f829f",
+  "gate_events": [
+   {
+    "class": "accepted",
+    "kind": "audit",
+    "action": "accepted",
+    "reason": "verdict accepted by gates"
+   }
+  ],
+  "error": null,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 45359,
+   "cache_read_input_tokens": 32703,
+   "output_tokens": 12882,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 0,
+    "ephemeral_5m_input_tokens": 45359
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 346,
+     "cache_read_input_tokens": 32703,
+     "cache_creation_input_tokens": 12656,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 12656,
+      "ephemeral_1h_input_tokens": 0
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "num_turns": 2
+ },
+ "verifier": {
+  "role": "verifier",
+  "outcome": "gcfu",
+  "needs_human": true,
+  "confidence": 0.6,
+  "evidence": [
+   {
+    "claim": "House number 4168 is readable, confirming most photos are at the ordered property",
+    "source_type": "photo",
+    "photo_guid": "66d5eb17",
+    "observation": "Porch column shows '4168' matching 4168 E STATE ROAD 55; also visible in 6bfcbcca and 25ebd1e4."
+   },
+   {
+    "claim": "Lawn areas were genuinely mowed (real before/after difference)",
+    "source_type": "photo",
+    "photo_guid": "49d78a48",
+    "observation": "Rear lawn shows fresh mower stripes and cut grass; side lawns 2c2ef380/28c69532 and behind-outbuilding 7c105a5e also cut versus overgrown Before shots."
+   },
+   {
+    "claim": "After 'Front Edging/Foundations' photo shows a different urban property",
+    "source_type": "photo",
+    "photo_guid": "20565839",
+    "observation": "Filed as After front edging/foundations but shows a graffiti mural, chain-link fence and urban lot; watermark reads EDT while all others read CDT; it is the only GPS point and its medoid is ~1,124,949 m from the property geocode.",
+    "field_key": null
+   },
+   {
+    "claim": "Foundation weeds remain in an After photo",
+    "source_type": "photo",
+    "photo_guid": "b0d5ab58",
+    "observation": "After top-down flower beds shows cut lawn but rough weeds/overgrowth still along the right foundation."
+   },
+   {
+    "claim": "Heavy brush/overgrowth along sides of house not shown cleared",
+    "source_type": "photo",
+    "photo_guid": "bd24a986",
+    "observation": "Dense brush/saplings against siding; similar remaining brush in 2e183d99 and 39ce5eac with no After showing it cleared."
+   },
+   {
+    "claim": "Capture times are upload-stamped and watermarks are compressed",
+    "source_type": "signal",
+    "photo_guid": null,
+    "observation": "documentation_gaps=capture_times_upload_stamped; watermarks span only ~05:17-05:35 PM CDT covering Before/During/After, implausibly short for a 29,929 sq ft lot.",
+    "field_key": null
+   },
+   {
+    "claim": "Audit flagged foundation overgrowth and lawn not fully maintained",
+    "source_type": "document",
+    "photo_guid": "b0d5ab58",
+    "observation": "Audit Property Assistant notes unmowed patches/weeds along foundation (b0d5ab58) and overgrowth along the house (bd24a986, 8df9527f).",
+    "field_key": "Audit Property Assistant"
+   }
+  ],
+  "checks": {
+   "location_match": "unclear",
+   "time_on_site": "unclear",
+   "four_sides": "unclear",
+   "before_after_diff": "pass",
+   "extraordinary_conditions": false
+  },
+  "fraud_indicators": [
+   "Photo 20565839 filed as After Front Edging shows a different urban property (graffiti mural, chain-link fence)",
+   "Photo 20565839 watermark reads EDT while all other photos read CDT",
+   "20565839 is the only GPS-tagged photo; its medoid is ~1,124,949 m from the property geocode",
+   "Watermarks compress Before/During/After into an ~18-minute window, implausibly short to mow a 29,929 sq ft lot",
+   "All capture times are upload-stamped and unreliable"
+  ],
+  "flag_reasons": [
+   "The After front foundation/edging proof (20565839) is a wrong-property urban photo, so front foundation/edging completion is not visually proven",
+   "Foundation weeds still visible in After flower-bed photo b0d5ab58",
+   "Heavy brush/overgrowth along the sides of the house (bd24a986, 2e183d99, 39ce5eac) is not shown cleared, unmet impediment for large overgrowth along the house",
+   "Time on site missing and watermarks compressed, so full-lot work duration cannot be confirmed"
+  ],
+  "review_items": [
+   "Confirm whether photo 20565839 belongs to another order/property (urban scene, EDT watermark, only GPS point far from the property)",
+   "Verify side-of-house brush/foundation overgrowth was cleared - no valid After exists for bd24a986/2e183d99/39ce5eac",
+   "Check remaining foundation weeds in After b0d5ab58",
+   "Assess plausibility of the short watermark span for a 29,929 sq ft lot cut"
+  ],
+  "recommended_actions": [
+   "Request valid After photos of the front foundation/edging and the side-of-house overgrowth",
+   "Have vendor clarify the misfiled urban photo (20565839)"
+  ],
+  "rationale_plain": "Photos at 4168 (house number readable in 66d5eb17, 6bfcbcca, 25ebd1e4) show a rural farmhouse where the lawn was mowed: rear (49d78a48), sides (2c2ef380, 28c69532) and behind the outbuilding (7c105a5e) show cut grass versus overgrown Before shots. However, the After front-edging/foundations photo (20565839) shows a different urban property with a graffiti mural and an EDT watermark, and is the only GPS point, far from the property geocode. After flower-bed photo b0d5ab58 still shows foundation weeds, and heavy brush along the sides of the house (bd24a986, 2e183d99, 39ce5eac) is not shown cleared. Watermarks compress Before and After into a very short window. Foundation and edging completion is therefore not proven.",
+  "notes_for_human": null,
+  "subtype": "error_max_budget_usd",
+  "cost_usd": 0.513,
+  "session_id": "f0e99dd3-85c8-4167-88af-50c5099f73fc",
+  "gate_events": [
+   {
+    "class": "lint_unsourced_number",
+    "kind": "lint",
+    "action": "deny",
+    "reason": "rationale_plain contains the number 1.1 which does not appear in your evidence, checks, or DETERMINISTIC_SIGNALS. Remove or source it."
+   },
+   {
+    "class": "accepted",
+    "kind": "audit",
+    "action": "accepted",
+    "reason": "verdict accepted by gates"
+   }
+  ],
+  "error": "Exception: Claude Code returned an error result: Reached maximum budget ($0.5)",
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 27575,
+   "cache_read_input_tokens": 5270,
+   "output_tokens": 8372,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 0,
+    "ephemeral_5m_input_tokens": 27575
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 8372,
+     "cache_read_input_tokens": 5270,
+     "cache_creation_input_tokens": 27575,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 27575,
+      "ephemeral_1h_input_tokens": 0
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "num_turns": 3
+ },
+ "agreement": true,
+ "thresholds_applied": {
+  "auto_decide": {
+   "good_to_pay": 0.75,
+   "gcfu": 0.75,
+   "potential_fraud": 0.95
+  },
+  "verifier_below_confidence": 0.85
+ },
+ "gate_events": [
+  {
+   "class": "accepted",
+   "kind": "audit",
+   "action": "accepted",
+   "reason": "verdict accepted by gates"
+  },
+  {
+   "class": "lint_unsourced_number",
+   "kind": "lint",
+   "action": "deny",
+   "reason": "rationale_plain contains the number 1.1 which does not appear in your evidence, checks, or DETERMINISTIC_SIGNALS. Remove or source it."
+  },
+  {
+   "class": "accepted",
+   "kind": "audit",
+   "action": "accepted",
+   "reason": "verdict accepted by gates"
+  }
+ ],
+ "signals": {
+  "identity_ok": true,
+  "work_code_ok": true,
+  "in_season": true,
+  "photo_count": 47,
+  "photo_count_ok": true,
+  "gps": {
+   "medoid": [
+    40.685447,
+    -73.930031
+   ],
+   "medoid_guid": "20565839-a8d7-448f-a7bc-1e27940ce664",
+   "valid": 1,
+   "unknown": 46,
+   "outlier_fraction": 0.0,
+   "outliers": [],
+   "mixed_clusters": false,
+   "property_geocode": {
+    "lat": 40.955106465248,
+    "lon": -87.306974499388,
+    "source": "census",
+    "quality": "exact",
+    "cached": true
+   },
+   "medoid_to_property_m": 1124949,
+   "location_match": "unverified",
+   "notes": [],
+   "api_distance_fields": {
+    "door_knock": -1,
+    "farthest_to_property": -1,
+    "farthest_between": -1
+   }
+  },
+  "time_on_site_min": -1,
+  "time_on_site_ok": true,
+  "photo_time_span_min": 3435,
+  "date_skew_days": 2,
+  "documents": {
+   "listed": 7,
+   "unique": 3,
+   "kinds": [
+    "Audit Property Assistant",
+    "Invoice",
+    "Update"
+   ],
+   "invoice_present": true,
+   "update_present": true
+  },
+  "photo_integrity": {
+   "reused_pairs": [],
+   "staged_pairs": [],
+   "same_stage_dupes": [],
+   "adjacent_cross_station_pairs": [],
+   "taken_dates_unreliable": true
+  },
+  "documentation_gaps": [
+   "capture_times_upload_stamped",
+   "gps_metadata_sparse",
+   "insufficient_gps_points",
+   "time_on_site_missing"
+  ],
+  "fraud_signals": [],
+  "short_circuit": null,
+  "short_circuit_reason": null
+ },
+ "models": {
+  "drafter": "claude-sonnet-5",
+  "verifier": "claude-opus-4-8"
+ },
+ "cost_usd": 0.8924,
+ "session_ids": [
+  "09f5475a-4ae6-4c4a-b126-ca23603f829f",
+  "f0e99dd3-85c8-4167-88af-50c5099f73fc"
+ ],
+ "config_version": "sha256:2a6fa47a1e585ee8",
+ "decided_at": "2026-07-14T13:49:50+00:00",
+ "run_id": "final-brief",
+ "latency_s": 294.1,
+ "audit_path": "experiments/final-brief/500119020.json",
+ "report_path": "experiments/final-brief/500119020.md"
+}

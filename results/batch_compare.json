@@ -1,0 +1,2121 @@
+{
+ "ran_at": "2026-07-14T15:19:16+00:00",
+ "models": {
+  "drafter": "claude-sonnet-5",
+  "verifier": "claude-opus-4-8"
+ },
+ "config_version": "sha256:2a6fa47a1e585ee8",
+ "wave1": {
+  "batch_id": "msgbatch_016bXHTyQPkxf5JEg3pPPhHm",
+  "elapsed_s": 4334.8
+ },
+ "wave2": {
+  "batch_id": "msgbatch_01RmsCqX9gZRdGpCMccxV94G",
+  "elapsed_s": 182.0
+ },
+ "orders": [
+  {
+   "order": "500119014",
+   "draft": {
+    "order_number": "500119014",
+    "outcome": "good_to_pay",
+    "confidence": 0.62,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "GPS medoid is 3m from property geocode with 42 valid inliers",
+      "source_type": "signal",
+      "observation": "gps.medoid_to_property_m=3, location_match=pass"
+     },
+     {
+      "claim": "Front lawn shows real before/after difference",
+      "source_type": "photo",
+      "observation": "5a52d62f (before) shows longer grass near steps; 612f33cf/460e7dda (after) show cut, edged lawn",
+      "photo_guid": "5a52d62f"
+     },
+     {
+      "claim": "Side Lawn 1 cut",
+      "source_type": "photo",
+      "observation": "8713e1af (before) shows tall patchy grass; 96d00c96/905a0196 (after) show shorter grass, cosmetic brown patches only",
+      "photo_guid": "8713e1af"
+     },
+     {
+      "claim": "Rear lawn cut and cleared",
+      "source_type": "photo",
+      "observation": "fd014a76/cfd19d17 (before) show overgrown weedy slope; affa887b (after) shows tidy cut rear lawn",
+      "photo_guid": "fd014a76"
+     },
+     {
+      "claim": "Grass height verified under 2 inches after cut",
+      "source_type": "photo",
+      "observation": "9fdba7ca shows ruler measurement of cut grass ~2 inches",
+      "photo_guid": "9fdba7ca"
+     },
+     {
+      "claim": "Clippings/debris from cutting removed",
+      "source_type": "photo",
+      "observation": "3bb14b8f and 3a225273 show clean lawn areas post-mow, no grass clippings piled",
+      "photo_guid": "3bb14b8f"
+     },
+     {
+      "claim": "Staged before/after timestamp pairs present at multiple stations",
+      "source_type": "signal",
+      "observation": "photo_integrity.staged_pairs lists 6 stations with after_precedes_before or gap_too_short issues"
+     },
+     {
+      "claim": "One outlier photo does not match property or date",
+      "source_type": "photo",
+      "observation": "57cad809 labeled 'Rear of House' shows a different single-story ranch house, taken 2026-07-09 (next day), GPS 723km away",
+      "photo_guid": "57cad809"
+     },
+     {
+      "claim": "Debris/trash removal was not a performed service, not necessarily left debris",
+      "source_type": "document",
+      "observation": "Update doc: 'Was exterior debris/trash removed? No' - lumber leaning on wall visible in b892b61f but this is a separate audit-flagged item, not lawn debris",
+      "field_key": "Update"
+     },
+     {
+      "claim": "Time on site sufficient for scope",
+      "source_type": "signal",
+      "observation": "time_on_site_min=38, time_on_site_ok=true, actual working photo timestamps span 15:07-15:44 (37 min), consistent with multi-station cut"
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": false
+    },
+    "fraud_indicators": [
+     "staged_documentation flag: 6 before/after pairs show after preceding before or near-zero gaps (e.g., Side Lawn 2, Front Lawn, Side Lawn 1, Rear Lawn)",
+     "One Condition photo (57cad809, 'Rear of House') shows a different house style, taken a full day later, GPS 723km from the property medoid",
+     "photo_time_span_min=1299 driven almost entirely by the single outlier photo dated the next day"
+    ],
+    "flag_reasons": [
+     "GPS cluster for the working photo set matches the property within 3m (location_match=pass)",
+     "Visible before/after comparison across front, both side yards, and rear lawn shows grass cut from tall/patchy to short, with ruler-verified height under 2 inches",
+     "Edging, weed whacking, and clippings-removal photos corroborate a completed multi-station cut within a 37-minute working window consistent with reported time on site",
+     "Audit-flagged issues (tree overgrowth, leaning debris/screen door, shrub trimming) are non-lawn conditions outside the core grass-cut scope and are separately noted as not claimable or addressed via a tree-trim bid",
+     "Staged timestamp pairs and one mismatched Condition photo are documentation anomalies, not evidence that the cutting work itself is absent or performed elsewhere"
+    ],
+    "review_items": [
+     "Confirm 57cad809 ('Rear of House', different house, dated 07/09, GPS outlier) belongs to a different order and was misfiled here",
+     "Review staged before/after pairs listed in photo_integrity (Side Lawn 2, Front Lawn x2, Side Lawn 1 x2, Rear Lawn) before releasing payment \u2014 timestamps show After preceding Before at several stations",
+     "Optionally verify lumber/debris against house wall (photo b892b61f) does not require a separate hazard follow-up per audit"
+    ],
+    "recommended_actions": [
+     "Release payment pending human confirmation of staged timestamp pairs and the mismatched outlier photo",
+     "No additional grass-cut follow-up needed based on visible coverage"
+    ],
+    "rationale_plain": "The photo GPS cluster matches the property closely, and before/after photos across front, both side yards, and the rear lawn show grass visibly cut down from tall/patchy to short, confirmed by a ruler measurement showing under 2 inches (9fdba7ca). Edging, weed-whacking, and clippings-removal photos support a real multi-station cut fitting the reported time on site. However, several before/after photo pairs are timestamp-staged (After taken before Before, per photo_integrity), and one Condition photo (57cad809) shows a different house a day later and far from the property. These are documentation anomalies worth a human glance before release, but the visible work itself, at the location-matched property, appears completed to standard."
+   },
+   "draft_status": "succeeded",
+   "draft_cost_usd": 0.0489,
+   "draft_usage": {
+    "in": 26112,
+    "out": 4558
+   },
+   "gate": "pass",
+   "verify": {
+    "order_number": "500119014",
+    "outcome": "good_to_pay",
+    "confidence": 0.68,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "Photo cluster is at the correct property; house number 1801 legible on front door",
+      "source_type": "photo",
+      "photo_guid": "26439fef",
+      "observation": "Front door sidelight clearly shows '1801'; matches 1801 WOODWARD AVE. GPS medoid 3m from property geocode, location_match pass."
+     },
+     {
+      "claim": "Rear lawn cut and maintained in After photos",
+      "source_type": "photo",
+      "photo_guid": "affa887b",
+      "observation": "Rear/side of house shows uniformly cut green lawn; corroborated by dacb040a and 3bb14b8f at 11:39-11:40 EDT."
+     },
+     {
+      "claim": "Before rear lawn shows taller, weedy grass",
+      "source_type": "photo",
+      "photo_guid": "cfd19d17",
+      "observation": "Rear lawn Before shows patchy, weed-dotted longer grass \u2014 meaningful before/after difference vs affa887b."
+     },
+     {
+      "claim": "Front and side coverage present and cut",
+      "source_type": "photo",
+      "photo_guid": "612f33cf",
+      "observation": "Front lawn After shows trimmed grass and edged walkway/steps; side lawn After 96d00c96 shows short-cut grass (patchy/bare, not overgrown)."
+     },
+     {
+      "claim": "Edging and weed-whacking performed",
+      "source_type": "photo",
+      "photo_guid": "c4b91920",
+      "observation": "After edging photo shows trimmed fence-line/foundation edges; During weed-whacking c0eb45e3 and mowing ea596677/73ac8ba7 documented."
+     },
+     {
+      "claim": "Reported time on site is adequate",
+      "source_type": "signal",
+      "field_key": "time_on_site_min",
+      "observation": "38 minutes, time_on_site_ok true \u2014 no short_visit signal; realistic for a standard lot."
+     },
+     {
+      "claim": "Staged before/after pairs present",
+      "source_type": "signal",
+      "field_key": "photo_integrity.staged_pairs",
+      "observation": "Multiple stations show After timestamps preceding Before or gaps of seconds (Side Lawn 1/2, Side Lawn 2/2, Rear, Front)."
+     },
+     {
+      "claim": "One photo geolocates 723km away and is dated the next day",
+      "source_type": "photo",
+      "photo_guid": "57cad809",
+      "observation": "Condition/Rear of House shows a single-story tan ranch house unlike the verified two-story blue/white house; GPS outlier 723291m, taken 2026-07-09."
+     },
+     {
+      "claim": "Vendor certified grass cut and backyard completed",
+      "source_type": "document",
+      "field_key": "Update",
+      "observation": "grass_cut_completed Yes, backyard Yes, lot 65x50 = 3250 sqft; invoice $25 Grass Recut 3250."
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": false
+    },
+    "fraud_indicators": [
+     "Staged before/after pairs: After timestamps precede Before on Side Lawn 1/2, Side Lawn 2/2, and Rear stations",
+     "Front Lawn Before/After pair only 4-5 seconds apart (gap_too_short)",
+     "Wrong-property photo 57cad809 (single-story ranch) filed as 'Rear of House', GPS 723km away and dated 07/09 (next day)"
+    ],
+    "flag_reasons": [
+     "Location verified: house number 1801 legible on front door and GPS medoid 3m from property",
+     "Before-to-after difference visible: rear/side lawns go from weedy/longer to uniformly cut",
+     "Coverage adequate: front, rear, both sides, behind outbuilding, edging and weed-whacking documented",
+     "Reported time on site 38 min is adequate; no short_visit signal",
+     "Staged before/after timestamps require a human glance before release"
+    ],
+    "review_items": [
+     "Confirm payment evidence is acceptable despite staged before/after pairs (After precedes Before on multiple stations)",
+     "Confirm photo 57cad809 (ranch house, 723km away, 07/09) belongs to a different order and does not indicate the crew visited a wrong site",
+     "Note audit-flagged conditions for separate handling: leaning screen door, tree branches over garage/roof, debris/lumber against wall \u2014 not part of grass-cut scope"
+    ],
+    "recommended_actions": [
+     "Release payment after human confirms staged-pair documentation",
+     "Reassign/verify the misfiled out-of-area photo 57cad809",
+     "Route tree-trimming bid ($250) and damage/debris conditions to appropriate work queues"
+    ],
+    "rationale_plain": "The visit is at the right property: the front door in 26439fef shows house number 1801 and GPS sits 3m from the geocode. After photos affa887b, dacb040a and 612f33cf show the front, rear and side lawns cut and edged, versus weedier/longer grass in Before photo cfd19d17 \u2014 a real difference. Coverage spans four sides plus behind the outbuilding, with weed-whacking and mowing documented. Reported time on site is 38 minutes, which is adequate. However, integrity signals show staged before/after pairs (After timestamps precede Before on several stations), so a human should confirm before release. One photo, 57cad809, shows a different single-story house 723km away dated the next day; it is a stray misfiled image, not the verified set. These anomalies are recorded for the reviewer."
+   },
+   "verify_status": "succeeded",
+   "verify_cost_usd": 0.1083,
+   "flag": "good_to_pay",
+   "disposition": "human_review",
+   "anomaly": true,
+   "fraud_indicators": [
+    "deterministic: staged_documentation",
+    "staged_documentation flag: 6 before/after pairs show after preceding before or near-zero gaps (e.g., Side Lawn 2, Front Lawn, Side Lawn 1, Rear Lawn)",
+    "One Condition photo (57cad809, 'Rear of House') shows a different house style, taken a full day later, GPS 723km from the property medoid",
+    "photo_time_span_min=1299 driven almost entirely by the single outlier photo dated the next day",
+    "Staged before/after pairs: After timestamps precede Before on Side Lawn 1/2, Side Lawn 2/2, and Rear stations",
+    "Front Lawn Before/After pair only 4-5 seconds apart (gap_too_short)",
+    "Wrong-property photo 57cad809 (single-story ranch) filed as 'Rear of House', GPS 723km away and dated 07/09 (next day)"
+   ],
+   "final_outcome": "good_to_pay",
+   "confidence": 0.62,
+   "adjudication": [
+    "reviewer requested human confirmation",
+    "confidence 0.62 below auto_decide[good_to_pay]=0.75"
+   ],
+   "total_cost_usd": 0.1572
+  },
+  {
+   "order": "500119015",
+   "draft": {
+    "order_number": "500119015",
+    "outcome": "good_to_pay",
+    "confidence": 0.62,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "Location matches property",
+      "source_type": "signal",
+      "observation": "medoid_to_property_m=5, location_match=pass, 44/45 photos inlier",
+      "field_key": "gps"
+     },
+     {
+      "claim": "House number visible confirming address",
+      "source_type": "photo",
+      "observation": "House number 16812 visible on garage fascia",
+      "photo_guid": "4b99e151"
+     },
+     {
+      "claim": "Before photos show overgrown grass/weeds in side and rear yard",
+      "source_type": "photo",
+      "observation": "Tall grass and weeds along fence/foundation before cut",
+      "photo_guid": "bd1a1d46"
+     },
+     {
+      "claim": "Before photo of side lawn 1 shows overgrowth",
+      "source_type": "photo",
+      "observation": "Long grass and weeds visible pre-cut",
+      "photo_guid": "b1d28cdc"
+     },
+     {
+      "claim": "After photos show mowed, striped lawn across front/side/rear",
+      "source_type": "photo",
+      "observation": "Neatly striped, short cut grass",
+      "photo_guid": "22d16a05"
+     },
+     {
+      "claim": "Rear lawn and edging after cut",
+      "source_type": "photo",
+      "observation": "Fence line and foundation clear of tall grass/weeds",
+      "photo_guid": "b5548f5b"
+     },
+     {
+      "claim": "Side lawn 2 after cut, clean",
+      "source_type": "photo",
+      "observation": "Short grass, no overgrowth remaining",
+      "photo_guid": "89c5156c"
+     },
+     {
+      "claim": "Ruler shows grass at or under 2 inches after cut",
+      "source_type": "photo",
+      "observation": "Ruler measurement showing short grass",
+      "photo_guid": "1714bd4d"
+     },
+     {
+      "claim": "Staged before/after pairing at Front Lawn station",
+      "source_type": "signal",
+      "observation": "Before/after gap only 46 seconds (5485fc39 -> 22d16a05)",
+      "field_key": "photo_integrity.staged_pairs"
+     },
+     {
+      "claim": "Photo reuse across multiple stage/station labels",
+      "source_type": "signal",
+      "observation": "Near-duplicate images 4b99e151/957e1177/0c82e385/9bb30acb/4202d568 filed under different stages/stations at nearly identical timestamps",
+      "field_key": "photo_integrity.reused_pairs"
+     },
+     {
+      "claim": "GPS outlier photo shows unrelated building",
+      "source_type": "photo",
+      "observation": "Multi-story brick building unrelated to single-family ranch home, taken 07:07 AM far outside the cutting window, 81596m from property",
+      "photo_guid": "65239f73"
+     },
+     {
+      "claim": "Audit-flagged tree/overgrowth defect is not supported once photo source is checked",
+      "source_type": "document",
+      "observation": "Audit cites tree-touching-roof defect from photo 65239f73, which is actually an unrelated multi-story building, not this property",
+      "field_key": "Audit Property Assistant"
+     },
+     {
+      "claim": "Debris removal answer is a service-performed question, not evidence of leftover debris",
+      "source_type": "document",
+      "observation": "Update answers 'Was exterior debris/trash removed?: No'; after photos (ff9961e3) show clean lawn with clippings removed",
+      "field_key": "Update"
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": false
+    },
+    "fraud_indicators": [
+     "Photo reuse: same image filed under multiple different stage/station labels (Property Address, Grass Recut-Address, General Property Condition, Front Of House) at near-identical timestamps",
+     "Staged before/after pair at Front Lawn station with only 46-second gap",
+     "Dozens of adjacent cross-station photo pairs taken 0-3 seconds apart under different station labels, suggesting rapid-fire staged documentation rather than sequential work",
+     "GPS outlier photo (65239f73) shows an unrelated multi-story building filed as 'General Property Condition', taken far outside the normal timestamp cluster",
+     "Second GPS outlier (25819c44, securing-sticker close-up) shows large distance offset, though this is a single close-up shot and likely a GPS metadata glitch"
+    ],
+    "flag_reasons": [
+     "Location confirmed via GPS medoid (5m from property) and visible house number 16812 in multiple photos",
+     "Before photos show genuinely overgrown grass/weeds in side and rear yard that after photos show cut and striped",
+     "Coverage includes front, both side lawns, rear lawn, edging/foundation, and behind-garage areas in After stage",
+     "Time-on-site signal marked ok with no short_visit flag despite anomalous overall span, so time prong for fraud does not independently fire",
+     "Photo reuse and staged pairing anomalies exist but do not negate the visible mowing evidence at the verified location, per composition rule"
+    ],
+    "review_items": [
+     "Confirm photo 65239f73 (unrelated multi-story building) is a stray/misfiled image and not evidence of a different service address",
+     "Review reused_pairs cluster (4b99e151/957e1177/0c82e385/9bb30acb/4202d568) \u2014 same scene reused across 5 different labels within 2 seconds; confirm documentation wasn't padded/reshuffled",
+     "Confirm the 46-second staged before/after gap at Front Lawn (5485fc39/22d16a05) does not indicate fabricated pairing before releasing payment",
+     "Verify audit-flagged 'tree touching roof' defect is not applicable since its source photo (65239f73) is not this property"
+    ],
+    "recommended_actions": [
+     "Release payment pending human confirmation of staged/reused documentation",
+     "Do not treat audit tree-damage flag as applicable to this property; source photo is unrelated",
+     "No follow-up cut needed based on visible after-photo coverage"
+    ],
+    "rationale_plain": "Location checks out: GPS medoid is 5m from the property and the house number 16812 appears in several photos (e.g., 4b99e151). Before photos (e.g., b1d28cdc, bd1a1d46) show genuinely overgrown grass and weeds along fences and foundations, while After photos (22d16a05, b5548f5b, 89c5156c, 1714bd4d) show a neatly mowed, striped lawn across front, both sides, and rear, including edging and foundation lines. Time-on-site is marked ok with no short-visit flag. However, the photo set shows signs of staged documentation: a before/after pair only 46 seconds apart, and several near-identical images reused under different station labels within seconds of each other (4b99e151/957e1177/0c82e385/9bb30acb/4202d568). One audit-flagged tree defect traces to an unrelated building photo (65239f73), not this property, so that finding does not apply."
+   },
+   "draft_status": "succeeded",
+   "draft_cost_usd": 0.0593,
+   "draft_usage": {
+    "in": 29105,
+    "out": 6043
+   },
+   "gate": "pass",
+   "verify": {
+    "order_number": "500119015",
+    "outcome": "good_to_pay",
+    "confidence": 0.7,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "Property location verified: house number 16812 matches order address 16812 Ellis Ave and GPS medoid sits 5m from geocode",
+      "source_type": "photo",
+      "observation": "Garage house-number plaque reads 16812",
+      "photo_guid": "8bfd8d95",
+      "field_key": null
+     },
+     {
+      "claim": "Before photos show overgrown side lawn and tall grass/weeds along walkway and foundation",
+      "source_type": "photo",
+      "observation": "18:28 CDT side lawn heavy weeds along walkway, foundation untrimmed",
+      "photo_guid": "ecf8fa98",
+      "field_key": null
+     },
+     {
+      "claim": "Before rear ruler photo shows tall grass/weeds",
+      "source_type": "photo",
+      "observation": "18:28 CDT rear lawn overgrown with weeds and clover",
+      "photo_guid": "9918b82c",
+      "field_key": null
+     },
+     {
+      "claim": "After photos show same side lawn cut and edged",
+      "source_type": "photo",
+      "observation": "19:34 CDT same walkway now trimmed, grass short",
+      "photo_guid": "68370fbe",
+      "field_key": null
+     },
+     {
+      "claim": "Rear lawn cut with visible mowing stripes",
+      "source_type": "photo",
+      "observation": "19:34 CDT backyard cut, fence line clear",
+      "photo_guid": "22d16a05",
+      "field_key": null
+     },
+     {
+      "claim": "Front lawn cut and edged along drive and sidewalk",
+      "source_type": "photo",
+      "observation": "19:34 CDT front lawn short, clean edges",
+      "photo_guid": "4e54b99c",
+      "field_key": null
+     },
+     {
+      "claim": "Behind outbuilding/garage area cut",
+      "source_type": "photo",
+      "observation": "19:34 CDT grass short around rear of house",
+      "photo_guid": "a87f9f15",
+      "field_key": null
+     },
+     {
+      "claim": "Reported time on site is not short and photo work span is adequate",
+      "source_type": "signal",
+      "observation": "time_on_site_min=988, time_on_site_ok=true, no short_visit; before cluster 18:28, after cluster 19:34 CDT",
+      "photo_guid": null,
+      "field_key": "time_on_site_min"
+     },
+     {
+      "claim": "Staged before/after pair on Front Lawn station",
+      "source_type": "signal",
+      "observation": "before 5485fc39 and after 22d16a05 only 46s apart; pairing cannot serve as before/after proof",
+      "photo_guid": "22d16a05",
+      "field_key": null
+     },
+     {
+      "claim": "Wrong-property photo filed as General Property Condition",
+      "source_type": "photo",
+      "observation": "65239f73 shows a large brick multi-unit building, GPS outlier 81596m, taken 07:07 \u2014 not this ranch house",
+      "photo_guid": "65239f73",
+      "field_key": null
+     },
+     {
+      "claim": "Front-of-house address shot reused across multiple condition stations",
+      "source_type": "signal",
+      "observation": "957e1177 near-matches 4b99e151, 0c82e385, 9bb30acb, 4202d568",
+      "photo_guid": "957e1177",
+      "field_key": null
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": false
+    },
+    "fraud_indicators": [
+     "Staged before/after pair on Front Lawn (5485fc39/22d16a05, 46s apart)",
+     "Front Lawn 'After' 22d16a05 actually shows a fenced backyard (mislabeled)",
+     "Wrong-property photo 65239f73 (brick multi-unit, GPS+time outlier) filed as General Property Condition",
+     "Front-of-house address shot 957e1177 reused across multiple condition/address stations",
+     "Large burst of After/Condition photos filed 0-1 seconds apart under different station labels"
+    ],
+    "flag_reasons": [
+     "Location verified: house number 16812 matches address and GPS medoid is 5m from property",
+     "Clear before/after difference \u2014 overgrown side/rear lawns cut and edged across all four sides",
+     "Reported time on site adequate (988 min, no short_visit signal); before cluster 18:28 and after cluster 19:34 CDT",
+     "Coverage present for front, rear, both sides, behind outbuilding and under deck"
+    ],
+    "review_items": [
+     "Confirm staged Front Lawn pair (5485fc39/22d16a05) \u2014 payment evidence is time-staged; verify before release",
+     "Confirm 65239f73 (brick multi-unit) belongs to another order/property",
+     "Verify 22d16a05 labeled Front Lawn actually depicts the backyard",
+     "Spot-check reused address shot 957e1177 across condition stations"
+    ],
+    "recommended_actions": [
+     "Release payment after human confirms staged/reused documentation",
+     "Coach vendor on correct station labeling and avoiding photo reuse"
+    ],
+    "rationale_plain": "The property is verified: the garage plaque in 8bfd8d95 reads 16812 matching the order, and GPS sits 5m from the geocode. Before photos (ecf8fa98, 9918b82c) show overgrown side and rear lawns with weedy walkway edges; after photos (68370fbe, 22d16a05, 4e54b99c, a87f9f15) show those same areas cut and edged across all four sides. Reported time on site is adequate and no short-visit signal fired. However, integrity signals show a staged Front Lawn before/after pair (5485fc39/22d16a05, 46s apart), an address shot 957e1177 reused across condition stations, and a wrong-property photo 65239f73 filed as General Property Condition. Because payment documentation is partly time-staged, a human should confirm before release.",
+    "notes_for_human": "Visible work supports completion at the verified property, but a staged before/after pair and a reused address photo mean payment evidence is partly time-staged \u2014 confirm before release. Also confirm wrong-property photo 65239f73 (brick multi-unit) is misfiled here, not a location problem for the set."
+   },
+   "verify_status": "succeeded",
+   "verify_cost_usd": 0.1278,
+   "flag": "good_to_pay",
+   "disposition": "human_review",
+   "anomaly": true,
+   "fraud_indicators": [
+    "deterministic: photo_reuse",
+    "deterministic: staged_documentation",
+    "Photo reuse: same image filed under multiple different stage/station labels (Property Address, Grass Recut-Address, General Property Condition, Front Of House) at near-identical timestamps",
+    "Staged before/after pair at Front Lawn station with only 46-second gap",
+    "Dozens of adjacent cross-station photo pairs taken 0-3 seconds apart under different station labels, suggesting rapid-fire staged documentation rather than sequential work",
+    "GPS outlier photo (65239f73) shows an unrelated multi-story building filed as 'General Property Condition', taken far outside the normal timestamp cluster",
+    "Second GPS outlier (25819c44, securing-sticker close-up) shows large distance offset, though this is a single close-up shot and likely a GPS metadata glitch",
+    "Staged before/after pair on Front Lawn (5485fc39/22d16a05, 46s apart)",
+    "Front Lawn 'After' 22d16a05 actually shows a fenced backyard (mislabeled)",
+    "Wrong-property photo 65239f73 (brick multi-unit, GPS+time outlier) filed as General Property Condition",
+    "Front-of-house address shot 957e1177 reused across multiple condition/address stations",
+    "Large burst of After/Condition photos filed 0-1 seconds apart under different station labels"
+   ],
+   "final_outcome": "good_to_pay",
+   "confidence": 0.62,
+   "adjudication": [
+    "reviewer requested human confirmation",
+    "confidence 0.62 below auto_decide[good_to_pay]=0.75"
+   ],
+   "total_cost_usd": 0.1871
+  },
+  {
+   "order": "500119016",
+   "draft": {
+    "order_number": "500119016",
+    "outcome": "good_to_pay",
+    "confidence": 0.62,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "GPS medoid is 125m from property geocode, location_match=pass",
+      "source_type": "signal",
+      "observation": "gps.medoid_to_property_m=125, location_match=pass, 37 valid inliers, no outliers",
+      "field_key": "gps"
+     },
+     {
+      "claim": "Time on site 27 min matches photo time span, not a short visit",
+      "source_type": "signal",
+      "observation": "time_on_site_min=27, time_on_site_ok=true, photo_time_span_min=26",
+      "field_key": "time_on_site_min"
+     },
+     {
+      "claim": "Front lawn before/after shows visible cut",
+      "source_type": "photo",
+      "observation": "37612791 (Before, tall grass with clover) vs 622ec156/22dfbb2e (After, short mowed grass with visible mower stripes)",
+      "photo_guid": "622ec156"
+     },
+     {
+      "claim": "Side and rear lawns show visible cut",
+      "source_type": "photo",
+      "observation": "8dcb498f/c4f94a74/3481ca45 (Before, taller grass with white clover blooms) vs eb834b90/3108ece1/b22e0be8/500fcb22 (After, shorter grass)",
+      "photo_guid": "500fcb22"
+     },
+     {
+      "claim": "Behind outbuilding and under-deck areas were covered",
+      "source_type": "photo",
+      "observation": "c3e52a1a and e35431cd show mowed grass behind outbuilding; 419a5f19 shows mowed grass under deck area",
+      "photo_guid": "e35431cd"
+     },
+     {
+      "claim": "Mowing was actively performed on-site",
+      "source_type": "photo",
+      "observation": "During photos b3e3aea3, 50210979, e8cf28ea, 1c2c9ad4 show operator on riding mower cutting grass",
+      "photo_guid": "50210979"
+     },
+     {
+      "claim": "Extensive staged/mislabeled before-after pairs",
+      "source_type": "signal",
+      "observation": "photo_integrity.staged_pairs lists multiple after_precedes_before and gap_too_short issues across Side Lawn 1, Front Lawn, Rear Lawn stations; fraud_signals=['staged_documentation']",
+      "field_key": "photo_integrity"
+     },
+     {
+      "claim": "Audit flagged a ruler photo suggesting grass not fully cut",
+      "source_type": "document",
+      "observation": "Audit Property Assistant flags f4fdba81 (labeled After - Ruler 2 inches or less) as 'grass 4-6in, not maintained' - visually the ruler tape shows grass reaching mid-tape, ambiguous given this photo was taken early (10:32) amid a confirmed staged/mislabeled cluster",
+      "field_key": "Audit Property Assistant"
+     },
+     {
+      "claim": "Audit flagged possible overgrowth near playset border and misc items near garage",
+      "source_type": "document",
+      "observation": "Audit flags rear edging photo 19d1281e (weedy border near playset) and front lawn before photo 37612791 (bike/motorcycle near garage) as non-claimable defects; photos show only minor cosmetic items, not blocking mowing standard",
+      "field_key": "Audit Property Assistant"
+     },
+     {
+      "claim": "Vendor certifies backyard completed, debris removal not a separate service performed",
+      "source_type": "document",
+      "observation": "Update document: 'Was yard maintenance completed in the backyard? Yes'; 'Was exterior debris/trash removed? No' - consistent with no debris-removal task billed, not evidence of visible trash in After photos",
+      "field_key": "Update"
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": false
+    },
+    "flag_reasons": [
+     "Location matches property (125m, GPS pass) and time on site (27 min) matches photo span, ruling out wrong-property or short-visit fraud prongs",
+     "Visible Before/After difference is clear across front, side, and rear lawns (taller clover-flecked grass vs. short mowed grass with mower stripes)",
+     "All four sides plus fence line, behind outbuilding, and under-deck areas are photographically covered",
+     "Staged/mislabeled timestamp pairs are a real documentation integrity problem but do not by themselves indicate no work occurred, per policy visible evidence outranks metadata",
+     "Audit-flagged items (ruler grass height, playset border weeds, garage-area bike) are cosmetic/ambiguous and don't show whole-area failure"
+    ],
+    "review_items": [
+     "Confirm photo f4fdba81 (After - Ruler 2in) actually shows grass at or under 2 inches; grass in image appears to reach higher on tape",
+     "Verify staged_pairs list (Side Lawn 1, Front Lawn, Rear Lawn) - the before/after labels for these stations are unreliable due to overlapping/out-of-order timestamps; confirm actual completion visually rather than trusting labels",
+     "Check 19d1281e for weedy border near playset - minor overgrowth flagged by audit, confirm it's acceptable cosmetic level",
+     "Confirm payment release only after human review since documentation is time-staged"
+    ],
+    "recommended_actions": [
+     "Pay per good_to_pay evaluation, contingent on human confirmation of staged documentation",
+     "Note to vendor that before/after photo timestamps must be corrected/sequenced properly in future submissions to avoid audit flags"
+    ],
+    "rationale_plain": "Location matches the property (GPS 125m from address, pass) and time on site (27 minutes) aligns with the photo timestamp span, so wrong-property and short-visit concerns don't apply. Before photos (e.g., 37612791, 3481ca45) show taller grass with clover blooms, while After photos (e.g., 622ec156, 500fcb22, e35431cd) show shorter, mowed grass with visible mower stripes across front, side, rear, and behind-outbuilding areas. During photos (50210979, b3e3aea3) show an operator actively mowing. However, photo_integrity signals show multiple staged/mislabeled before-after pairs and duplicate photos across stations, and one audit-flagged ruler photo (f4fdba81) shows grass that looks taller than the 2-inch label claims. These timestamp/documentation issues warrant a human glance before payment release."
+   },
+   "draft_status": "succeeded",
+   "draft_cost_usd": 0.0514,
+   "draft_usage": {
+    "in": 25142,
+    "out": 5255
+   },
+   "gate": "pass",
+   "verify": {
+    "order_number": "500119016",
+    "outcome": "good_to_pay",
+    "confidence": 0.62,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "Location verified at target property",
+      "source_type": "signal",
+      "field_key": "gps.location_match",
+      "observation": "All 37 photos GPS inliers, medoid 125m from geocoded property, outlier_fraction 0.0, location_match pass."
+     },
+     {
+      "claim": "Adequate time on site",
+      "source_type": "signal",
+      "field_key": "time_on_site_min",
+      "observation": "27 minutes reported, photo span 26 min; no short_visit signal. Consistent with a full multi-station cut."
+     },
+     {
+      "claim": "Front lawn cut",
+      "source_type": "photo",
+      "photo_guid": "22dfbb2e",
+      "observation": "After Front Lawn shows uniformly mowed lawn with visible mow lines, versus Before 37612791/5c1da045 showing longer, weedy grass."
+     },
+     {
+      "claim": "Rear lawn cut",
+      "source_type": "photo",
+      "photo_guid": "500fcb22",
+      "observation": "After Rear Lawn shows cut grass around playset and fire ring; matches Before 3481ca45 area now maintained."
+     },
+     {
+      "claim": "Behind outbuilding maintained",
+      "source_type": "photo",
+      "photo_guid": "e35431cd",
+      "observation": "After Behind Outbuilding/Garage shows cut lawn, addressing overgrowth impediment."
+     },
+     {
+      "claim": "Staged before/after pairs present",
+      "source_type": "signal",
+      "field_key": "photo_integrity.staged_pairs",
+      "observation": "Multiple stations (Side Lawn 1, Front Lawn, Rear Lawn) show After timestamps preceding Before or gaps of seconds; fraud_signals lists staged_documentation."
+     },
+     {
+      "claim": "Duplicate before photo across two stations",
+      "source_type": "signal",
+      "field_key": "photo_integrity.same_stage_dupes",
+      "observation": "8dcb498f (Side Lawn 2) and c4f94a74 (Side Lawn 1) are an exact match filed under different stations."
+     },
+     {
+      "claim": "Ruler 'After 2 inches or less' shows tall grass",
+      "source_type": "photo",
+      "photo_guid": "f4fdba81",
+      "observation": "Ruler photo labeled After 2 inches or less shows grass at ~6-7 inches with weeds, contradicting its label."
+     },
+     {
+      "claim": "Debris removal not performed",
+      "source_type": "document",
+      "field_key": "Update",
+      "observation": "'Was exterior debris/trash removed?: No'; stored items/equipment visible near outbuilding (38f0f6ed) but on a working farm, not lawn debris blocking the cut."
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": false
+    },
+    "fraud_indicators": [
+     "Staged before/after timestamps across Side Lawn 1, Front Lawn, and Rear Lawn stations (After precedes Before)",
+     "Exact duplicate Before photo filed under two different stations (8dcb498f = c4f94a74)",
+     "Ruler photo labeled 'After - 2 inches or less' (f4fdba81) shows ~6-7 inch grass",
+     "Watermark local times inconsistent with metadata UTC offset across the set"
+    ],
+    "flag_reasons": [
+     "Location verified: all photos GPS inliers within 125m of property",
+     "Time on site 27 min supports a real full-lot cut; no short_visit signal",
+     "After photos of front, rear, sides, and behind outbuilding show mowed lawn versus longer Before grass",
+     "Overgrowth and coverage impediments visibly addressed in After photos"
+    ],
+    "review_items": [
+     "Confirm payment evidence is acceptable despite staged before/after pairs on Side Lawn 1, Front Lawn, Rear Lawn",
+     "Verify ruler photo f4fdba81 (labeled '2 inches or less') showing ~6-7 inch grass against final After lawn condition",
+     "Check duplicate Before 8dcb498f/c4f94a74 filed under two stations",
+     "Note this is flagged a 'TEST GRASS Order' (DEVGUY vendor) \u2014 confirm handling"
+    ],
+    "recommended_actions": [
+     "Human glance to release payment given time-staged documentation",
+     "Confirm test-order status does not change QA disposition"
+    ],
+    "rationale_plain": "All 37 photos are GPS inliers within 125m of the property, so location is verified, and reported time on site is 27 minutes with a 26-minute photo span, consistent with real work. Before photos (37612791, 5c1da045) show longer, weedy grass; After photos of the front (22dfbb2e), rear (500fcb22), and behind the outbuilding (e35431cd) show uniformly mowed lawn with mow lines, addressing the overgrowth and coverage impediments. However, several stations have staged before/after pairs where After precedes Before, an exact duplicate Before is filed under two stations (8dcb498f/c4f94a74), and the ruler photo f4fdba81 labeled '2 inches or less' shows tall grass. Because the payment evidence is time-staged, a human should confirm before release."
+   },
+   "verify_status": "succeeded",
+   "verify_cost_usd": 0.113,
+   "flag": "good_to_pay",
+   "disposition": "human_review",
+   "anomaly": true,
+   "fraud_indicators": [
+    "deterministic: staged_documentation",
+    "Staged before/after timestamps across Side Lawn 1, Front Lawn, and Rear Lawn stations (After precedes Before)",
+    "Exact duplicate Before photo filed under two different stations (8dcb498f = c4f94a74)",
+    "Ruler photo labeled 'After - 2 inches or less' (f4fdba81) shows ~6-7 inch grass",
+    "Watermark local times inconsistent with metadata UTC offset across the set"
+   ],
+   "final_outcome": "good_to_pay",
+   "confidence": 0.62,
+   "adjudication": [
+    "reviewer requested human confirmation",
+    "confidence 0.62 below auto_decide[good_to_pay]=0.75"
+   ],
+   "total_cost_usd": 0.1644
+  },
+  {
+   "order": "500119017",
+   "draft": {
+    "order_number": "500119017",
+    "outcome": "good_to_pay",
+    "confidence": 0.58,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "After photos at the correct address show a completed, well-mowed lawn on all sides",
+      "source_type": "photo",
+      "photo_guid": "ff6d8d5a",
+      "observation": "Front lawn mowed short, matches house/window layout seen in other inlier photos"
+     },
+     {
+      "claim": "House number matches order address 6052",
+      "source_type": "photo",
+      "photo_guid": "b350807c",
+      "observation": "Siding shows address plaque '6052' consistent with order address"
+     },
+     {
+      "claim": "Visible before/after difference on front lawn",
+      "source_type": "photo",
+      "photo_guid": "696ce2d1",
+      "observation": "Before front/side lawn shows taller grass than After photo ff6d8d5a at same station"
+     },
+     {
+      "claim": "Rear, side, edging, clippings, under-deck, behind-outbuilding all documented at correct (inlier) location",
+      "source_type": "photo",
+      "photo_guid": "cadc5ef2",
+      "observation": "Rear lawn After shows mowed grass matching house structure seen in inlier Condition photos"
+     },
+     {
+      "claim": "A stray Condition photo shows a door numbered 1801, ~173km from the medoid, taken hours before the rest of the shoot",
+      "source_type": "signal",
+      "observation": "gps.outliers entry for da6901e4, dist_m=173652, taken 2026-07-08 11:07 EDT vs rest of shoot starting 16:42 EDT"
+     },
+     {
+      "claim": "~45% of photos are GPS outliers, with 28 of them at an identical distance (102065m) from the medoid",
+      "source_type": "signal",
+      "observation": "gps.outlier_fraction=0.452, many outliers listed at dist_m=102065, mixed_clusters=true"
+     },
+     {
+      "claim": "The far-away 'Before' rear lawn/condition photos show extremely overgrown grass/weeds inconsistent with the moderate growth seen in the correct-property Before shots",
+      "source_type": "photo",
+      "photo_guid": "d0116b81",
+      "observation": "Waist-high grass/weeds against open field backdrop, does not match structure or fence style visible in the correct-property inlier photos"
+     },
+     {
+      "claim": "time_on_site is long enough to support full-property mowing",
+      "source_type": "signal",
+      "observation": "time_on_site_min=407, time_on_site_ok=true, no short_visit signal present"
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": false
+    },
+    "fraud_indicators": [
+     "Condition photo da6901e4 shows a door with house number 1801, ~173km from the property medoid, timestamped hours before the rest of the shoot",
+     "28 photos share an identical outlier distance of 102065m from the medoid, suggesting a batch of photos from an unrelated location was merged into this order's Before/Condition set",
+     "Those far-outlier 'Before' rear-lawn/condition photos show extreme overgrowth inconsistent visually with the correct property's structures/fencing seen in inlier photos",
+     "mixed_clusters=true with 45% overall GPS outlier fraction"
+    ],
+    "flag_reasons": [
+     "Inlier After photos (e.g., ff6d8d5a, cadc5ef2, b350807c) confirm the correct address (6052) and show all sides mowed with visible before/after change",
+     "time_on_site (407 min) and full photo coverage of front/side/rear/edging/clippings support a real, adequately-timed visit",
+     "However nearly half the photo set is GPS-outlier, including one clearly wrong-address door photo and a large batch of extreme-overgrowth photos at a different location, undermining confidence in the 'Before' documentation integrity"
+    ]
+   },
+   "draft_status": "succeeded",
+   "draft_cost_usd": 0.0764,
+   "draft_usage": {
+    "in": 36440,
+    "out": 8000
+   },
+   "gate": "pass",
+   "verify": {
+    "order_number": "500119017",
+    "outcome": "good_to_pay",
+    "confidence": 0.55,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "Front-of-house condition photo shows house number 6052, matching the order address.",
+      "source_type": "photo",
+      "observation": "b350807c: siding reads '6052', GPS inlier \u2014 confirms the completion visit is at the ordered property.",
+      "photo_guid": "b350807c",
+      "field_key": null
+     },
+     {
+      "claim": "After photos show a freshly mowed lawn on all sides of the verified property.",
+      "source_type": "photo",
+      "observation": "ff6d8d5a (front), a965cde3/cadc5ef2/2be9f662 (rear), 174960b0/58809f4d (sides) show cut grass with visible mowing lines and mower in frame.",
+      "photo_guid": "ff6d8d5a",
+      "field_key": null
+     },
+     {
+      "claim": "Time on site is ample for a full multi-station cut.",
+      "source_type": "signal",
+      "observation": "time_on_site_min=407, photo_time_span_min=406; no short_visit signal.",
+      "photo_guid": null,
+      "field_key": "time_on_site_min"
+     },
+     {
+      "claim": "About 45% of photos are GPS outliers ~102 km from the property medoid.",
+      "source_type": "signal",
+      "observation": "outlier_fraction 0.452; many 'Before Rear/Side Lawn' overgrowth photos at 102065 m; mixed_clusters=true.",
+      "photo_guid": null,
+      "field_key": "gps"
+     },
+     {
+      "claim": "A 'Property Address' photo shows a different house number at 173 km.",
+      "source_type": "photo",
+      "observation": "da6901e4 shows door numbered '1801' with an 11:07 EDT watermark, 173652 m from medoid \u2014 a different property.",
+      "photo_guid": "da6901e4",
+      "field_key": null
+     },
+     {
+      "claim": "Outlier 'Before' photos show extreme overgrowth inconsistent with the maintained 6052 lawn.",
+      "source_type": "photo",
+      "observation": "2d20b8c6/b2f0f463/f2d0cd66/2acd3b4b show 5-ft grass in a far field; inlier before photos (696ce2d1/214902e7/8eaa6b34) at 6052 show only mildly shaggy lawn.",
+      "photo_guid": "2d20b8c6",
+      "field_key": null
+     },
+     {
+      "claim": "Invoice is a flat $50 with no height/area exception.",
+      "source_type": "document",
+      "observation": "Invoice: Grass Recut 36481, $50, 0% discount; Update: grass-cut exception = No \u2014 no billing inflation.",
+      "photo_guid": null,
+      "field_key": "Invoice"
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "unclear",
+     "extraordinary_conditions": false
+    },
+    "fraud_indicators": [
+     "~28 photos (45%) are GPS outliers ~102 km from the property medoid",
+     "'Property Address' photo da6901e4 shows house number '1801' at 173 km \u2014 a different property",
+     "Multiple 'Before Rear/Side Lawn' overgrowth photos located 102 km from the ordered property",
+     "Before-set contaminated with another property's photos; before/after difference at 6052 not cleanly provable"
+    ],
+    "flag_reasons": [
+     "Front photo b350807c shows house number 6052 matching the order; After cluster is GPS-inlier at that property",
+     "After photos show a freshly mowed lawn on all four sides with mowing lines and mower visible",
+     "Time on site (407 min) is ample and no short_visit signal fired",
+     "No billing inflation \u2014 flat $50, no height/area exception"
+    ],
+    "review_items": [
+     "Confirm da6901e4 ('1801' door, 173 km away) does not belong to this order",
+     "Explain why ~45% of photos, including overgrowth 'Before' shots, are ~102 km from the 6052 property (2d20b8c6, b2f0f463, f2d0cd66, 2acd3b4b)",
+     "Verify the completion After photos (ff6d8d5a, a965cde3, 58809f4d) are the genuine before/after pair for 6052 despite the contaminated before-set",
+     "Check audit-flagged tree branches over shed (87c9a871) and torn window screen (24991715/b8573a8e) for any client condition follow-up"
+    ],
+    "recommended_actions": [
+     "Pay only after human confirms the foreign-location photos are misfiled and not a multi-property stitch",
+     "Return the mixed-cluster documentation to vendor for clarification"
+    ],
+    "rationale_plain": "The ordered property is confirmed by house number 6052 in front photo b350807c, and the After photos at that GPS-verified location (ff6d8d5a front, a965cde3 and cadc5ef2 rear, 174960b0 and 58809f4d sides) show a freshly mowed lawn with visible mowing lines and the mower in frame. Time on site is 407 minutes with no short-visit signal, and the invoice is a flat $50 with no exception, so there is no billing inflation. However, about 45% of photos are GPS outliers roughly 102 km away, including the extreme-overgrowth 'Before' shots, and da6901e4 shows a different house numbered '1801' 173 km away. Because so much foreign documentation is mixed in, before/after difference is unclear and a human should confirm the completion set truly belongs to 6052.",
+    "notes_for_human": "Completion at the correct property (6052) is visibly documented and time is ample, but ~45% of photos come from a location ~102 km away and one address photo (da6901e4) shows a different house ('1801', 173 km). Confirm the before-set contamination is misfiling rather than a multi-property stitch before releasing payment."
+   },
+   "verify_status": "succeeded",
+   "verify_cost_usd": 0.1837,
+   "flag": "good_to_pay",
+   "disposition": "human_review",
+   "anomaly": true,
+   "fraud_indicators": [
+    "Condition photo da6901e4 shows a door with house number 1801, ~173km from the property medoid, timestamped hours before the rest of the shoot",
+    "28 photos share an identical outlier distance of 102065m from the medoid, suggesting a batch of photos from an unrelated location was merged into this order's Before/Condition set",
+    "Those far-outlier 'Before' rear-lawn/condition photos show extreme overgrowth inconsistent visually with the correct property's structures/fencing seen in inlier photos",
+    "mixed_clusters=true with 45% overall GPS outlier fraction",
+    "~28 photos (45%) are GPS outliers ~102 km from the property medoid",
+    "'Property Address' photo da6901e4 shows house number '1801' at 173 km \u2014 a different property",
+    "Multiple 'Before Rear/Side Lawn' overgrowth photos located 102 km from the ordered property",
+    "Before-set contaminated with another property's photos; before/after difference at 6052 not cleanly provable"
+   ],
+   "final_outcome": "good_to_pay",
+   "confidence": 0.58,
+   "adjudication": [
+    "reviewer requested human confirmation",
+    "confidence 0.58 below auto_decide[good_to_pay]=0.75"
+   ],
+   "total_cost_usd": 0.2601
+  },
+  {
+   "order": "500119018",
+   "draft": {
+    "order_number": "500119018",
+    "outcome": "good_to_pay",
+    "confidence": 0.55,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "GPS medoid is 101m from property, location_match=pass",
+      "source_type": "signal",
+      "observation": "DETERMINISTIC_SIGNALS.gps.medoid_to_property_m=101, location_match=pass; only one outlier photo out of 34 (outlier_fraction 0.029)"
+     },
+     {
+      "claim": "One photo (dba4020f) is from a different property entirely, taken the day before",
+      "source_type": "photo",
+      "observation": "dba4020f taken 2026-07-08 22:28 CDT (a day before the service date) shows a different house style with a pickup truck in frame, GPS >1,000km away \u2014 a single stray/misfiled photo, not representative of the whole set"
+     },
+     {
+      "claim": "Front lawn shows visible before/after improvement",
+      "source_type": "photo",
+      "observation": "303f5499 (Before, Front Lawn) shows grass with some length and litter; 19f3f598 (After, Front Lawn) shows neatly striped, freshly mowed grass at street edge"
+     },
+     {
+      "claim": "Ruler confirms grass cut to ~2 inches",
+      "source_type": "photo",
+      "observation": "c7809a14 After Ruler Measurement shows grass around a 2-inch ruler mark"
+     },
+     {
+      "claim": "Fence-line/foundation areas appear maintained",
+      "source_type": "photo",
+      "observation": "04f541a3 (Rear edging/fence/foundation After) and 59042d3c (Front edging/fence/foundation After) show mowed grass along house and fence, no tall grass/weeds visible"
+     },
+     {
+      "claim": "Rear lawn after-photo is largely obscured",
+      "source_type": "photo",
+      "observation": "dce4d708 (After, Rear Lawn) is dominated by sun flare/bushes/roofline, making it hard to confirm rear lawn condition from this single image alone; other rear-facing photos (04f541a3, 2ce97238) do show mowed rear yard"
+     },
+     {
+      "claim": "Multiple staged before/after pairs exist",
+      "source_type": "signal",
+      "observation": "photo_integrity.staged_pairs: Rear Lawn (after precedes before by 60s), Side Lawn 1 (gap only 16s), Side Lawn 2 (after precedes before by 985s) \u2014 these pairings cannot be used as before/after proof"
+     },
+     {
+      "claim": "Photo reuse across stations",
+      "source_type": "signal",
+      "observation": "reused_pairs list photos labeled Front Lawn Before/During matching near-identically to a Front Of House Condition photo, and a Condition photo matching an After Flower Bed photo \u2014 suggests documentation reshuffling"
+     },
+     {
+      "claim": "Audit flagged debris (blue tarp) near brick wall",
+      "source_type": "document",
+      "observation": "Audit Property Assistant flags 7b5ecd85 (After, Clippings/Debris Removed) for a blue tarp visible near brick wall in background; reviewing the photo itself, no unambiguous tarp is clearly distinguishable, item is small/background and not a large accumulation"
+     },
+     {
+      "claim": "Vendor certified grass cut and backyard completed",
+      "source_type": "document",
+      "observation": "Update document: Was yard maintenance completed? Yes; backyard completed? Yes; debris removed answered No (task not separately billed, not an admission of visible debris)"
+     },
+     {
+      "claim": "Time on site was reasonable for a standard lot",
+      "source_type": "signal",
+      "observation": "time_on_site_min=29, time_on_site_ok=true, no short_visit signal fired"
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "unclear",
+     "extraordinary_conditions": false
+    }
+   },
+   "draft_status": "succeeded",
+   "draft_cost_usd": 0.059,
+   "draft_usage": {
+    "in": 28485,
+    "out": 6103
+   },
+   "gate": "flag_reasons",
+   "verify": {
+    "order_number": "500119018",
+    "outcome": "good_to_pay",
+    "confidence": 0.6,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "Before photos show tall, weedy, unmaintained lawn with dandelions",
+      "source_type": "photo",
+      "photo_guid": "303f5499",
+      "field_key": null,
+      "observation": "Front lawn before mowing: overgrown grass with numerous yellow weeds throughout."
+     },
+     {
+      "claim": "After photo shows front lawn cut to a uniform, maintained height",
+      "source_type": "photo",
+      "photo_guid": "19f3f598",
+      "field_key": null,
+      "observation": "Front lawn after: evenly mowed short green turf along the street edge."
+     },
+     {
+      "claim": "Rear/side lawns show cut, maintained turf after work",
+      "source_type": "photo",
+      "photo_guid": "7b5ecd85",
+      "field_key": null,
+      "observation": "Rear yard mowed to uniform height; house numbers visible on porch."
+     },
+     {
+      "claim": "Location verified at subject property",
+      "source_type": "signal",
+      "photo_guid": null,
+      "field_key": "gps.location_match",
+      "observation": "medoid 101 m from property geocode, location_match=pass, 33/34 photos inliers."
+     },
+     {
+      "claim": "Time on site adequate",
+      "source_type": "signal",
+      "photo_guid": null,
+      "field_key": "time_on_site_min",
+      "observation": "29 minutes; time_on_site_ok=true; no short_visit signal."
+     },
+     {
+      "claim": "One photo is a completely different house from another region",
+      "source_type": "photo",
+      "photo_guid": "dba4020f",
+      "field_key": null,
+      "observation": "Brick ranch with attached garage and red pickup, watermark 07/08/2026 CDT, GPS outlier ~1,076,000 m away \u2014 belongs to another order."
+     },
+     {
+      "claim": "Staged before/after pairs across multiple stations",
+      "source_type": "signal",
+      "photo_guid": null,
+      "field_key": "photo_integrity.staged_pairs",
+      "observation": "Rear Lawn and Side Lawn 2 'After' timestamps precede their 'Before'; Side Lawn 1 gap only 16s."
+     },
+     {
+      "claim": "Possible debris (tarp/bins) visible near rear fence in After photos",
+      "source_type": "photo",
+      "photo_guid": "7b5ecd85",
+      "field_key": "Audit Property Assistant",
+      "observation": "Trash bins and a colored item near the brick wall/fence line remain; vendor answered debris removal = No."
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": false
+    },
+    "fraud_indicators": [
+     "Staged before/after pairs: Rear Lawn and Side Lawn 2 'After' timestamps precede their 'Before'",
+     "Side Lawn 1 before/after only 16 seconds apart",
+     "Photo reuse: near-duplicate images filed under different stations/stages (95dee852/65991a14, 090c274e/65991a14, f7789ca5/8cfa8e24)",
+     "Wrong-property photo dba4020f filed as Before Front Lawn \u2014 different house, CDT watermark, GPS ~1,076 km away",
+     "Same-stage duplicate eb7c7943/fb53708c"
+    ],
+    "flag_reasons": [
+     "Before/after photos show clear meaningful work: overgrown weedy lawn brought to a uniformly mowed, maintained state on all sides",
+     "Location verified (medoid 101 m, location_match pass) and time on site adequate (29 min, no short_visit)",
+     "Visible evidence at the verified property outranks staged metadata \u2014 the After photos show completion",
+     "Needs human confirmation because payment evidence includes staged before/after pairs and a misfiled wrong-property photo"
+    ],
+    "review_items": [
+     "Confirm payment despite staged before/after pairs (Rear Lawn dce4d708/393068ea, Side Lawn 2 6c50c12e/6116bc7e) \u2014 verify After photos show completion",
+     "Confirm dba4020f belongs to a different order (different house, CDT watermark, GPS outlier)",
+     "Check 7b5ecd85 and ac3e9ff5 for persistent debris/tarp near rear fence line vs debris-removal impediment"
+    ],
+    "recommended_actions": [
+     "Release payment after human glance confirms staged pairs are not concealing incomplete work",
+     "Reassign/remove misfiled photo dba4020f from this order"
+    ],
+    "rationale_plain": "Before photos (303f5499) show an overgrown, weedy front lawn; After photos (19f3f598, 7b5ecd85) show it mowed to a uniform, maintained height, with rear and side lawns also cut. GPS places the visit at the property (101 m, location_match pass) and time on site was 29 minutes, so the work realistically fits. The core grass cut looks complete on all sides. However, photo_integrity flags staged before/after pairs (dce4d708/393068ea and 6c50c12e/6116bc7e have 'After' before 'Before') and reused images, so the documentation is unreliable even though the visible state shows completion. One photo (dba4020f) is a different house from another region and appears misfiled. A human should confirm the staged pairs are not hiding incomplete work and check for the tarp/debris near the rear fence."
+   },
+   "verify_status": "succeeded",
+   "verify_cost_usd": 0.1247,
+   "flag": "good_to_pay",
+   "disposition": "human_review",
+   "anomaly": true,
+   "fraud_indicators": [
+    "deterministic: photo_reuse",
+    "deterministic: staged_documentation",
+    "Staged before/after pairs: Rear Lawn and Side Lawn 2 'After' timestamps precede their 'Before'",
+    "Side Lawn 1 before/after only 16 seconds apart",
+    "Photo reuse: near-duplicate images filed under different stations/stages (95dee852/65991a14, 090c274e/65991a14, f7789ca5/8cfa8e24)",
+    "Wrong-property photo dba4020f filed as Before Front Lawn \u2014 different house, CDT watermark, GPS ~1,076 km away",
+    "Same-stage duplicate eb7c7943/fb53708c"
+   ],
+   "final_outcome": "good_to_pay",
+   "confidence": 0.55,
+   "adjudication": [
+    "reviewer requested human confirmation",
+    "confidence 0.55 below auto_decide[good_to_pay]=0.75"
+   ],
+   "total_cost_usd": 0.1837
+  },
+  {
+   "order": "500119019",
+   "draft": {
+    "order_number": "500119019",
+    "outcome": "gcfu",
+    "confidence": 0.55,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "GPS cluster is 27m from property geocode, location verified",
+      "source_type": "signal",
+      "observation": "medoid_to_property_m=27, location_match=pass"
+     },
+     {
+      "claim": "Time on site 34 minutes, meets threshold",
+      "source_type": "signal",
+      "observation": "time_on_site_min=34, time_on_site_ok=true"
+     },
+     {
+      "claim": "Four staged before/after pairs at the main recut stations invalidate timing-based before/after proof",
+      "source_type": "signal",
+      "observation": "Front Lawn (1ae9a0ed/10ce0dc9, 14s gap), Rear Lawn (521c2bd8/455e8acd, after precedes before by 1464s), Side Lawn 1 (9c5e3980/7b86bdc9, after precedes before by 154s), Side Lawn 2 (cc9da0bd/e11c1f1b, 60s gap)"
+     },
+     {
+      "claim": "Debris (white pipe and wood) visible on ground next to house in an After-labeled photo",
+      "source_type": "photo",
+      "photo_guid": "86b87c50",
+      "observation": "Photo labeled 'After - Rear Edging/Foundation Free of Tall Grass and Weeds' shows a long white pipe and wood pieces on the ground beside the foundation"
+     },
+     {
+      "claim": "Large tree/shrub touching the house on the right side, per impediment 'no trees should be touching the house'",
+      "source_type": "photo",
+      "photo_guid": "10d65013",
+      "observation": "Photo shows a substantial tree/shrub growing in the narrow gap between houses with branches near/touching siding"
+     },
+     {
+      "claim": "Overgrown shrubs/bushes along the driveway, relevant to 'check exterior for large overgrowth'",
+      "source_type": "photo",
+      "photo_guid": "214d281d",
+      "observation": "Driveway shot shows overgrown vegetation along the left side near a utility pole"
+     },
+     {
+      "claim": "Side Lawn 1 'Before' photo is unusable (blurry/dark, likely accidental)",
+      "source_type": "photo",
+      "photo_guid": "9c5e3980",
+      "observation": "Image is largely black/blurred, no visible lawn condition documented"
+     },
+     {
+      "claim": "Grass across After-stage photos generally appears mowed short with ruler confirmation of 2-inch height",
+      "source_type": "photo",
+      "photo_guid": "001dcfe9",
+      "observation": "Ruler on cut grass shows compliant short height"
+     },
+     {
+      "claim": "Debris removal service was not separately performed (does not itself indicate debris left)",
+      "source_type": "document",
+      "field_key": "Update",
+      "observation": "Was exterior debris/trash removed?: No \u2014 but debris is independently visible in photo 86b87c50"
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "unclear",
+     "extraordinary_conditions": true
+    },
+    "fraud_indicators": [
+     "Staged before/after timestamp pairs at 4 of 4 main recut stations (Front, Rear, Side1, Side2)",
+     "After photo timestamp precedes Before photo timestamp for Rear Lawn (24 min) and Side Lawn 1 (154s)",
+     "Very short before/after gaps (14s, 60s) insufficient to represent real mowing",
+     "Side Lawn 1 'Before' photo is unusable/corrupted (9c5e3980)"
+    ],
+    "flag_reasons": [
+     "Debris (pipe, wood) visibly left on the ground next to the house in an After-stage photo (86b87c50), unaddressed per impediment on debris removal",
+     "Large tree/shrub touching the house per impediment (photo 10d65013), and overgrown shrubs along driveway (214d281d) not addressed by a grass-only work order",
+     "Photo integrity flags staged before/after pairs at all four core recut stations, undermining timing-based proof of work, though visible grass condition in most After photos appears mowed",
+     "Side Lawn 1 Before photo is unusable, leaving an incomplete documentation gap for that area"
+    ],
+    "review_items": [
+     "Confirm whether debris (white pipe/wood) in photo 86b87c50 was later removed or requires a follow-up work order",
+     "Assess tree/shrub touching house in photo 10d65013 and overgrown driveway shrubs in 214d281d \u2014 may need separate trim/hazard order",
+     "Review the four staged before/after pairs (Front Lawn, Rear Lawn, Side Lawn 1, Side Lawn 2) \u2014 confirm actual completion despite timestamp irregularities",
+     "Side Lawn 1 Before photo 9c5e3980 is unusable \u2014 verify if a valid before photo exists elsewhere"
+    ],
+    "recommended_actions": [
+     "Route to human QA for confirmation given staged documentation and visible debris/overgrowth findings",
+     "Request vendor clarification or follow-up photos for debris removal and Side Lawn 1 before-condition gap"
+    ],
+    "rationale_plain": "Location and time-on-site both check out (GPS within 27m of the property, 34 minutes on site). However, the photo timing data shows staged before/after pairs at all four main lawn stations (Front, Rear, Side 1, Side 2), including two cases where the \"after\" photo's timestamp precedes the \"before\" photo. Despite this, most After photos (e.g., 10ce0dc9, 455e8acd, 7b86bdc9) do show short, mowed grass. Separately, an After-stage photo (86b87c50) shows visible debris \u2014 a pipe and wood \u2014 left next to the house, and other photos show a tree touching the house (10d65013) and overgrown driveway shrubs (214d281d), both flagged per the order's exterior-overgrowth and debris impediments. The Side Lawn 1 before photo (9c5e3980) is unusable. These gaps and unresolved conditions support a follow-up rather than outright rejection."
+   },
+   "draft_status": "succeeded",
+   "draft_cost_usd": 0.053,
+   "draft_usage": {
+    "in": 27981,
+    "out": 4994
+   },
+   "gate": "lint_length",
+   "verify": {
+    "order_number": "500119019",
+    "outcome": "gcfu",
+    "confidence": 0.6,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "Property identity verified \u2014 house number 125 legible on front porch, GPS medoid 27m from geocode, all 43 photos inliers",
+      "source_type": "photo",
+      "observation": "Front-of-house photo shows '125' address plaque; DETERMINISTIC_SIGNALS location_match=pass",
+      "photo_guid": "f8cd1e50",
+      "field_key": null
+     },
+     {
+      "claim": "Grass was cut on all four sides \u2014 front, sides and rear show mown turf in After photos",
+      "source_type": "photo",
+      "observation": "After Front Lawn 10ce0dc9, After Side Lawn 7b86bdc9/e11c1f1b, After Rear Lawn 455e8acd show cut grass vs overgrown weeds in Before bdf4e3d9/1ae9a0ed",
+      "photo_guid": "10ce0dc9",
+      "field_key": null
+     },
+     {
+      "claim": "Debris left on site in an After photo despite debris-removal being an order impediment",
+      "source_type": "photo",
+      "observation": "After Rear edging 86b87c50 shows a long white pipe and wood pieces lying on the ground beside the house; Update answer 'Was exterior debris/trash removed?: No'",
+      "photo_guid": "86b87c50",
+      "field_key": "Update"
+     },
+     {
+      "claim": "Cabling/hose debris remains at foundation in After photo",
+      "source_type": "photo",
+      "observation": "After Top-down Flower Beds 0d366d5b shows loose black cabling across the walkway",
+      "photo_guid": "0d366d5b",
+      "field_key": null
+     },
+     {
+      "claim": "Possible tree/shrub in contact with house \u2014 impediment 'no trees touching house'",
+      "source_type": "photo",
+      "observation": "Before Right Side 10d65013 shows a large shrub/tree in the narrow gap between houses; audit flagged proximity to structure",
+      "photo_guid": "10d65013",
+      "field_key": "Audit Property Assistant"
+     },
+     {
+      "claim": "Damaged/torn storm door and peeling siding \u2014 impediment on intact doors/windows",
+      "source_type": "photo",
+      "observation": "0bda2865 and 24c0032e show a torn screen door and heavy paint peel; wf_remarks Submission=Fail, upstream note on Outside Windows And Doors",
+      "photo_guid": "0bda2865",
+      "field_key": "upstream_ai_findings"
+     },
+     {
+      "claim": "Time-staged before/after pairs across four stations",
+      "source_type": "signal",
+      "observation": "photo_integrity staged_pairs: Front Lawn 14s gap, Rear Lawn after precedes before by 1464s, Side Lawn 1 after precedes before 154s, Side Lawn 2 60s gap",
+      "photo_guid": null,
+      "field_key": null
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": true
+    },
+    "fraud_indicators": [
+     "Staged before/after pairing on Grass Recut Front Lawn (14s gap)",
+     "After precedes Before on Grass Recut Rear Lawn (~24 min)",
+     "After precedes Before on Grass Recut Side Lawn 1 of 2 (154s)",
+     "Staged before/after pairing on Side Lawn 2 of 2 (60s gap)"
+    ],
+    "flag_reasons": [
+     "Grass was cut and property location verified, but visible debris (white pipe/wood, loose cabling) remains in After photos 86b87c50 and 0d366d5b against the debris-removal impediment",
+     "Extraordinary conditions present: shrub/tree contacting house (10d65013) and torn/damaged storm door (0bda2865) require human confirmation",
+     "Payment documentation is time-staged (four staged before/after pairs), so completion cannot be credited on the pairings alone"
+    ],
+    "review_items": [
+     "Verify debris left behind in After photos 86b87c50 and 0d366d5b (pipe/wood/cabling) \u2014 deduct or follow up",
+     "Confirm whether shrub/tree in 10d65013 is touching the structure (impediment #1)",
+     "Review torn storm door / peeling siding in 0bda2865 and 24c0032e against windows/doors impediment and wf Submission=Fail",
+     "Confirm grass-cut completion is not credited solely on the staged before/after pairs (Front/Rear/Side stations)"
+    ],
+    "recommended_actions": [
+     "Return to vendor for debris removal and verification of overgrowth/tree contact along the house",
+     "Route property-condition findings (door glass/screen, tree contact) to appropriate work order"
+    ],
+    "rationale_plain": "The address plaque reading 125 (f8cd1e50) and the GPS cluster confirm the crew was at the correct property, and time on site was adequate. After photos (10ce0dc9, 7b86bdc9, e11c1f1b, 455e8acd) show the front, sides and rear mown compared with overgrown Before shots, so real cutting happened. However, After photo 86b87c50 still shows a long white pipe and wood on the ground and 0d366d5b shows loose cabling, while the vendor reported debris was not removed \u2014 debris remains against the order's cleanup standard. Photos also show a shrub/tree close to the house (10d65013) and a torn, damaged storm door (0bda2865), which are conditions a person should confirm. Several before/after pairs are time-staged, so completion should not rest on those pairings alone."
+   },
+   "verify_status": "succeeded",
+   "verify_cost_usd": 0.1182,
+   "flag": "gcfu",
+   "disposition": "human_review",
+   "anomaly": true,
+   "fraud_indicators": [
+    "deterministic: staged_documentation",
+    "Staged before/after timestamp pairs at 4 of 4 main recut stations (Front, Rear, Side1, Side2)",
+    "After photo timestamp precedes Before photo timestamp for Rear Lawn (24 min) and Side Lawn 1 (154s)",
+    "Very short before/after gaps (14s, 60s) insufficient to represent real mowing",
+    "Side Lawn 1 'Before' photo is unusable/corrupted (9c5e3980)",
+    "Staged before/after pairing on Grass Recut Front Lawn (14s gap)",
+    "After precedes Before on Grass Recut Rear Lawn (~24 min)",
+    "After precedes Before on Grass Recut Side Lawn 1 of 2 (154s)",
+    "Staged before/after pairing on Side Lawn 2 of 2 (60s gap)"
+   ],
+   "final_outcome": "gcfu",
+   "confidence": 0.55,
+   "adjudication": [
+    "reviewer requested human confirmation",
+    "confidence 0.55 below auto_decide[gcfu]=0.75"
+   ],
+   "total_cost_usd": 0.1712
+  },
+  {
+   "order": "500119020",
+   "draft": {
+    "order_number": "500119020",
+    "outcome": "gcfu",
+    "confidence": 0.55,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "House number 4168 matches the order address across multiple Condition/Before photos, confirming the property visited.",
+      "source_type": "photo",
+      "observation": "House number '4168' clearly visible on porch column",
+      "photo_guid": "66d5eb17",
+      "field_key": null
+     },
+     {
+      "claim": "Front, side x2, and rear lawns show clear before/after transformation from tall brush/weeds to mowed lawn with visible mower stripes.",
+      "source_type": "photo",
+      "observation": "Before d6bdb19d (thick brush) vs After 28c69532/2c2ef380/49d78a48 (mowed lawn)",
+      "photo_guid": "d6bdb19d",
+      "field_key": null
+     },
+     {
+      "claim": "Grass height ruler after mowing shows ~2 inches, supporting completion.",
+      "source_type": "photo",
+      "observation": "Ruler measurement after cut",
+      "photo_guid": "faa5e6f2",
+      "field_key": null
+     },
+     {
+      "claim": "One photo labeled as an After-stage station for this property actually shows an unrelated urban scene with graffiti wall, chain-link fence and a different worker, not the rural farmhouse.",
+      "source_type": "photo",
+      "observation": "Graffiti wall/fence scene, different person mowing, watermark shows EDT vs CDT on all other photos",
+      "photo_guid": "20565839",
+      "field_key": null
+     },
+     {
+      "claim": "The only valid GPS point in the set (from the mismatched photo) is ~1,125 km from the property address.",
+      "source_type": "signal",
+      "observation": "medoid_to_property_m: 1124949",
+      "field_key": "gps.medoid_to_property_m"
+     },
+     {
+      "claim": "Overgrown brush/vines directly against the house siding near the right side/foundation persist in Condition-stage photos taken at times overlapping the Before/During work window, with no dedicated After photo showing that specific area cleared.",
+      "source_type": "photo",
+      "observation": "Brush/vine against siding still visible",
+      "photo_guid": "7095a1e2",
+      "field_key": null
+     },
+     {
+      "claim": "Audit flagged overgrown trees/vegetation touching the house on the before photo of the right side.",
+      "source_type": "document",
+      "observation": "Candidate defect: 'Overgrown trees and vegetation are growing against the side of the house' (Claimable)",
+      "field_key": "Audit Property Assistant"
+     },
+     {
+      "claim": "Debris/trash removal was not performed as a separate task, but no debris is visible in After photos, so this is not an admission of debris left behind.",
+      "source_type": "document",
+      "observation": "Was exterior debris/trash removed?: No",
+      "field_key": "Update"
+     },
+     {
+      "claim": "All capture timestamps are upload-stamped and unreliable; chronology rests on watermarks which show a long span.",
+      "source_type": "signal",
+      "observation": "capture_times_upload_stamped, taken_dates_unreliable:true, photo_time_span_min:3435",
+      "field_key": "documentation_gaps"
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "unclear",
+     "four_sides": "pass",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": false
+    },
+    "flag_reasons": [
+     "Core lawn areas (front, both sides, rear, behind garage, under deck) show clear, credible before/after mowing work at the correct address (house number 4168 visible)",
+     "One specific area \u2014 brush/vines directly against the house siding on the side flagged by the audit \u2014 has no clear After photo showing it resolved, only Condition photos still showing overgrowth against the house at a similar time window",
+     "A single stray photo (20565839) shows an unrelated scene and is the only GPS-tagged photo, located ~1,125km away \u2014 insufficient alone for potential_fraud per the single-anomaly exception, but warrants human review",
+     "Documentation timing anomalies (upload-stamped times, long time span) reduce confidence in exact chronology though visible work supports meaningful completion"
+    ],
+    "review_items": [
+     "Confirm photo 20565839 (labeled After-Front Edging/Fence Line) \u2014 verify whether it belongs to a different order; it shows a graffiti wall/chain-link fence scene, not the farmhouse at 4168 E State Rd 55",
+     "Check whether the right-side-of-house brush/vine overgrowth flagged by the audit (photos bd24a986, 7095a1e2, 39ce5eac, 2e183d99) was actually cleared \u2014 no explicit After photo of that specific area was found",
+     "Verify true time-on-site if possible, since time_on_site_min is reported as missing/-1"
+    ],
+    "recommended_actions": [
+     "Route to Quality Review to confirm the mismatched photo (20565839) belongs to this order before final payment",
+     "Request vendor provide an After photo specifically of the right-side/foundation area near the house to close out the overgrowth impediment",
+     "If mismatched photo is confirmed to belong to a different order and foundation area is otherwise substantiated, this can move to good_to_pay after correction"
+    ],
+    "rationale_plain": "Most of the property (front, both side yards, rear lawn, behind the garage, under the deck) shows a strong, credible before/after transformation from tall brush and weeds to mowed lawn with visible mower stripes, and the house number 4168 matches the order address in several photos. However, one photo (20565839) labeled as an After station shows a completely unrelated urban scene with a graffiti wall and a different worker, and it is also the only photo with valid GPS data, sitting roughly 1,125km from the property per the signals \u2014 this needs human confirmation even though it looks like an isolated stray photo rather than a whole-set mismatch. Separately, brush and vines directly against the house siding, flagged by the audit as touching the house, still appear in Condition-stage photos (7095a1e2) without a clear After photo showing that specific area resolved. Time-on-site is unreported."
+   },
+   "draft_status": "succeeded",
+   "draft_cost_usd": 0.0686,
+   "draft_usage": {
+    "in": 32741,
+    "out": 7168
+   },
+   "gate": "lint_length",
+   "verify": {
+    "order_number": "500119020",
+    "outcome": "gcfu",
+    "confidence": 0.68,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "Property identity confirmed by readable house number 4168 matching order address 4168 E State Road 55.",
+      "source_type": "photo",
+      "observation": "House number '4168' clearly legible on porch post.",
+      "photo_guid": "66d5eb17",
+      "field_key": null
+     },
+     {
+      "claim": "Front-of-house photos show a rural white farmhouse with attached garage in a farm/corn-field setting consistent with Morocco, IN.",
+      "source_type": "photo",
+      "observation": "Same house recurs across front/rear condition shots.",
+      "photo_guid": "8d39aa78",
+      "field_key": null
+     },
+     {
+      "claim": "Before photos show heavy overgrowth of weeds/brush against the house sides and foundation.",
+      "source_type": "photo",
+      "observation": "Dense tall weeds and brush pressed against siding.",
+      "photo_guid": "d6bdb19d",
+      "field_key": null
+     },
+     {
+      "claim": "Lawn areas were mowed - clear before/after difference in open lawn.",
+      "source_type": "photo",
+      "observation": "Rear lawn cut with visible mow stripes.",
+      "photo_guid": "49d78a48",
+      "field_key": null
+     },
+     {
+      "claim": "Behind outbuilding and side lawns show a finished mow.",
+      "source_type": "photo",
+      "observation": "Even cut grass with stripes near porch.",
+      "photo_guid": "7c105a5e",
+      "field_key": null
+     },
+     {
+      "claim": "Overgrowth/weeds remain along house sides/foundation after work.",
+      "source_type": "photo",
+      "observation": "Dense tall weeds and brush still against siding by porch.",
+      "photo_guid": "7095a1e2",
+      "field_key": null
+     },
+     {
+      "claim": "After flower-bed shot shows lawn cut but weeds remain along right foundation.",
+      "source_type": "photo",
+      "observation": "Mowed lawn with unmaintained weedy strip against wall.",
+      "photo_guid": "b0d5ab58",
+      "field_key": null
+     },
+     {
+      "claim": "The designated front foundation/fence-line completion photo shows a DIFFERENT property.",
+      "source_type": "photo",
+      "observation": "Urban scene: graffiti mural, chain-link fence, worker weed-whacking, EDT watermark; only GPS-tagged photo, geolocates to Brooklyn NY.",
+      "photo_guid": "20565839",
+      "field_key": null
+     },
+     {
+      "claim": "Audit flagged overgrown vegetation against side of house.",
+      "source_type": "document",
+      "observation": "Before Right Side: 'Overgrown trees and vegetation growing against the side of the house.'",
+      "photo_guid": "bd24a986",
+      "field_key": "Audit Property Assistant"
+     },
+     {
+      "claim": "Vendor answered debris removal not performed.",
+      "source_type": "document",
+      "observation": "'Was exterior debris/trash removed?: No' - no debris visible in after lawn shots.",
+      "photo_guid": null,
+      "field_key": "Update"
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "unclear",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": false
+    },
+    "fraud_indicators": [
+     "Photo 20565839 filed as 'After - Front Edging/Fence Line/Foundations' shows an unrelated urban scene (graffiti mural, chain-link fence) and is the only GPS point, geolocating ~1,124,949 m away (Brooklyn NY)",
+     "Photo 20565839 watermark is EDT while all other photos are CDT - different timezone/location",
+     "All capture times are upload-stamped; chronology derives only from watermarks"
+    ],
+    "flag_reasons": [
+     "Lawn was mowed (clear before/after in open lawn areas) but overgrowth/weeds remain along house sides and foundation (7095a1e2, b0d5ab58)",
+     "Front foundation/fence-line completion photo (20565839) is from a different property, so front edging is not visually proven at 4168",
+     "Impediment 'Check all areas for large overgrowth along fence lines/foundations' not met at the side-of-house areas",
+     "Impediment 'no trees touching the house' - vegetation still against siding per bd24a986/39ce5eac"
+    ],
+    "review_items": [
+     "Confirm photo 20565839 belongs to a different order - urban scene, EDT watermark, Brooklyn GPS - filed as front foundation/edging completion",
+     "Re-verify front foundation/fence-line was actually brought to standard at 4168 (documentation void)",
+     "Assess whether remaining side/foundation overgrowth (7095a1e2, 65e0b6f9, 2e183d99, b0d5ab58) is billable grass vs woody brush",
+     "Check impediment: vegetation/trees against side of house (bd24a986, 39ce5eac)"
+    ],
+    "recommended_actions": [
+     "Return for follow-up to clear overgrowth/weeds along house sides and foundation",
+     "Obtain a valid front foundation/fence-line 'after' photo at the correct property"
+    ],
+    "rationale_plain": "The house number 4168 is legible (66d5eb17) and matches the order address, and the rural farmhouse recurs across the set, so the property is identified. Before photos (d6bdb19d) show heavy weeds/brush against the house, and after photos show the open lawn genuinely mowed (49d78a48, 7c105a5e), so real work occurred. However, overgrowth and weeds remain along the house sides and foundation (7095a1e2, b0d5ab58), and the front foundation/fence-line completion photo (20565839) shows a different, urban property with an EDT watermark and the only GPS point far away. That completion area is therefore not proven at 4168 and specific areas remain out of standard. These gaps support a follow-up. The stray photo is noted for human review.",
+    "notes_for_human": "A key completion photo (20565839, 'After - Front Edging/Fence Line/Foundations') is clearly a different property: urban graffiti wall, chain-link fence, EDT watermark, and it is the sole GPS point (~1.1M m away, Brooklyn NY). The rest of the set is a consistent rural farmhouse at 4168, so I treated it as a misfiled stray photo, not whole-set wrong-property fraud. But because it voids the front foundation/edging completion evidence and coincides with remaining side/foundation overgrowth, please confirm the stray photo and whether the front foundation was truly finished. This is also flagged as a 'TEST GRASS Order' in special instructions."
+   },
+   "verify_status": "succeeded",
+   "verify_cost_usd": 0.158,
+   "flag": "gcfu",
+   "disposition": "human_review",
+   "anomaly": true,
+   "fraud_indicators": [
+    "Photo 20565839 filed as 'After - Front Edging/Fence Line/Foundations' shows an unrelated urban scene (graffiti mural, chain-link fence) and is the only GPS point, geolocating ~1,124,949 m away (Brooklyn NY)",
+    "Photo 20565839 watermark is EDT while all other photos are CDT - different timezone/location",
+    "All capture times are upload-stamped; chronology derives only from watermarks"
+   ],
+   "final_outcome": "gcfu",
+   "confidence": 0.55,
+   "adjudication": [
+    "reviewer requested human confirmation",
+    "confidence 0.55 below auto_decide[gcfu]=0.75"
+   ],
+   "total_cost_usd": 0.2266
+  },
+  {
+   "order": "500119022",
+   "draft": {
+    "order_number": "500119022",
+    "outcome": "potential_fraud",
+    "confidence": 0.7,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "Deterministic time-on-site is only 6 minutes for a claimed full-lot REO grass cut (24,025 sq ft, 155x155 lot) covering front, both side lawns, rear lawn, behind outbuilding, under deck, edging front/rear, weed whacking and weed-killer application.",
+      "source_type": "signal",
+      "observation": "time_on_site_min:6, time_on_site_ok:false, fraud_signals includes short_visit"
+     },
+     {
+      "claim": "Front Lawn station's After photo is timestamped BEFORE its paired Before photo.",
+      "source_type": "photo",
+      "observation": "e6b6db38 (After, 07:07:22) precedes 6a25d26b (Before, 07:07:30) by 8 seconds",
+      "photo_guid": "e6b6db38"
+     },
+     {
+      "claim": "Side Lawn 1 of 2 station's After photo is timestamped well before its paired Before photo.",
+      "source_type": "photo",
+      "observation": "743bbac3 (After, 07:06:48) precedes ad50ef98 (Before, 07:08:37) by 109 seconds",
+      "photo_guid": "743bbac3"
+     },
+     {
+      "claim": "Side Lawn 2 of 2 pair has an implausibly short before/after gap.",
+      "source_type": "signal",
+      "observation": "staged_pairs entry: gap_too_short, 238 seconds between before 78d8deb0 and after c0f2073e"
+     },
+     {
+      "claim": "Property location is correct (not a wrong-property issue).",
+      "source_type": "signal",
+      "observation": "location_match:pass, medoid_to_property_m:33; house number '120' visible in photos 863db699 and 2749e421"
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "fail",
+     "four_sides": "pass",
+     "before_after_diff": "unclear",
+     "extraordinary_conditions": false
+    },
+    "fraud_indicators": [
+     "short_visit signal: only 6 minutes on-site for a full-lot cut spanning ~12 distinct stations (front, 2 sides, rear, outbuilding, under-deck, edging, weed-whack, weed-kill)",
+     "staged_documentation: 3 before/after station pairs show After timestamped before or seconds after Before (after_precedes_before x2, gap_too_short x1)",
+     "One stray Condition photo (f737e5b4) dated two days later (07/10) with unknown GPS, inconsistent with the rest of the set",
+     "Order fields state has_pool_hottub:No, but Condition photos (1b03861b, 5ea4ecd3) show a visible pool/pool cover on the property"
+    ],
+    "flag_reasons": [
+     "Deterministic short_visit signal: only 6 minutes reported on site for a multi-station full lot cut, which cannot realistically fit the claimed scope of work",
+     "Three staged before/after pairs (front lawn, side lawn 1, side lawn 2) show impossible or implausibly short timestamp ordering",
+     "Per policy, short_visit alone satisfies the fraud time-prong regardless of how complete the photographed work appears"
+    ],
+    "review_items": [
+     "Confirm with vendor/GPS logs whether 6-minute time_on_site is accurate or a logging error, given the scope of claimed work",
+     "Review staged pairs 6a25d26b/e6b6db38 and ad50ef98/743bbac3 - After timestamped before Before",
+     "Verify stray photo f737e5b4 (dated 07/10, GPS unknown) does not belong to a different visit/order",
+     "Clarify has_pool_hottub:No vs visible pool in photos 1b03861b and 5ea4ecd3"
+    ],
+    "recommended_actions": [
+     "Withhold payment pending Quality Review",
+     "Request vendor clarification on visit duration vs scope of work claimed",
+     "Have QA compare full photo timestamp sequence against the 6-minute reported time-on-site"
+    ],
+    "rationale_plain": "The property location checks out (GPS and house number '120' both match), and the After photos do show cut grass across front, side, and rear lawns. However, the deterministic time_on_site signal shows only 6 minutes on site, which is very short for the claimed scope: front lawn, two side lawns, rear lawn, behind outbuilding, under-deck, front/rear edging, weed-whacking, and weed-killer application. Additionally, three before/after station pairs (front lawn: 6a25d26b/e6b6db38; side lawn 1: ad50ef98/743bbac3; side lawn 2: 78d8deb0/c0f2073e) show staged or impossible timestamp ordering, with After photos taken before or barely after their Before counterparts. Per policy, a short_visit signal on its own supports a fraud-time concern regardless of how complete the work looks in photos, so this is routed for human Quality Review."
+   },
+   "draft_status": "succeeded",
+   "draft_cost_usd": 0.0427,
+   "draft_usage": {
+    "in": 25907,
+    "out": 3349
+   },
+   "gate": "lint_length",
+   "verify": {
+    "order_number": "500119022",
+    "outcome": "potential_fraud",
+    "confidence": 0.72,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "SafeGuard-reported time on site is 6 minutes, below the completion threshold, with the deterministic short_visit signal set.",
+      "source_type": "signal",
+      "field_key": "time_on_site_min",
+      "observation": "time_on_site_min=6, time_on_site_ok=false, fraud_signals include short_visit. A full multi-station recut (front, two side lawns, rear, weed-whacking, weed-killer, edging) cannot be performed in 6 minutes."
+     },
+     {
+      "claim": "Claimed scope is a full multi-station lawn recut with several service stations.",
+      "source_type": "photo",
+      "field_key": null,
+      "photo_guid": "e6b6db38",
+      "observation": "After - Front Lawn shows a cut front lawn; combined with side lawn (743bbac3, c0f2073e), rear lawn (9a3f3c9a), weed-whacking (4f4e5fca) and weed-killer (8226d314) photos, the documented scope is far more work than 6 minutes allows."
+     },
+     {
+      "claim": "Staged before/after documentation: After frames time-stamped before their Before frames.",
+      "source_type": "signal",
+      "field_key": "photo_integrity",
+      "observation": "Front Lawn After e6b6db38 (07:07:22) precedes Before 6a25d26b (07:07:30); Side Lawn 1 After 743bbac3 (07:06:48) precedes Before ad50ef98 (07:08:37). staged_documentation signal set."
+     },
+     {
+      "claim": "A photo of a clearly different house is filed in the set.",
+      "source_type": "photo",
+      "field_key": null,
+      "photo_guid": "f737e5b4",
+      "observation": "General Property Condition shows a white wood-sided two-story house with a porch, taken 2026-07-10 with unknown GPS \u2014 inconsistent with the brick turreted house at 120 (66f94789, 8dd21385) that anchors the verified set."
+     },
+     {
+      "claim": "Location of the main set matches the property.",
+      "source_type": "signal",
+      "field_key": "gps",
+      "observation": "medoid_to_property_m=33, location_match=pass; house number 120 legible on door plaque photos 9eeb354a, 1c5b9872, 2749e421."
+     },
+     {
+      "claim": "Pool and overhanging tree branches present though order fields deny a pool.",
+      "source_type": "photo",
+      "field_key": "has_pool_hottub",
+      "observation": "Photos 1b03861b, 5ea4ecd3, 5fe287fd show a covered above-ground pool with tarp; ORDER_FIELDS has_pool_hottub=No. Audit also flags tree branches near roof/turret (8dd21385)."
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "fail",
+     "four_sides": "pass",
+     "before_after_diff": "unclear",
+     "extraordinary_conditions": true
+    },
+    "fraud_indicators": [
+     "Reported time on site 6 minutes \u2014 too short for the claimed full multi-station recut",
+     "staged before/after timestamps: After precedes Before on Front Lawn (e6b6db38 vs 6a25d26b) and Side Lawn 1 (743bbac3 vs ad50ef98)",
+     "photo of a different white-sided house (f737e5b4) filed as General Property Condition, taken 2 days later with unknown GPS",
+     "numerous cross-station photos taken only seconds apart during the compressed 07:06-07:13 window"
+    ],
+    "flag_reasons": [
+     "Deterministic short_visit fires: 6 minutes on site cannot cover the claimed front/side/rear recut plus weed-whacking, weed-killer and edging",
+     "short_visit alone satisfies fraud pillars (2) and (3) per policy \u2014 completed-looking work does not override it",
+     "staged before/after pairs (After stamped before Before) make the completion documentation unreliable",
+     "A different house (f737e5b4) is filed in the set, corroborating documentation reshuffling"
+    ],
+    "review_items": [
+     "Verify reported 6-minute time on site against the 07:06-07:13 photo window and claimed scope",
+     "Confirm whether f737e5b4 (white-sided house, 07/10) belongs to another order",
+     "Review staged pairs e6b6db38/6a25d26b and 743bbac3/ad50ef98 \u2014 After precedes Before",
+     "Confirm pool/tarp (1b03861b, 5ea4ecd3, 5fe287fd) status vs has_pool_hottub=No, and tree branches near roof (8dd21385)"
+    ],
+    "recommended_actions": [
+     "Route to Quality Review to reconcile reported time-on-site with documented scope",
+     "Confirm the misfiled white-house photo and staged timestamps before any payment"
+    ],
+    "rationale_plain": "The property location checks out \u2014 GPS sits 33m from the address and door plaque photos read 120 (9eeb354a, 1c5b9872). However, SafeGuard's own reported time on site is 6 minutes (short_visit signal), which cannot realistically cover the claimed full recut of front, both sides and rear plus weed-whacking (4f4e5fca), weed-killer (8226d314) and edging. Policy treats this time signal as sufficient to flag. The documentation is also unreliable: staged pairs show After frames stamped before their Before frames (e6b6db38 vs 6a25d26b; 743bbac3 vs ad50ef98), and a clearly different white-sided house (f737e5b4) taken two days later is filed in the set. A covered pool with tarp appears (1b03861b, 5ea4ecd3) though the order denies a pool, and branches sit near the roof (8dd21385) \u2014 extraordinary conditions a human should confirm."
+   },
+   "verify_status": "succeeded",
+   "verify_cost_usd": 0.1032,
+   "flag": "potential_fraud",
+   "disposition": "human_review",
+   "anomaly": true,
+   "fraud_indicators": [
+    "deterministic: short_visit",
+    "deterministic: staged_documentation",
+    "short_visit signal: only 6 minutes on-site for a full-lot cut spanning ~12 distinct stations (front, 2 sides, rear, outbuilding, under-deck, edging, weed-whack, weed-kill)",
+    "staged_documentation: 3 before/after station pairs show After timestamped before or seconds after Before (after_precedes_before x2, gap_too_short x1)",
+    "One stray Condition photo (f737e5b4) dated two days later (07/10) with unknown GPS, inconsistent with the rest of the set",
+    "Order fields state has_pool_hottub:No, but Condition photos (1b03861b, 5ea4ecd3) show a visible pool/pool cover on the property",
+    "Reported time on site 6 minutes \u2014 too short for the claimed full multi-station recut",
+    "staged before/after timestamps: After precedes Before on Front Lawn (e6b6db38 vs 6a25d26b) and Side Lawn 1 (743bbac3 vs ad50ef98)",
+    "photo of a different white-sided house (f737e5b4) filed as General Property Condition, taken 2 days later with unknown GPS",
+    "numerous cross-station photos taken only seconds apart during the compressed 07:06-07:13 window"
+   ],
+   "final_outcome": "potential_fraud",
+   "confidence": 0.7,
+   "adjudication": [
+    "reviewer requested human confirmation",
+    "confidence 0.70 below auto_decide[potential_fraud]=0.95",
+    "fraud flag confirmed by independent verifier \u2014 Quality Review"
+   ],
+   "total_cost_usd": 0.1459
+  },
+  {
+   "order": "500119023",
+   "draft": {
+    "order_number": "500119023",
+    "outcome": "good_to_pay",
+    "confidence": 0.55,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "Property GPS cluster matches order address within 30m",
+      "source_type": "signal",
+      "observation": "gps.medoid_to_property_m=30, location_match=pass, outlier_fraction=0.012 (1 of 81 photos)"
+     },
+     {
+      "claim": "Crew actively mowing/trimming across front, side, and rear lawns",
+      "source_type": "photo",
+      "observation": "615e0bae, 74212021, 7f14399f (During mowing/trimming), 16426e28/556c4f9f (weed whacking), 021ebd82 (edging)"
+     },
+     {
+      "claim": "Visible before/after change on Side Lawn 2 and Front Lawn",
+      "source_type": "photo",
+      "observation": "4eb970a9 (Before, taller weeds) vs 51a07daf (After, shorter cut grass); 0556dda4 (Before) vs 2088c4fb/d10413b8 (After, lower grass along wall)"
+     },
+     {
+      "claim": "Coverage of all four sides plus fence/foundation and rear structures documented",
+      "source_type": "photo",
+      "observation": "c4ccc709 & abd40ff4 (Front edging/fence), bf1bdfc5 & 02ca9f22 (Rear edging/fence), bf50f1f4/e2dc8656 (Behind outbuilding), 9f8e9dcd/7d7ba83d/60dcdf32 (Under deck/stairwell)"
+     },
+     {
+      "claim": "One photo is a severe GPS outlier, ~113km from the property, on a riding mower with different truck/houses in background",
+      "source_type": "photo",
+      "observation": "9bdeae63 (dist_m=113270, timestamp 2026-07-08 15:50:43, watermark 11:50 AM EDT) - inconsistent scene (zero-turn mower, different fence/houses) vs rest of set"
+     },
+     {
+      "claim": "Staged before/after pairing on Side Lawn 2 station",
+      "source_type": "signal",
+      "observation": "photo_integrity.staged_pairs: after (e1e531a6) taken 42s BEFORE the before photo (4eb970a9)"
+     },
+     {
+      "claim": "Large number of cross-station photo pairs taken 0-20 seconds apart across different labeled stations/stages",
+      "source_type": "signal",
+      "observation": "photo_integrity.adjacent_cross_station_pairs lists ~40 such pairs spanning both 09:28-09:29 and 09:34-09:36 clusters"
+     },
+     {
+      "claim": "Order is explicitly marked as a test order",
+      "source_type": "field",
+      "observation": "special_instructions: \"TEST GRASS Order\""
+     },
+     {
+      "claim": "Time on site reported as adequate",
+      "source_type": "signal",
+      "observation": "time_on_site_min=383, time_on_site_ok=true, no short_visit signal present"
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": true
+    },
+    "flag_reasons": [
+     "Location-verified photos (30m from property, pass) show mower/trimmer actively cutting grass and visible before/after height reduction on multiple stations",
+     "All four sides, fence lines, foundations, behind outbuilding, and under-deck areas are documented in After photos",
+     "Deterministic time-on-site signal (383 min) is marked ok, so the time-insufficiency fraud prong does not apply",
+     "Despite staged_documentation signal and one severe GPS outlier photo, only 1 of 81 photos is anomalous and visible work evidence supports completion \u2014 outlier is a single stray photo, not a whole-cluster wrong-property pattern"
+    ],
+    "review_items": [
+     "Confirm whether 9bdeae63 (GPS 113km away, riding mower, different background) belongs to a different order/property before releasing payment",
+     "Verify the staged pairing on Side Lawn 2 (4eb970a9 before / e1e531a6 after, after precedes before by 42s) does not indicate reused/relabeled photos",
+     "Note the order is marked \"TEST GRASS Order\" in special_instructions - confirm this is a legitimate billable order and not a system test entry",
+     "Spot-check the large batch of cross-station photos taken seconds apart (e.g., e15f8a33/e1e531a6/0556dda4 cluster) to rule out documentation reshuffling"
+    ],
+    "recommended_actions": [
+     "Route to human QA before payment release given staged photo timestamps and one severe GPS outlier",
+     "If human confirms outlier photo is unrelated/mislabeled and staged pair is not indicative of reused documentation, proceed to pay"
+    ],
+    "rationale_plain": "Location matches the property (30m, GPS pass) and reported time on site (383 min) is flagged ok, so no time-shortage issue. Photos show a crew actively mowing, trimming, and edging (615e0bae, 74212021, 021ebd82), and visible height reduction between before/after shots on Side Lawn 2 and the Front Lawn (4eb970a9 vs 51a07daf; 0556dda4 vs 2088c4fb). Coverage includes all sides, fence lines, behind the outbuilding, and under the deck. However, one photo (9bdeae63) is a severe GPS outlier ~113km away showing a different mower/background, and the photo_integrity signals show a staged before/after pair and many cross-station photos taken seconds apart, plus the order is labeled \"TEST GRASS Order\" in special instructions. These anomalies don't outweigh the visible completed-work evidence but warrant a human glance before payment."
+   },
+   "draft_status": "succeeded",
+   "draft_cost_usd": 0.0738,
+   "draft_usage": {
+    "in": 42864,
+    "out": 6193
+   },
+   "gate": "lint_length",
+   "verify": {
+    "order_number": "500119023",
+    "outcome": "good_to_pay",
+    "confidence": 0.6,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "Photo GPS cluster sits 30m from the property geocode; location verified.",
+      "source_type": "signal",
+      "field_key": "gps.medoid_to_property_m",
+      "observation": "medoid_to_property_m=30, location_match=pass, 80 of 81 photos inliers."
+     },
+     {
+      "claim": "Before photos show heavy overgrowth; after photos show the lot cut down.",
+      "source_type": "photo",
+      "photo_guid": "0f13a467",
+      "observation": "Before Rear Lawn 09:28 dense tall weeds; After Rear Lawn 056773c5 09:34 shows short cut stubble \u2014 meaningful change."
+     },
+     {
+      "claim": "Crew mowing and weed-whacking visible in during photos across front/rear/side stations.",
+      "source_type": "photo",
+      "photo_guid": "d54f699e",
+      "observation": "Worker walking gas mower through cut vs uncut line; other during shots show weed-whacking."
+     },
+     {
+      "claim": "One photo is a different property 113km away.",
+      "source_type": "photo",
+      "photo_guid": "9bdeae63",
+      "observation": "Zero-turn rider at a suburban fenced yard, GPS outlier 113270m, watermark 11:50 AM vs the 05:28-05:36 PM cluster \u2014 stray/misfiled."
+     },
+     {
+      "claim": "Staged before/after on Side Lawn 2 of 2.",
+      "source_type": "signal",
+      "field_key": "photo_integrity.staged_pairs",
+      "observation": "After e1e531a6 taken 42s BEFORE its Before 4eb970a9 (both 09:28)."
+     },
+     {
+      "claim": "Vendor did not perform separate debris-removal service.",
+      "source_type": "document",
+      "field_key": "Update",
+      "observation": "'Was exterior debris/trash removed?: No'; minor litter visible but lot brought to cut standard."
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "pass",
+     "before_after_diff": "pass",
+     "extraordinary_conditions": false
+    },
+    "fraud_indicators": [
+     "Wrong-property photo 9bdeae63: zero-turn rider at suburban fenced yard, 113km away, watermark 11:50 AM, filed as During Front Lawn Mowing",
+     "Staged before/after on Side Lawn 2 of 2 (After e1e531a6 taken 42s before its Before 4eb970a9)",
+     "Extensive same-second cross-station label reshuffling across the set",
+     "Work photo cluster compressed into ~8 minutes (09:28-09:36) despite 383-min reported time on site"
+    ],
+    "flag_reasons": [
+     "GPS cluster verifies the correct property (30m from geocode).",
+     "Before-to-after photos show real overgrowth removed and lot cut to standard.",
+     "During photos show active mowing/weed-whacking on multiple sides.",
+     "No corroborating deterministic fraud signal: single GPS outlier, time_on_site OK, visible diff present.",
+     "Staged pair and reshuffled labels require a human glance before release."
+    ],
+    "review_items": [
+     "Confirm stray photo 9bdeae63 belongs to another order (different property, 113km, 11:50 AM watermark).",
+     "Verify the one staged pair 4eb970a9/e1e531a6 (Side Lawn 2 of 2) \u2014 pairing void, but after-state grass acceptable?",
+     "Confirm payment despite time-staged/reshuffled documentation \u2014 main after photos (09:34-09:36) appear genuine.",
+     "Check remaining weed clumps in bf1bdfc5, bf50f1f4, ddbbfe34 (fence-line/behind-outbuilding) meet standard."
+    ],
+    "recommended_actions": [
+     "Release payment after human confirms staged/reshuffled documentation.",
+     "Remove misfiled photo 9bdeae63 from this order."
+    ],
+    "rationale_plain": "The photo cluster sits 30m from the property, confirming the crew was at 688 Jefferson Ave. Before photos (0f13a467 and others) show heavy overgrowth; after photos (056773c5) show the lot cut down, and during photos (d54f699e) show active mowing and weed-whacking across front, rear and side stations. That is meaningful work at the right property brought to a reasonably maintained standard. Two anomalies exist: photo 9bdeae63 is a different property 113km away with an 11:50 AM watermark, and Side Lawn 2 of 2 (e1e531a6/4eb970a9) is a staged before/after. These are single stray/staged items in an otherwise location-verified set, with no corroborating deterministic fraud signal. Because staged documentation is present, a human should glance before release."
+   },
+   "verify_status": "succeeded",
+   "verify_cost_usd": 0.1743,
+   "flag": "good_to_pay",
+   "disposition": "human_review",
+   "anomaly": true,
+   "fraud_indicators": [
+    "deterministic: staged_documentation",
+    "Wrong-property photo 9bdeae63: zero-turn rider at suburban fenced yard, 113km away, watermark 11:50 AM, filed as During Front Lawn Mowing",
+    "Staged before/after on Side Lawn 2 of 2 (After e1e531a6 taken 42s before its Before 4eb970a9)",
+    "Extensive same-second cross-station label reshuffling across the set",
+    "Work photo cluster compressed into ~8 minutes (09:28-09:36) despite 383-min reported time on site"
+   ],
+   "final_outcome": "good_to_pay",
+   "confidence": 0.55,
+   "adjudication": [
+    "reviewer requested human confirmation",
+    "confidence 0.55 below auto_decide[good_to_pay]=0.75"
+   ],
+   "total_cost_usd": 0.2481
+  },
+  {
+   "order": "500119024",
+   "draft": {
+    "order_number": "500119024",
+    "outcome": "gcfu",
+    "confidence": 0.52,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "GPS cluster matches property (26m from geocode)",
+      "source_type": "signal",
+      "observation": "medoid_to_property_m=26, location_match=pass",
+      "field_key": "gps"
+     },
+     {
+      "claim": "One After photo labeled 'Clippings and Yard Debris Removed' is a different house 1500+km away, timestamped in a different timezone (CDT vs EDT)",
+      "source_type": "photo",
+      "observation": "bccd8804 shows a two-story house with attached garage, taken 2026-07-08 05:30 CDT while all other photos are EDT ~11:49-11:53; gps outlier dist_m=1541853",
+      "photo_guid": "bccd8804"
+     },
+     {
+      "claim": "Front Lawn 'After' photo does not actually show the mowed lawn",
+      "source_type": "photo",
+      "observation": "07ae2d1f is an extreme close-up of gravel/dirt with camera shadow, not the lawn shown in the Before photo",
+      "photo_guid": "07ae2d1f"
+     },
+     {
+      "claim": "Rear Lawn 'Before' photo is mislabeled/wrong content",
+      "source_type": "photo",
+      "observation": "92c1af49 (station: Grass Recut - Rear Lawn, Before) shows the boarded-up rear porch doors, not a lawn area",
+      "photo_guid": "92c1af49"
+     },
+     {
+      "claim": "Debris (mattress) not removed despite claimed clean-up",
+      "source_type": "photo",
+      "observation": "2812f240 (After, Behind Outbuilding/Garage, GPS inlier) shows a discarded mattress still under the deck near the garage",
+      "photo_guid": "2812f240"
+     },
+     {
+      "claim": "Update questionnaire says debris removal service not performed",
+      "source_type": "document",
+      "observation": "Was exterior debris/trash removed?: No \u2014 corroborates visible mattress debris left in 2812f240",
+      "field_key": "Update"
+     },
+     {
+      "claim": "Multiple stations show staged/implausible before-after timing",
+      "source_type": "signal",
+      "observation": "photo_integrity.staged_pairs: Front Lawn gap 26s, Side Lawn 1 gap 155s, Side Lawn 2 gap 85s, Rear Lawn after_precedes_before by -53s",
+      "field_key": "photo_integrity"
+     },
+     {
+      "claim": "Side Lawn 2 shows a reasonable mow with visible cut grass",
+      "source_type": "photo",
+      "observation": "e8625bd9 (After) shows a freshly cut lawn strip consistent with 8ba85aef (Before) same area",
+      "photo_guid": "e8625bd9"
+     },
+     {
+      "claim": "Reported time on site (623 min) is far larger than actual photo timestamp span (~4 min, 15:49:56-15:53:36)",
+      "source_type": "signal",
+      "observation": "time_on_site_min=623 vs photo_time_span_min=623 reported equal, but actual photo capture window is only minutes based on timestamps shown on images",
+      "field_key": "time_on_site_min"
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "fail",
+     "before_after_diff": "fail",
+     "extraordinary_conditions": false
+    },
+    "fraud_indicators": [
+     "GPS-outlier photo (bccd8804) depicts a completely different house ~1500km away, filed as 'Clippings and Yard Debris Removed'",
+     "That same outlier photo carries a CDT timezone watermark while all other photos are EDT, inconsistent with a single visit",
+     "Staged before/after pairs on Front Lawn, Side Lawn 1, Side Lawn 2 (gaps of 26-155s, too short for real mowing)",
+     "Rear Lawn 'After' photo (ac1c88a2) timestamped BEFORE its paired 'Before' photo (92c1af49) \u2014 after_precedes_before",
+     "Rear Lawn 'Before' photo shows the boarded porch, not lawn \u2014 station mislabeled/misfiled",
+     "Front Lawn 'After' photo is a close-up shadow of dirt/gravel, not proof the lawn was mowed",
+     "Mattress and debris visibly left on site in a location-verified After photo despite claimed completion"
+    ],
+    "flag_reasons": [
+     "Front Lawn After photo (07ae2d1f) fails to visually document the mowed lawn, leaving that station's completion unproven",
+     "Rear Lawn Before photo (92c1af49) is mislabeled, showing the porch instead of the lawn, undermining before/after proof for that station",
+     "Debris (mattress) remains visible under the deck in a verified After photo (2812f240), violating the 'remove debris/trash' impediment",
+     "Staged timestamp gaps and an after-precedes-before pair across multiple stations raise documentation reliability concerns",
+     "A GPS-outlier photo from an apparently unrelated house is filed in this order's photo set, requiring human confirmation it isn't misfiled evidence"
+    ],
+    "review_items": [
+     "Confirm bccd8804 (different house, 1500km GPS outlier, CDT watermark) is a misfiled photo from another order and not evidence of a wrong-property visit",
+     "Verify whether Front Lawn was actually mowed \u2014 After photo 07ae2d1f shows only a dirt/gravel close-up, not the lawn area shown in Before photo 16b4c025",
+     "Confirm Rear Lawn coverage \u2014 Before photo 92c1af49 shows the porch, not the lawn; determine if a genuine rear-lawn before photo exists",
+     "Assess whether mattress/debris seen in 2812f240 needs a debris-removal follow-up per impediment 'Remove any debris, trash, or abandoned vehicles'",
+     "Review staged_pairs list (Front Lawn, Side Lawn 1&2, Rear Lawn) for genuine before/after sequencing"
+    ],
+    "recommended_actions": [
+     "Route to Quality Review for photo set integrity check before payment",
+     "Request follow-up documentation/photos clearly showing Front and Rear Lawn after mowing",
+     "Request debris (mattress) removal or clarification if outside scope"
+    ],
+    "rationale_plain": "The property location matches (medoid within 26m). However, several issues undermine confidence in the documentation: one After photo (bccd8804) shows a completely different house with a mismatched timezone watermark, staged/implausible timing exists across multiple stations (gaps of seconds, and one after-photo timestamped before its before-photo), the Rear Lawn \"Before\" photo (92c1af49) actually shows the boarded porch rather than the lawn, and the Front Lawn \"After\" photo (07ae2d1f) is only a close-up of dirt/gravel that doesn't show the mowed lawn. A mattress and debris are still visibly present under the deck in a verified After photo (2812f240), which conflicts with the debris-removal impediment. Side Lawn 2 does show a plausible mow. Given the mix of coverage gaps and documentation anomalies, this is being flagged for follow-up with human review recommended."
+   },
+   "draft_status": "succeeded",
+   "draft_cost_usd": 0.0508,
+   "draft_usage": {
+    "in": 22277,
+    "out": 5695
+   },
+   "gate": "lint_length",
+   "verify": {
+    "order_number": "500119024",
+    "outcome": "gcfu",
+    "confidence": 0.68,
+    "needs_human": true,
+    "evidence": [
+     {
+      "claim": "Property location verified: GPS medoid 26m from geocoded property, 26 of 27 photos inliers.",
+      "source_type": "signal",
+      "field_key": "gps.medoid_to_property_m",
+      "observation": "location_match=pass; boarded-up front porch with '51' visible confirms address in b026dafc/92c1af49."
+     },
+     {
+      "claim": "Cut grass visible in After side-lawn photos with fresh clippings scattered.",
+      "source_type": "photo",
+      "photo_guid": "e8625bd9",
+      "observation": "Side Lawn 2 of 2 After shows mowed lawn with clippings; e1d914fe/593def72 show mower actively cutting. Meaningful work occurred."
+     },
+     {
+      "claim": "Fence line still has tall dead grass/weeds in the 'Rear Edging, Fence Line Free of Tall Grass and Weeds' After photo.",
+      "source_type": "photo",
+      "photo_guid": "d84ee4f6",
+      "observation": "Brown overgrown grass/weeds remain along fence and gate base \u2014 impediment 'Check fence lines for large overgrowth' not met."
+     },
+     {
+      "claim": "Large mattress and debris left under deck / behind outbuilding in After photos.",
+      "source_type": "photo",
+      "photo_guid": "0dd9a1ba",
+      "observation": "Under Deck/Stairwell After (0dd9a1ba) and Behind Outbuilding (2812f240) show a discarded mattress; vendor answered debris NOT removed and it is visibly still present \u2014 impediment 'Remove any debris' unmet."
+     },
+     {
+      "claim": "Debris-not-removed answer corroborates visible debris.",
+      "source_type": "document",
+      "field_key": "Update",
+      "observation": "'Was exterior debris/trash removed?: No' \u2014 combined with mattress visible in 0dd9a1ba/2812f240 supports gcfu."
+     },
+     {
+      "claim": "Front Lawn After photo does not show the lawn.",
+      "source_type": "photo",
+      "photo_guid": "07ae2d1f",
+      "observation": "Image is the photographer's shadow on gravel/dirt \u2014 provides no visual proof the front lawn was finished to standard."
+     },
+     {
+      "claim": "One photo is from a different location and timezone, filed as debris-removed After.",
+      "source_type": "photo",
+      "photo_guid": "bccd8804",
+      "observation": "GPS outlier 1,541,853m away, watermark reads CDT (Central) not EDT; shows a two-car garage not present in verified set."
+     },
+     {
+      "claim": "Staged before/after pairs across four stations.",
+      "source_type": "signal",
+      "field_key": "photo_integrity.staged_pairs",
+      "observation": "Front/Side1/Side2 pairs seconds apart; Rear After (ac1c88a2) taken 53s BEFORE its Before \u2014 pairings cannot be credited as before/after proof."
+     }
+    ],
+    "checks": {
+     "location_match": "pass",
+     "time_on_site": "pass",
+     "four_sides": "unclear",
+     "before_after_diff": "unclear",
+     "extraordinary_conditions": true
+    },
+    "fraud_indicators": [
+     "Photo bccd8804 is a GPS outlier ~1.5M meters away with a CDT (Central) watermark and shows a different building, filed as 'Clippings and Yard Debris Removed'",
+     "Staged before/after pairs on Front Lawn, Side Lawn 1, Side Lawn 2, Rear Lawn (gaps 26s/155s/85s)",
+     "Rear Lawn After (ac1c88a2) timestamped 53 seconds BEFORE its Before photo",
+     "All usable work photos cluster within ~4 minutes (15:49-15:53) despite 623-minute reported time on site"
+    ],
+    "flag_reasons": [
+     "Fence line still shows tall dead grass/weeds in After photo d84ee4f6 \u2014 overgrowth impediment unmet",
+     "Discarded mattress/debris left under deck and behind outbuilding (0dd9a1ba, 2812f240); vendor confirms debris not removed",
+     "Front Lawn After (07ae2d1f) shows only a shadow on gravel \u2014 no visual proof front lawn finished",
+     "Staged before/after pairings void the completion proof for four mowing stations"
+    ],
+    "review_items": [
+     "Review d84ee4f6 \u2014 confirm fence-line overgrowth remains out of standard",
+     "Review 0dd9a1ba and 2812f240 \u2014 mattress/debris left on site (abandoned item)",
+     "Confirm bccd8804 (different building, CDT watermark, GPS 1.5M m off) belongs to another order/property",
+     "Verify boarded windows/broken door slat condition vs Update answer 'no broken windows/unsecure doors'",
+     "Assess adequacy of Front Lawn After (07ae2d1f shadow photo) for completion proof"
+    ],
+    "recommended_actions": [
+     "Return to vendor to remove mattress/debris and clear fence-line overgrowth",
+     "Obtain a clear Front Lawn After photo showing the mowed lawn",
+     "Escalate boarded-up windows/broken door and possible trees-on-roof condition for property-preservation review"
+    ],
+    "rationale_plain": "The property location is verified \u2014 GPS sits 26m from the address and the boarded porch marked '51' matches. Mowing did happen: photos e8625bd9 and 593def72 show a mower cutting and cut grass with fresh clippings. However, specific areas remain out of standard: fence-line photo d84ee4f6 still shows tall dead grass and weeds, and a discarded mattress with debris is visible under the deck and behind the outbuilding (0dd9a1ba, 2812f240), which the vendor confirms was not removed. The Front Lawn After (07ae2d1f) is just a shadow on gravel and proves nothing. Four stations have staged before/after pairs, so those pairings cannot verify completion. Photo bccd8804 is from a different building/timezone. These gaps and the extraordinary boarded-up condition warrant human follow-up."
+   },
+   "verify_status": "succeeded",
+   "verify_cost_usd": 0.1118,
+   "flag": "gcfu",
+   "disposition": "human_review",
+   "anomaly": true,
+   "fraud_indicators": [
+    "deterministic: staged_documentation",
+    "GPS-outlier photo (bccd8804) depicts a completely different house ~1500km away, filed as 'Clippings and Yard Debris Removed'",
+    "That same outlier photo carries a CDT timezone watermark while all other photos are EDT, inconsistent with a single visit",
+    "Staged before/after pairs on Front Lawn, Side Lawn 1, Side Lawn 2 (gaps of 26-155s, too short for real mowing)",
+    "Rear Lawn 'After' photo (ac1c88a2) timestamped BEFORE its paired 'Before' photo (92c1af49) \u2014 after_precedes_before",
+    "Rear Lawn 'Before' photo shows the boarded porch, not lawn \u2014 station mislabeled/misfiled",
+    "Front Lawn 'After' photo is a close-up shadow of dirt/gravel, not proof the lawn was mowed",
+    "Mattress and debris visibly left on site in a location-verified After photo despite claimed completion",
+    "Photo bccd8804 is a GPS outlier ~1.5M meters away with a CDT (Central) watermark and shows a different building, filed as 'Clippings and Yard Debris Removed'",
+    "Staged before/after pairs on Front Lawn, Side Lawn 1, Side Lawn 2, Rear Lawn (gaps 26s/155s/85s)",
+    "Rear Lawn After (ac1c88a2) timestamped 53 seconds BEFORE its Before photo",
+    "All usable work photos cluster within ~4 minutes (15:49-15:53) despite 623-minute reported time on site"
+   ],
+   "final_outcome": "gcfu",
+   "confidence": 0.52,
+   "adjudication": [
+    "reviewer requested human confirmation",
+    "confidence 0.52 below auto_decide[gcfu]=0.75"
+   ],
+   "total_cost_usd": 0.1626
+  }
+ ],
+ "total_cost_usd": 1.9069
+}

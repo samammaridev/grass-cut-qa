@@ -1,0 +1,169 @@
+[
+ {
+  "order_number": "500119014",
+  "outcome": "good_to_pay",
+  "confidence": 0.9,
+  "needs_human": false,
+  "evidence": [
+   {
+    "claim": "rear cut",
+    "source_type": "photo",
+    "photo_guid": "449251ac-6533-419c-be00-695a0893c3bb",
+    "observation": "After: rear lawn cut"
+   },
+   {
+    "claim": "front cut",
+    "source_type": "photo",
+    "photo_guid": "449251ac",
+    "observation": "After: front lawn cut"
+   }
+  ],
+  "checks": {
+   "location_match": "pass",
+   "time_on_site": "pass",
+   "four_sides": "pass",
+   "before_after_diff": "pass",
+   "extraordinary_conditions": false
+  },
+  "flag_reasons": [
+   "lawn cut to standard across all sides"
+  ],
+  "review_items": [],
+  "recommended_actions": [
+   "release_payment"
+  ],
+  "rationale_plain": "The photos show the lawn cut to standard (449251ac).",
+  "notes_for_human": null
+ },
+ {
+  "order_number": "500119014",
+  "outcome": "nope",
+  "confidence": 0.9,
+  "needs_human": false,
+  "evidence": [
+   {
+    "claim": "rear cut",
+    "source_type": "photo",
+    "photo_guid": "449251ac-6533-419c-be00-695a0893c3bb",
+    "observation": "After: rear lawn cut"
+   },
+   {
+    "claim": "front cut",
+    "source_type": "photo",
+    "photo_guid": "449251ac",
+    "observation": "After: front lawn cut"
+   }
+  ],
+  "checks": {
+   "location_match": "pass",
+   "time_on_site": "pass",
+   "four_sides": "pass",
+   "before_after_diff": "pass",
+   "extraordinary_conditions": false
+  },
+  "flag_reasons": [
+   "lawn cut to standard across all sides"
+  ],
+  "review_items": [],
+  "recommended_actions": [
+   "release_payment"
+  ],
+  "rationale_plain": "The photos show the lawn cut to standard (449251ac).",
+  "notes_for_human": null
+ },
+ {
+  "order_number": "500119014",
+  "outcome": "good_to_pay",
+  "confidence": 2,
+  "needs_human": false,
+  "evidence": [
+   {
+    "claim": "rear cut",
+    "source_type": "photo",
+    "photo_guid": "449251ac-6533-419c-be00-695a0893c3bb",
+    "observation": "After: rear lawn cut"
+   },
+   {
+    "claim": "front cut",
+    "source_type": "photo",
+    "photo_guid": "449251ac",
+    "observation": "After: front lawn cut"
+   }
+  ],
+  "checks": {
+   "location_match": "pass",
+   "time_on_site": "pass",
+   "four_sides": "pass",
+   "before_after_diff": "pass",
+   "extraordinary_conditions": false
+  },
+  "flag_reasons": [
+   "lawn cut to standard across all sides"
+  ],
+  "review_items": [],
+  "recommended_actions": [
+   "release_payment"
+  ],
+  "rationale_plain": "The photos show the lawn cut to standard (449251ac).",
+  "notes_for_human": null
+ },
+ {
+  "order_number": "500119014",
+  "outcome": "good_to_pay",
+  "confidence": 0.9,
+  "needs_human": false,
+  "evidence": [],
+  "checks": {
+   "location_match": "pass",
+   "time_on_site": "pass",
+   "four_sides": "pass",
+   "before_after_diff": "pass",
+   "extraordinary_conditions": false
+  },
+  "flag_reasons": [
+   "lawn cut to standard across all sides"
+  ],
+  "review_items": [],
+  "recommended_actions": [
+   "release_payment"
+  ],
+  "rationale_plain": "The photos show the lawn cut to standard (449251ac).",
+  "notes_for_human": null
+ },
+ {
+  "order_number": "500119014",
+  "outcome": "good_to_pay",
+  "confidence": 0.9,
+  "needs_human": false,
+  "evidence": [
+   {
+    "claim": "rear cut",
+    "source_type": "photo",
+    "photo_guid": "449251ac-6533-419c-be00-695a0893c3bb",
+    "observation": "After: rear lawn cut"
+   },
+   {
+    "claim": "front cut",
+    "source_type": "photo",
+    "photo_guid": "449251ac",
+    "observation": "After: front lawn cut"
+   }
+  ],
+  "checks": {
+   "location_match": "pass",
+   "time_on_site": "pass",
+   "four_sides": "pass",
+   "before_after_diff": "pass",
+   "extraordinary_conditions": false
+  },
+  "flag_reasons": [
+   "lawn cut to standard across all sides"
+  ],
+  "review_items": [],
+  "recommended_actions": [
+   "release_payment"
+  ],
+  "rationale_plain": "word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word ",
+  "notes_for_human": null
+ }
+]

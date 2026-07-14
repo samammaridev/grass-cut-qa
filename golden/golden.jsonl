@@ -1,0 +1,7 @@
+# SafeGuard grass-cut QA golden set — one JSON per line (ORCHESTRATION.md §12).
+# STATUS: PLACEHOLDER. The real ~200-order golden set will be PROVIDED BY SAFEGUARD
+# (historical orders with human-adjudicated dispositions) in exactly this schema:
+#   {"order_number", "snapshot_dir", "truth", "truth_reasons": [], "tags": [], "labeler", "labeled_at"}
+# Snapshots are frozen via `python -m gcqa.run --order <n> --snapshot` — never mutate; append new cases.
+# The single entry below is a harness smoke-test case (test order, bootstrap-labeled), not ground truth.
+{"order_number": "500119014", "snapshot_dir": "golden/snapshots/500119014", "truth": "good_to_pay", "truth_reasons": ["before/after photos show full cut at the correct property", "house number 1801 visible", "single stray GPS-outlier photo is not disqualifying"], "tags": ["gps_outlier", "clean_pass", "smoke_test"], "labeler": "poc-bootstrap", "labeled_at": "2026-07-13"}

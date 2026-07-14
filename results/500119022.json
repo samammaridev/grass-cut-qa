@@ -1,0 +1,919 @@
+{
+ "order_number": "500119022",
+ "review_stage": "final",
+ "flag": "potential_fraud",
+ "anomaly": true,
+ "fraud_indicators": [
+  "deterministic: short_visit",
+  "deterministic: staged_documentation",
+  "short_visit: 6 minutes reported on-site time for a 24,025 sq ft lot with 38 photos across many labeled stations",
+  "staged before/after pair: Front Lawn After (e6b6db38) timestamped 8 seconds before Front Lawn Before (6a25d26b)",
+  "staged before/after pair: Side Lawn 1 After (743bbac3) timestamped 109 seconds before Side Lawn 1 Before (ad50ef98)",
+  "Side Lawn 2 before/after gap only 238 seconds (gap_too_short flag)",
+  "Condition photo f737e5b4 shows a different-style house (white wood-frame w/ garage) vs the brick building in the rest of the set, GPS unknown, metadata date 2 days later than the rest with watermark 2 hours after the visit's watermark cluster",
+  "Possible pool visible in rear-yard Condition photos (1b03861b, 5ea4ecd3) contradicting has_pool_hottub=No field",
+  "Reported time on site only 6 minutes for a full multi-station 24,025 sq ft recut",
+  "Staged before/after: Front Lawn 'After' (e6b6db38) precedes 'Before' (6a25d26b)",
+  "Staged before/after: Side Lawn 1 'After' (743bbac3) precedes 'Before' (ad50ef98) by 109s",
+  "'After - Behind Outbuilding/Garage' (f4fa3088) shows uncut overgrown grass/weeds",
+  "Different white wood-frame house (f737e5b4) filed in this brick-house set, taken 07-10, no GPS",
+  "Photos show a covered pool (1b03861b/5fe287fd/5ea4ecd3) but field has_pool_hottub=No"
+ ],
+ "disposition": "human_review",
+ "outcome": "potential_fraud",
+ "confidence": 0.68,
+ "verifier_flag": "potential_fraud",
+ "fraud_confirmed": true,
+ "adjudication": [
+  "reviewer requested human confirmation",
+  "confidence 0.68 below auto_decide[potential_fraud]=0.95",
+  "fraud flag confirmed by independent verifier \u2014 Quality Review"
+ ],
+ "drafter": {
+  "role": "drafter",
+  "outcome": "potential_fraud",
+  "needs_human": true,
+  "confidence": 0.68,
+  "evidence": [
+   {
+    "claim": "Reported time on site (6 min) cannot support the claimed multi-station full-lot service on a 24,025 sq ft lot",
+    "source_type": "signal",
+    "observation": "time_on_site_min=6, time_on_site_ok=false, fraud_signals includes short_visit",
+    "field_key": "time_on_site_min",
+    "photo_guid": null
+   },
+   {
+    "claim": "Front Lawn before/after pair is staged - After photo timestamped before Before photo",
+    "source_type": "photo",
+    "observation": "e6b6db38 (After) taken 07:07:22, 8 seconds before 6a25d26b (Before) taken 07:07:30",
+    "field_key": null,
+    "photo_guid": "e6b6db38"
+   },
+   {
+    "claim": "Side Lawn 1 before/after pair is staged - After photo timestamped well before Before photo",
+    "source_type": "photo",
+    "observation": "743bbac3 (After) taken 07:06:48, 109 seconds before ad50ef98 (Before) taken 07:08:37",
+    "field_key": null,
+    "photo_guid": "743bbac3"
+   },
+   {
+    "claim": "Side Lawn 2 before/after gap too short to represent real work",
+    "source_type": "signal",
+    "observation": "photo_integrity.staged_pairs lists Side Lawn 2 gap_seconds=238 with issue gap_too_short",
+    "field_key": "photo_integrity.staged_pairs",
+    "photo_guid": null
+   },
+   {
+    "claim": "A Condition photo appears to be from a different property/visit",
+    "source_type": "photo",
+    "observation": "f737e5b4 shows a white wood-frame house with attached garage, entirely different architecture from the brick turreted building shown in all other 37 photos of 120 S Park Ave; GPS flag is 'unknown' (not in the verified cluster); metadata taken date is 2026-07-10 (2 days after the rest of the set) while its burned-in watermark reads 07/08/2026 05:17 PM, ~2 hours after the rest of the visit's watermark cluster (03:06-03:13 PM)",
+    "field_key": null,
+    "photo_guid": "f737e5b4"
+   },
+   {
+    "claim": "Documentation claims a comprehensive multi-area cut (front, both sides, rear, behind outbuilding, under deck, edging/fence lines, weed whacking, weed-killer application) inconsistent with the 6-minute visit",
+    "source_type": "document",
+    "observation": "Update document lists 38 labeled images spanning all these stations, all completed per vendor within the reported time on site",
+    "field_key": "Update",
+    "photo_guid": null
+   },
+   {
+    "claim": "Rear yard Condition photos appear to show a pool though the order field states none is present",
+    "source_type": "photo",
+    "observation": "1b03861b and 5ea4ecd3 show a round pool-like structure in the backyard adjacent to the deck/fence area",
+    "field_key": "has_pool_hottub",
+    "photo_guid": "1b03861b"
+   }
+  ],
+  "checks": {
+   "location_match": "pass",
+   "time_on_site": "fail",
+   "four_sides": "pass",
+   "before_after_diff": "fail",
+   "extraordinary_conditions": true
+  },
+  "fraud_indicators": [
+   "short_visit: 6 minutes reported on-site time for a 24,025 sq ft lot with 38 photos across many labeled stations",
+   "staged before/after pair: Front Lawn After (e6b6db38) timestamped 8 seconds before Front Lawn Before (6a25d26b)",
+   "staged before/after pair: Side Lawn 1 After (743bbac3) timestamped 109 seconds before Side Lawn 1 Before (ad50ef98)",
+   "Side Lawn 2 before/after gap only 238 seconds (gap_too_short flag)",
+   "Condition photo f737e5b4 shows a different-style house (white wood-frame w/ garage) vs the brick building in the rest of the set, GPS unknown, metadata date 2 days later than the rest with watermark 2 hours after the visit's watermark cluster",
+   "Possible pool visible in rear-yard Condition photos (1b03861b, 5ea4ecd3) contradicting has_pool_hottub=No field"
+  ],
+  "flag_reasons": [
+   "Deterministic short_visit signal (6 min) cannot support the claimed comprehensive multi-station lawn service on a large lot - this prong alone fires potential_fraud per policy",
+   "photo_integrity shows staged/impossible before-after chronology on two stations (Front Lawn, Side Lawn 1), corroborating fabricated documentation",
+   "An anomalous Condition photo (f737e5b4) shows a visually different house with unknown GPS and a mismatched date/watermark, further undermining confidence in the documentation set",
+   "Composition rule: staged_documentation plus the time signal together mean the anomalies corroborate rather than excuse each other"
+  ],
+  "review_items": [
+   "Confirm f737e5b4 (different-style white house, GPS unknown, date mismatch) actually belongs to order 500119022 or was misfiled from another order",
+   "Verify the vendor's actual time on site - 6 minutes reported for a claimed full front/side/rear/outbuilding/deck/edging service on a 155x155 ft lot",
+   "Compare 6a25d26b (Before) vs e6b6db38 (After) Front Lawn - After timestamp precedes Before by 8 seconds",
+   "Compare ad50ef98 (Before) vs 743bbac3 (After) Side Lawn 1 - After timestamp precedes Before by 109 seconds",
+   "Confirm whether a pool/hot tub is present in the rear yard (1b03861b, 5ea4ecd3) despite the order field indicating none"
+  ],
+  "recommended_actions": [
+   "Hold payment pending Quality Review",
+   "Request vendor GPS/time-log verification for the visit",
+   "Confirm property identity of photo f737e5b4",
+   "Reconcile pool/hot tub field discrepancy with photos"
+  ],
+  "rationale_plain": "The short_visit signal shows only 6 minutes on site for a 24,025 sq ft lot with stations spanning front, both sides, rear, outbuilding, deck, edging, and weed treatment - too little time for that claimed scope. Photo_integrity flags staged before/after pairs: Front Lawn After (e6b6db38) is timestamped before its Before (6a25d26b), and Side Lawn 1 After (743bbac3) precedes its Before (ad50ef98) - an impossible sequence. One Condition photo (f737e5b4) shows a different-style house, GPS unknown, with a metadata/watermark date mismatch versus the rest of the location-verified set. Rear-yard Condition photos (1b03861b, 5ea4ecd3) also appear to show a pool despite the order field indicating none.",
+  "notes_for_human": "Short_visit (6 min) signal combined with staged before/after timestamp pairs on two stations strongly suggests the documentation does not reflect a genuine real-time full-property service, per policy this alone routes to potential_fraud regardless of how complete the photos look. Additionally, one Condition photo (f737e5b4) shows an entirely different house style with GPS unknown and a date/watermark mismatch - please confirm it isn't misfiled from a different order. Also verify the apparent pool in the rear yard against the \"has_pool_hottub: No\" field.",
+  "subtype": "success",
+  "cost_usd": 0.2664,
+  "session_id": "32558ca8-6491-4eba-843d-2a53a23304c9",
+  "gate_events": [
+   {
+    "class": "accepted",
+    "kind": "audit",
+    "action": "accepted",
+    "reason": "verdict accepted by gates"
+   }
+  ],
+  "error": null,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 26297,
+   "cache_read_input_tokens": 0,
+   "output_tokens": 10577,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 0,
+    "ephemeral_5m_input_tokens": 26297
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 10577,
+     "cache_read_input_tokens": 0,
+     "cache_creation_input_tokens": 26297,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 26297,
+      "ephemeral_1h_input_tokens": 0
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "num_turns": 2
+ },
+ "verifier": {
+  "role": "verifier",
+  "outcome": "potential_fraud",
+  "needs_human": true,
+  "confidence": 0.68,
+  "evidence": [
+   {
+    "claim": "Reported time on site is only 6 minutes, below threshold; a full multi-station recut of a 24,025 sq ft lot cannot realistically be performed in that window.",
+    "source_type": "signal",
+    "field_key": "time_on_site_min",
+    "observation": "time_on_site_min=6, time_on_site_ok=false, short_visit signal present."
+   },
+   {
+    "claim": "Photos claim a full-scope cut across front, sides, and rear that cannot fit the reported 6-minute visit.",
+    "source_type": "photo",
+    "photo_guid": "9a3f3c9a",
+    "observation": "After - Rear Lawn shows a large mowed lawn area; combined with front (e6b6db38) and side (743bbac3) this is a multi-station scope."
+   },
+   {
+    "claim": "Before/after pairings are time-staged \u2014 'After' timestamps precede their 'Before' on two stations.",
+    "source_type": "signal",
+    "field_key": "photo_integrity.staged_pairs",
+    "observation": "Front Lawn after (e6b6db38 07:07:22) precedes before (6a25d26b 07:07:30); Side Lawn 1 after (743bbac3 07:06:48) precedes before (ad50ef98 07:08:37)."
+   },
+   {
+    "claim": "An 'After - Behind Outbuilding/Garage' photo shows overgrown grass/weeds against a ruler, not a finished cut.",
+    "source_type": "photo",
+    "photo_guid": "f4fa3088",
+    "observation": "After-stage photo shows tall grass and weeds with a tape measure, consistent with audit's overgrowth flag."
+   },
+   {
+    "claim": "A photo of a different white wood-frame house is filed in this brick-house set, taken two days after the visit with no GPS.",
+    "source_type": "photo",
+    "photo_guid": "f737e5b4",
+    "observation": "General Property Condition taken 2026-07-10, gps unknown; does not match the brick turret house at 120 shown everywhere else."
+   },
+   {
+    "claim": "Location itself verifies to the property.",
+    "source_type": "signal",
+    "field_key": "gps.location_match",
+    "observation": "medoid 33 m from property geocode, location_match=pass; house number 120 legible in 2749e421 and 9eeb354a."
+   },
+   {
+    "claim": "Photos show a pool although the order field reports none.",
+    "source_type": "photo",
+    "photo_guid": "1b03861b",
+    "observation": "General Property Condition shows a covered above-ground pool; field has_pool_hottub=No."
+   }
+  ],
+  "checks": {
+   "location_match": "pass",
+   "time_on_site": "fail",
+   "four_sides": "pass",
+   "before_after_diff": "unclear",
+   "extraordinary_conditions": true
+  },
+  "fraud_indicators": [
+   "Reported time on site only 6 minutes for a full multi-station 24,025 sq ft recut",
+   "Staged before/after: Front Lawn 'After' (e6b6db38) precedes 'Before' (6a25d26b)",
+   "Staged before/after: Side Lawn 1 'After' (743bbac3) precedes 'Before' (ad50ef98) by 109s",
+   "'After - Behind Outbuilding/Garage' (f4fa3088) shows uncut overgrown grass/weeds",
+   "Different white wood-frame house (f737e5b4) filed in this brick-house set, taken 07-10, no GPS",
+   "Photos show a covered pool (1b03861b/5fe287fd/5ea4ecd3) but field has_pool_hottub=No"
+  ],
+  "flag_reasons": [
+   "short_visit: 6-minute reported time cannot accommodate the claimed multi-station cut of a 24,025 sq ft lot",
+   "Staged before/after pairings on two stations mean completed-work documentation cannot be trusted as capture proof",
+   "An 'After' behind-outbuilding photo still shows tall uncut grass/weeds",
+   "A stray different-house photo taken two days later is mixed into the set"
+  ],
+  "review_items": [
+   "Confirm SafeGuard-reported time_on_site of 6 minutes against upload logs \u2014 does it support the claimed full cut?",
+   "Compare staged pairs e6b6db38/6a25d26b and 743bbac3/ad50ef98 \u2014 after precedes before",
+   "Verify f737e5b4 (white house, 07-10, no GPS) belongs to a different order/property",
+   "Inspect f4fa3088 behind outbuilding \u2014 uncut overgrowth in an After photo",
+   "Reconcile pool visible in 1b03861b/5fe287fd with field has_pool_hottub=No (unsecured pool risk)"
+  ],
+  "recommended_actions": [
+   "Route to Quality Review to zero pay pending human confirmation of time-on-site and staged documentation",
+   "Have vendor re-verify behind-outbuilding area and confirm pool securing status"
+  ],
+  "rationale_plain": "Location verifies: photo GPS sits 33 m from the property and house number 120 is legible (2749e421, 9eeb354a). However, the reported time on site is only 6 minutes, which cannot cover the claimed front, side, and rear cut of a large lot. The before/after pairings are time-staged on two stations \u2014 the 'After' images (e6b6db38, 743bbac3) carry timestamps before their 'Before' images \u2014 so the completed-work photos cannot be trusted as capture proof. An 'After - Behind Outbuilding' photo (f4fa3088) still shows tall uncut grass and weeds. A different white house (f737e5b4), taken two days later without GPS, is mixed into the set, and a covered pool appears in photos though the field says none. These conditions warrant human confirmation.",
+  "notes_for_human": null,
+  "subtype": "success",
+  "cost_usd": 0.2649,
+  "session_id": "2506610d-bd8d-41fe-b1c8-967db10406bf",
+  "gate_events": [
+   {
+    "class": "accepted",
+    "kind": "audit",
+    "action": "accepted",
+    "reason": "verdict accepted by gates"
+   }
+  ],
+  "error": null,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 26441,
+   "cache_read_input_tokens": 0,
+   "output_tokens": 3620,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 0,
+    "ephemeral_5m_input_tokens": 26441
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 3620,
+     "cache_read_input_tokens": 0,
+     "cache_creation_input_tokens": 26441,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 26441,
+      "ephemeral_1h_input_tokens": 0
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "num_turns": 2
+ },
+ "agreement": true,
+ "thresholds_applied": {
+  "auto_decide": {
+   "good_to_pay": 0.75,
+   "gcfu": 0.75,
+   "potential_fraud": 0.95
+  },
+  "verifier_below_confidence": 0.85
+ },
+ "gate_events": [
+  {
+   "class": "accepted",
+   "kind": "audit",
+   "action": "accepted",
+   "reason": "verdict accepted by gates"
+  },
+  {
+   "class": "accepted",
+   "kind": "audit",
+   "action": "accepted",
+   "reason": "verdict accepted by gates"
+  }
+ ],
+ "signals": {
+  "identity_ok": true,
+  "work_code_ok": true,
+  "in_season": true,
+  "photo_count": 38,
+  "photo_count_ok": true,
+  "gps": {
+   "medoid": [
+    40.934036,
+    -87.154817
+   ],
+   "medoid_guid": "1721c0c1-ac7f-416c-9f36-8ba357f0b1e2",
+   "valid": 37,
+   "unknown": 1,
+   "outlier_fraction": 0.0,
+   "outliers": [],
+   "mixed_clusters": false,
+   "property_geocode": {
+    "lat": 40.934314045558,
+    "lon": -87.154684377735,
+    "source": "census",
+    "quality": "exact",
+    "cached": true
+   },
+   "medoid_to_property_m": 33,
+   "location_match": "pass",
+   "notes": [
+    "gps_static"
+   ],
+   "api_distance_fields": {
+    "door_knock": -1,
+    "farthest_to_property": -1,
+    "farthest_between": -1
+   }
+  },
+  "time_on_site_min": 6,
+  "time_on_site_ok": false,
+  "photo_time_span_min": 3587,
+  "date_skew_days": 0,
+  "documents": {
+   "listed": 7,
+   "unique": 3,
+   "kinds": [
+    "Audit Property Assistant",
+    "Invoice",
+    "Update"
+   ],
+   "invoice_present": true,
+   "update_present": true
+  },
+  "photo_integrity": {
+   "reused_pairs": [],
+   "staged_pairs": [
+    {
+     "station": "Grass Recut - Front Lawn",
+     "before": {
+      "guid": "6a25d26b",
+      "taken": "2026-07-08 07:07:30"
+     },
+     "after": {
+      "guid": "e6b6db38",
+      "taken": "2026-07-08 07:07:22"
+     },
+     "gap_seconds": -8,
+     "issue": "after_precedes_before"
+    },
+    {
+     "station": "Grass Recut - Side Lawn 1 of 2",
+     "before": {
+      "guid": "ad50ef98",
+      "taken": "2026-07-08 07:08:37"
+     },
+     "after": {
+      "guid": "743bbac3",
+      "taken": "2026-07-08 07:06:48"
+     },
+     "gap_seconds": -109,
+     "issue": "after_precedes_before"
+    },
+    {
+     "station": "Grass Recut - Side Lawn 2 of 2",
+     "before": {
+      "guid": "78d8deb0",
+      "taken": "2026-07-08 07:08:23"
+     },
+     "after": {
+      "guid": "c0f2073e",
+      "taken": "2026-07-08 07:12:21"
+     },
+     "gap_seconds": 238,
+     "issue": "gap_too_short"
+    }
+   ],
+   "same_stage_dupes": [],
+   "adjacent_cross_station_pairs": [
+    {
+     "a": {
+      "guid": "743bbac3",
+      "stage": "After",
+      "station": "Grass Recut - Side Lawn 1 of 2",
+      "taken": "2026-07-08 07:06:48"
+     },
+     "b": {
+      "guid": "c171bd1c",
+      "stage": "Before",
+      "station": "Grass Re-cut - Before Address",
+      "taken": "2026-07-08 07:06:59"
+     },
+     "gap_seconds": 11
+    },
+    {
+     "a": {
+      "guid": "c171bd1c",
+      "stage": "Before",
+      "station": "Grass Re-cut - Before Address",
+      "taken": "2026-07-08 07:06:59"
+     },
+     "b": {
+      "guid": "a33ab623",
+      "stage": "Before",
+      "station": "Grass Re-cut - Up and Down Street",
+      "taken": "2026-07-08 07:07:05"
+     },
+     "gap_seconds": 6
+    },
+    {
+     "a": {
+      "guid": "a33ab623",
+      "stage": "Before",
+      "station": "Grass Re-cut - Up and Down Street",
+      "taken": "2026-07-08 07:07:05"
+     },
+     "b": {
+      "guid": "e6b6db38",
+      "stage": "After",
+      "station": "Grass Recut - Front Lawn",
+      "taken": "2026-07-08 07:07:22"
+     },
+     "gap_seconds": 17
+    },
+    {
+     "a": {
+      "guid": "6a25d26b",
+      "stage": "Before",
+      "station": "Grass Recut - Front Lawn",
+      "taken": "2026-07-08 07:07:30"
+     },
+     "b": {
+      "guid": "66f94789",
+      "stage": "Condition",
+      "station": "Front Of House",
+      "taken": "2026-07-08 07:07:37"
+     },
+     "gap_seconds": 7
+    },
+    {
+     "a": {
+      "guid": "66f94789",
+      "stage": "Condition",
+      "station": "Front Of House",
+      "taken": "2026-07-08 07:07:37"
+     },
+     "b": {
+      "guid": "8dd21385",
+      "stage": "Condition",
+      "station": "General Property Condition",
+      "taken": "2026-07-08 07:07:45"
+     },
+     "gap_seconds": 8
+    },
+    {
+     "a": {
+      "guid": "7ec0c33f",
+      "stage": "Condition",
+      "station": "General Property Condition",
+      "taken": "2026-07-08 07:07:53"
+     },
+     "b": {
+      "guid": "1c5b9872",
+      "stage": "After",
+      "station": "Grass Recut - Address",
+      "taken": "2026-07-08 07:08:03"
+     },
+     "gap_seconds": 10
+    },
+    {
+     "a": {
+      "guid": "1c5b9872",
+      "stage": "After",
+      "station": "Grass Recut - Address",
+      "taken": "2026-07-08 07:08:03"
+     },
+     "b": {
+      "guid": "863db699",
+      "stage": "Condition",
+      "station": "General Property Condition",
+      "taken": "2026-07-08 07:08:11"
+     },
+     "gap_seconds": 8
+    },
+    {
+     "a": {
+      "guid": "863db699",
+      "stage": "Condition",
+      "station": "General Property Condition",
+      "taken": "2026-07-08 07:08:11"
+     },
+     "b": {
+      "guid": "78d8deb0",
+      "stage": "Before",
+      "station": "Grass Recut - Side Lawn 2 of 2",
+      "taken": "2026-07-08 07:08:23"
+     },
+     "gap_seconds": 12
+    },
+    {
+     "a": {
+      "guid": "78d8deb0",
+      "stage": "Before",
+      "station": "Grass Recut - Side Lawn 2 of 2",
+      "taken": "2026-07-08 07:08:23"
+     },
+     "b": {
+      "guid": "8e1e03ba",
+      "stage": "Before",
+      "station": "Grass Recut - Ruler Grass Height",
+      "taken": "2026-07-08 07:08:25"
+     },
+     "gap_seconds": 2
+    },
+    {
+     "a": {
+      "guid": "8e1e03ba",
+      "stage": "Before",
+      "station": "Grass Recut - Ruler Grass Height",
+      "taken": "2026-07-08 07:08:25"
+     },
+     "b": {
+      "guid": "f80fde00",
+      "stage": "Before",
+      "station": "Grass Re-cut - Before Lockboxes",
+      "taken": "2026-07-08 07:08:31"
+     },
+     "gap_seconds": 6
+    },
+    {
+     "a": {
+      "guid": "f80fde00",
+      "stage": "Before",
+      "station": "Grass Re-cut - Before Lockboxes",
+      "taken": "2026-07-08 07:08:31"
+     },
+     "b": {
+      "guid": "ad50ef98",
+      "stage": "Before",
+      "station": "Grass Recut - Side Lawn 1 of 2",
+      "taken": "2026-07-08 07:08:37"
+     },
+     "gap_seconds": 6
+    },
+    {
+     "a": {
+      "guid": "ad50ef98",
+      "stage": "Before",
+      "station": "Grass Recut - Side Lawn 1 of 2",
+      "taken": "2026-07-08 07:08:37"
+     },
+     "b": {
+      "guid": "2748b6a3",
+      "stage": "During",
+      "station": "Grass Recut - Front Lawn Mowing",
+      "taken": "2026-07-08 07:08:45"
+     },
+     "gap_seconds": 8
+    },
+    {
+     "a": {
+      "guid": "2748b6a3",
+      "stage": "During",
+      "station": "Grass Recut - Front Lawn Mowing",
+      "taken": "2026-07-08 07:08:45"
+     },
+     "b": {
+      "guid": "2749e421",
+      "stage": "Condition",
+      "station": "Property Address",
+      "taken": "2026-07-08 07:08:57"
+     },
+     "gap_seconds": 12
+    },
+    {
+     "a": {
+      "guid": "2749e421",
+      "stage": "Condition",
+      "station": "Property Address",
+      "taken": "2026-07-08 07:08:57"
+     },
+     "b": {
+      "guid": "9eeb354a",
+      "stage": "Condition",
+      "station": "Securing Sticker",
+      "taken": "2026-07-08 07:09:07"
+     },
+     "gap_seconds": 10
+    },
+    {
+     "a": {
+      "guid": "9eeb354a",
+      "stage": "Condition",
+      "station": "Securing Sticker",
+      "taken": "2026-07-08 07:09:07"
+     },
+     "b": {
+      "guid": "a022e494",
+      "stage": "After",
+      "station": "Grass Recut - Top-down View of Flower Beds",
+      "taken": "2026-07-08 07:09:18"
+     },
+     "gap_seconds": 11
+    },
+    {
+     "a": {
+      "guid": "a022e494",
+      "stage": "After",
+      "station": "Grass Recut - Top-down View of Flower Beds",
+      "taken": "2026-07-08 07:09:18"
+     },
+     "b": {
+      "guid": "707394d1",
+      "stage": "Before",
+      "station": "Grass Re-cut - Before Right Side",
+      "taken": "2026-07-08 07:09:30"
+     },
+     "gap_seconds": 12
+    },
+    {
+     "a": {
+      "guid": "707394d1",
+      "stage": "Before",
+      "station": "Grass Re-cut - Before Right Side",
+      "taken": "2026-07-08 07:09:30"
+     },
+     "b": {
+      "guid": "cc8cb106",
+      "stage": "Condition",
+      "station": "General Property Condition",
+      "taken": "2026-07-08 07:09:38"
+     },
+     "gap_seconds": 8
+    },
+    {
+     "a": {
+      "guid": "cc8cb106",
+      "stage": "Condition",
+      "station": "General Property Condition",
+      "taken": "2026-07-08 07:09:38"
+     },
+     "b": {
+      "guid": "e238366e",
+      "stage": "Condition",
+      "station": "Close-up of Securing Sticker Phone Number",
+      "taken": "2026-07-08 07:09:45"
+     },
+     "gap_seconds": 7
+    },
+    {
+     "a": {
+      "guid": "e238366e",
+      "stage": "Condition",
+      "station": "Close-up of Securing Sticker Phone Number",
+      "taken": "2026-07-08 07:09:45"
+     },
+     "b": {
+      "guid": "7218a666",
+      "stage": "After",
+      "station": "Grass Recut - Front - Edging, Fence Line and Foundations Free of Tall Grass and Weeds",
+      "taken": "2026-07-08 07:10:05"
+     },
+     "gap_seconds": 20
+    },
+    {
+     "a": {
+      "guid": "7218a666",
+      "stage": "After",
+      "station": "Grass Recut - Front - Edging, Fence Line and Foundations Free of Tall Grass and Weeds",
+      "taken": "2026-07-08 07:10:05"
+     },
+     "b": {
+      "guid": "5fe287fd",
+      "stage": "Condition",
+      "station": "General Property Condition",
+      "taken": "2026-07-08 07:10:13"
+     },
+     "gap_seconds": 8
+    },
+    {
+     "a": {
+      "guid": "1b03861b",
+      "stage": "Condition",
+      "station": "General Property Condition",
+      "taken": "2026-07-08 07:10:16"
+     },
+     "b": {
+      "guid": "60b76ba7",
+      "stage": "Condition",
+      "station": "Rear of House",
+      "taken": "2026-07-08 07:10:22"
+     },
+     "gap_seconds": 6
+    },
+    {
+     "a": {
+      "guid": "60b76ba7",
+      "stage": "Condition",
+      "station": "Rear of House",
+      "taken": "2026-07-08 07:10:22"
+     },
+     "b": {
+      "guid": "5ea4ecd3",
+      "stage": "Condition",
+      "station": "General Property Condition",
+      "taken": "2026-07-08 07:10:24"
+     },
+     "gap_seconds": 2
+    },
+    {
+     "a": {
+      "guid": "5ea4ecd3",
+      "stage": "Condition",
+      "station": "General Property Condition",
+      "taken": "2026-07-08 07:10:24"
+     },
+     "b": {
+      "guid": "fdb72b01",
+      "stage": "Condition",
+      "station": "Street Scene",
+      "taken": "2026-07-08 07:10:51"
+     },
+     "gap_seconds": 27
+    },
+    {
+     "a": {
+      "guid": "fdb72b01",
+      "stage": "Condition",
+      "station": "Street Scene",
+      "taken": "2026-07-08 07:10:51"
+     },
+     "b": {
+      "guid": "4f4e5fca",
+      "stage": "During",
+      "station": "Grass Recut - Weed Whacking",
+      "taken": "2026-07-08 07:11:03"
+     },
+     "gap_seconds": 12
+    },
+    {
+     "a": {
+      "guid": "4f4e5fca",
+      "stage": "During",
+      "station": "Grass Recut - Weed Whacking",
+      "taken": "2026-07-08 07:11:03"
+     },
+     "b": {
+      "guid": "8226d314",
+      "stage": "During",
+      "station": "Grass Re-cut - Application of Weed Killer",
+      "taken": "2026-07-08 07:11:10"
+     },
+     "gap_seconds": 7
+    },
+    {
+     "a": {
+      "guid": "f4fa3088",
+      "stage": "After",
+      "station": "Grass Recut - Behind Outbuilding/Garage",
+      "taken": "2026-07-08 07:11:50"
+     },
+     "b": {
+      "guid": "f3df27d5",
+      "stage": "After",
+      "station": "Grass Recut - Ruler Measurement of 2 Inches or Less",
+      "taken": "2026-07-08 07:11:59"
+     },
+     "gap_seconds": 9
+    },
+    {
+     "a": {
+      "guid": "f3df27d5",
+      "stage": "After",
+      "station": "Grass Recut - Ruler Measurement of 2 Inches or Less",
+      "taken": "2026-07-08 07:11:59"
+     },
+     "b": {
+      "guid": "fefb06a3",
+      "stage": "After",
+      "station": "Grass Recut - Clippings and Yard Debris Removed",
+      "taken": "2026-07-08 07:12:06"
+     },
+     "gap_seconds": 7
+    },
+    {
+     "a": {
+      "guid": "fefb06a3",
+      "stage": "After",
+      "station": "Grass Recut - Clippings and Yard Debris Removed",
+      "taken": "2026-07-08 07:12:06"
+     },
+     "b": {
+      "guid": "9a3f3c9a",
+      "stage": "After",
+      "station": "Grass Recut - Rear Lawn",
+      "taken": "2026-07-08 07:12:13"
+     },
+     "gap_seconds": 7
+    },
+    {
+     "a": {
+      "guid": "9a3f3c9a",
+      "stage": "After",
+      "station": "Grass Recut - Rear Lawn",
+      "taken": "2026-07-08 07:12:13"
+     },
+     "b": {
+      "guid": "c0f2073e",
+      "stage": "After",
+      "station": "Grass Recut - Side Lawn 2 of 2",
+      "taken": "2026-07-08 07:12:21"
+     },
+     "gap_seconds": 8
+    },
+    {
+     "a": {
+      "guid": "c0f2073e",
+      "stage": "After",
+      "station": "Grass Recut - Side Lawn 2 of 2",
+      "taken": "2026-07-08 07:12:21"
+     },
+     "b": {
+      "guid": "fe770c4b",
+      "stage": "After",
+      "station": "Grass Recut - Under Deck/Stairwell",
+      "taken": "2026-07-08 07:12:28"
+     },
+     "gap_seconds": 7
+    },
+    {
+     "a": {
+      "guid": "fe770c4b",
+      "stage": "After",
+      "station": "Grass Recut - Under Deck/Stairwell",
+      "taken": "2026-07-08 07:12:28"
+     },
+     "b": {
+      "guid": "6d070bac",
+      "stage": "During",
+      "station": "Grass Recut - Rear Lawn Mowing",
+      "taken": "2026-07-08 07:12:47"
+     },
+     "gap_seconds": 19
+    },
+    {
+     "a": {
+      "guid": "6d070bac",
+      "stage": "During",
+      "station": "Grass Recut - Rear Lawn Mowing",
+      "taken": "2026-07-08 07:12:47"
+     },
+     "b": {
+      "guid": "1721c0c1",
+      "stage": "After",
+      "station": "Grass Recut - Rear - Edging, Fence Line and Foundations Free of Tall Grass and Weeds",
+      "taken": "2026-07-08 07:13:14"
+     },
+     "gap_seconds": 27
+    }
+   ],
+   "taken_dates_unreliable": false
+  },
+  "documentation_gaps": [],
+  "fraud_signals": [
+   "short_visit",
+   "staged_documentation"
+  ],
+  "short_circuit": null,
+  "short_circuit_reason": null
+ },
+ "models": {
+  "drafter": "claude-sonnet-5",
+  "verifier": "claude-opus-4-8"
+ },
+ "cost_usd": 0.5313,
+ "session_ids": [
+  "32558ca8-6491-4eba-843d-2a53a23304c9",
+  "2506610d-bd8d-41fe-b1c8-967db10406bf"
+ ],
+ "config_version": "sha256:2a6fa47a1e585ee8",
+ "decided_at": "2026-07-14T14:01:04+00:00",
+ "run_id": "final-brief",
+ "latency_s": 166.1,
+ "audit_path": "experiments/final-brief/500119022.json",
+ "report_path": "experiments/final-brief/500119022.md"
+}

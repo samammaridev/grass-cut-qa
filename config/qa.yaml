@@ -1,0 +1,75 @@
+# Ops-tunable configuration — every change must pass the eval regression gate
+# before deploy (ORCHESTRATION.md §12/§14). Loaded once at startup per run;
+# sha256 of this file is stamped into every audit record as config_version.
+
+models:
+  drafter: claude-sonnet-5
+  verifier: claude-opus-4-8
+
+thresholds:
+  auto_decide:            # below → escalate_to_human (demotion, never fail-hard)
+    good_to_pay: 0.75     # provisional POC operating point (2026-07-13): the 0.75-0.85
+    gcfu: 0.75            # band still requires independent verifier AGREEMENT to pay
+    potential_fraud: 0.95 # (verifier_below_confidence stays 0.85). Final setting comes
+                          # from the golden-set sweep with fatal-cell=0 constraint.
+  verifier_below_confidence: 0.85   # low-confidence drafts also get verified
+
+gates:
+  min_fraud_photo_evidence: 2
+  fraud_requires_deterministic_signal: true
+  fraud_requires_verifier_agreement: true
+  verifier_runs_on: [potential_fraud, gcfu, low_confidence, location_unverified]
+
+prechecks:
+  min_time_on_site_min: 10
+  gps_outlier_m: 800
+  date_skew_days: 3
+  min_review_photos: 4
+  min_photo_success_ratio: 0.9
+  min_gps_points: 3
+  gps_property_match_m: 500
+  gps_property_fail_km: 10
+  gps_mixed_cluster_min_points: 3
+  phash_max_distance: 4         # dHash hamming <= -> near-duplicate photo
+  min_before_after_gap_min: 5   # Before->After same station must be at least this far apart
+  cross_station_adjacency_s: 30 # photos this close apart labeled as different stations -> directed visual compare
+
+geocode:
+  timeout_s: 10
+  retries: 2
+  rate_limit_s: 1.0
+  nominatim_enabled: true          # production profile: false (usage policy)
+  multi_match_radius_m: 500
+  cache_path: cache/geocode.json
+  cache_ttl_days: 180
+  negative_ttl_days: 7
+
+runtime:
+  concurrency: 20
+  max_budget_usd_per_order: 0.50
+  max_turns: 8
+  max_thinking_tokens: 8000    # runaway guard — above observed honest usage (~5k);
+                               # tightening below ~4k must pass the regression gate
+  photo_long_edge_px: 1092
+  jpeg_quality: 80
+  retention_days: 90
+
+cost_targets:                  # checked by `python -m gcqa.costcheck` over results.jsonl
+  per_order_usd_warn: 0.20     # mean above this -> WARN (investigate drivers)
+  per_order_usd_fail: 0.35     # mean above this -> FAIL (predictions broken)
+  monthly_orders: 30000        # used to project $/mo in the report
+
+prompts:
+  system: prompts/reviewer_v1.md
+  verifier_suffix: prompts/verifier_v1.md
+  fewshots: prompts/fewshots/
+
+report:
+  max_words: 120
+  lint: true
+
+batch:                    # contingent — inert until the ORCHESTRATION §7 trigger fires
+  mode: sdk               # sdk | batch
+  cadence_min: 60
+  max_correction_rounds: 2
+  cancel_after_h: 6

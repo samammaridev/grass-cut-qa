@@ -1,0 +1,11 @@
+order,flag,anomaly,disposition,confidence,verifier_flag,fraud_confirmed,indicators,cost_usd
+500119014,good_to_pay,True,human_review,0.58,good_to_pay,,8,0.5886
+500119015,good_to_pay,True,human_review,0.63,good_to_pay,,14,0.7213
+500119016,good_to_pay,True,human_review,0.65,good_to_pay,,9,0.6905
+500119017,good_to_pay,True,human_review,0.62,good_to_pay,,11,0.9243
+500119018,good_to_pay,True,human_review,0.55,good_to_pay,,13,0.6721
+500119019,gcfu,True,human_review,0.6,gcfu,,8,0.6439
+500119020,gcfu,True,human_review,0.55,gcfu,,10,0.8924
+500119022,potential_fraud,True,human_review,0.68,potential_fraud,True,14,0.5313
+500119023,good_to_pay,True,human_review,0.58,gcfu,,10,0.8547
+500119024,gcfu,True,human_review,0.55,gcfu,,9,0.5689

@@ -1,0 +1,23 @@
+# Secrets — never commit
+.env
+
+# Environments & caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Runtime artifacts (per-order records, photos, geocode cache)
+runs/
+cache/
+eval_runs/
+
+# Golden-set snapshots contain property photos — distribute out-of-band
+golden/snapshots/
+
+# Local order lists
+orders*.txt
+
+# Local Claude Code settings
+.claude/

@@ -1,0 +1,134 @@
+{%- set v = final.drafter -%}
+{%- set gps = final.signals.gps -%}
+{%- set flag_label = (final.flag | replace("_", " ") | upper) if final.flag else "UNCLASSIFIED" -%}
+{%- if final.disposition == "human_review" -%}
+# 🚩 FLAG: {{ flag_label }}{{ " + ⚠️ ANOMALY" if final.anomaly }} — needs human review · {{ final.order_number }}
+{%- if final.flag == "potential_fraud" %}
+**Quality Review:** fraud flag is {{ "CONFIRMED by the independent verifier" if final.fraud_confirmed else "UNCONFIRMED — " ~ ("verifier flagged " ~ final.verifier_flag if final.verifier_flag else "no independent verification") }}.
+{%- endif %}
+**Why a human:** {{ final.adjudication | join("; ") if final.adjudication else "routed to human review" }}
+{%- if final.verifier_flag and final.verifier_flag != final.flag %}
+**Reviewers disagree:** drafter flagged {{ final.flag }}, verifier flagged {{ final.verifier_flag }} — read both rationales below.
+{%- endif %}
+{%- if check_first %}
+**Check first:** photos {{ check_first | join(", ") }}. Deterministic signals: {{ final.signals.fraud_signals | join(", ") if final.signals.fraud_signals else "none" }}.
+{%- endif %}
+{%- else -%}
+# Work-Order QA Report — {{ final.order_number }}
+**FLAG: {{ flag_label }}**{{ " · ⚠️ ANOMALY on record (see indicators below)" if final.anomaly }} · confidence {{ "%.2f" | format(final.confidence) if final.confidence is not none else "n/a" }} · decided automatically (no human needed)
+{%- endif %}
+{%- set fi = final.fraud_indicators or [] %}
+{%- if fi %}
+
+## 🚩 Potential-fraud indicators ({{ fi | length }}){{ "" if final.flag == "potential_fraud" else " — warnings only, not the flag" }}
+{{ "The evidence behind the fraud flag, itemized:" if final.flag == "potential_fraud" else "These anomalies are consistent with fraud but do not, by themselves, meet the potential_fraud bar. They travel with the " ~ flag_label ~ " flag so Quality Review sees the full suspicion picture:" }}
+{%- for i in fi %}
+- {{ i }}
+{%- endfor %}
+{%- endif %}
+{%- set reasons = v.flag_reasons or [] %}
+{%- if reasons %}
+
+## Decision — why {{ flag_label }}
+{%- for r in reasons %}
+{{ loop.index }}. {{ r }}
+{%- endfor %}
+{%- endif %}
+{%- set items = (v.review_items or []) %}
+{%- set vitems = (final.verifier.review_items or []) if final.verifier else [] %}
+{%- if items or vitems %}
+
+## Review items for the human
+{%- for r in items %}
+- [ ] {{ r }}
+{%- endfor %}
+{%- for r in vitems %}{% if r not in items %}
+- [ ] {{ r }} *(verifier)*
+{%- endif %}{%- endfor %}
+{%- endif %}
+{{ address }} · {{ work_code_desc }} · Vendor {{ vendor }} · Reviewed {{ final.decided_at[:10] }} · run {{ final.run_id or "manual" }}
+
+## What the reviewer saw ({{ "superseded — final decision and reason above" if superseded else "AI-written rationale — authoritative facts are in the tables below" }})
+> {{ (v.rationale_plain or "rationale unavailable — see evidence tables") | replace("\n", " ") }}
+{% if final.verifier and final.verifier.rationale_plain %}
+## Independent verifier's rationale (AI-written, fresh context)
+> {{ final.verifier.rationale_plain | replace("\n", " ") }}
+{% endif %}
+## Checks
+| Check | Result | Basis (deterministic unless noted) |
+|---|---|---|
+| Location match | {{ gps.location_match | upper }} | {{ gps.valid }} GPS points; medoid {{ gps.medoid_to_property_m ~ " m from geocoded property (" ~ gps.property_geocode.source ~ "/" ~ gps.property_geocode.quality ~ ")" if gps.medoid_to_property_m is not none else "property geocode unavailable" }}{% if gps.outliers %}; {{ gps.outliers | length }} outlier(s): {% for o in gps.outliers %}{{ o.guid[:8] }} @ {{ "%.1f" | format(o.dist_m / 1000) }} km{{ ", " if not loop.last }}{% endfor %}{% endif %} |
+| Time on site | {{ "PASS" if final.signals.time_on_site_ok else "FLAG" }} | {{ final.signals.time_on_site_min }} min reported; photo timestamps span {{ final.signals.photo_time_span_min }} min |
+| Four-sides coverage | {{ v.checks.four_sides | upper if v.checks else "n/a" }} (model, photo-based) | station labels + photo content |
+| Before/after difference | {{ v.checks.before_after_diff | upper if v.checks else "n/a" }} (model, photo-based) | visible change in matching areas |
+| Extraordinary conditions | {{ "REPORTED" if v.checks and v.checks.extraordinary_conditions else "None" }} | — |
+| Photos | {{ final.signals.photo_count }} reviewed (Bid/Document excluded){{ "; gaps: " ~ final.signals.documentation_gaps | join(", ") if final.signals.documentation_gaps }} |
+| Dates | skew {{ final.signals.date_skew_days }} d{{ " · in season" if final.signals.in_season else " · OUT OF SEASON" }} |
+| Fraud signals (code) | {{ final.signals.fraud_signals | join(", ") if final.signals.fraud_signals else "none" }} |
+
+{%- set pi = final.signals.photo_integrity %}
+{%- if final.signals.fraud_signals or (pi and (pi.staged_pairs or pi.reused_pairs or pi.adjacent_cross_station_pairs)) or final.signals.documentation_gaps %}
+## ⚠️ Everything flagged on this order
+{%- if final.signals.fraud_signals %}
+**Deterministic fraud signals:** {{ final.signals.fraud_signals | join(", ") }}
+{%- endif %}
+{%- if pi and pi.staged_pairs %}
+
+**Staged before/after documentation** — these pairs cannot prove work (photographed seconds apart, or the "after" was taken first):
+
+| Station | Before taken | After taken | Problem |
+|---|---|---|---|
+{%- for p in pi.staged_pairs %}
+| {{ p.station }} | {{ p.before.taken }} ({{ p.before.guid }}) | {{ p.after.taken }} ({{ p.after.guid }}) | {{ "after shot BEFORE the before photo" if p.issue == "after_precedes_before" else ("only " ~ p.gap_seconds ~ " s apart") }} |
+{%- endfor %}
+{%- endif %}
+{%- if pi and pi.reused_pairs %}
+
+**Reused photos across stages** (same image filed under different labels):
+{%- for p in pi.reused_pairs %}
+- {{ p.guid_a }} ({{ p.stage_a }} · {{ p.station_a }}) = {{ p.guid_b }} ({{ p.stage_b }} · {{ p.station_b }}) — {{ p.match }} match
+{%- endfor %}
+{%- endif %}
+{%- if pi and pi.adjacent_cross_station_pairs %}
+
+**Photos taken seconds apart under different labels** ({{ pi.adjacent_cross_station_pairs | length }} pairs — possible relabeled scenes; the reviewer was directed to compare each visually):
+{%- for p in pi.adjacent_cross_station_pairs[:6] %}
+- {{ p.a.stage }} "{{ p.a.station }}" ({{ p.a.guid }}) and {{ p.b.stage }} "{{ p.b.station }}" ({{ p.b.guid }}) — {{ p.gap_seconds }} s apart
+{%- endfor %}
+{%- if pi.adjacent_cross_station_pairs | length > 6 %}
+- … and {{ pi.adjacent_cross_station_pairs | length - 6 }} more (see the audit record)
+{%- endif %}
+{%- endif %}
+{%- if final.signals.documentation_gaps %}
+
+**Documentation gaps:** {{ final.signals.documentation_gaps | join(", ") }}
+{%- endif %}
+{%- endif %}
+{%- if final.signals.documents and final.signals.documents.unique %}
+
+## Documents reviewed
+{{ final.signals.documents.unique }} unique attachment(s) ({{ final.signals.documents.kinds | join(", ") }}) — vendor questionnaire answers, invoice line items, and audit-report findings were cross-checked against the photos; document-sourced items appear in the evidence table below.
+{%- endif %}
+{%- if v.notes_for_human %}
+
+## Reviewer's note to the human
+> {{ v.notes_for_human | replace("\n", " ") }}
+{%- endif %}
+{%- if final.verifier and final.verifier.notes_for_human and final.verifier.notes_for_human != v.notes_for_human %}
+> *Verifier adds:* {{ final.verifier.notes_for_human | replace("\n", " ") }}
+{%- endif %}
+
+## Evidence cited by the reviewer
+| # | Claim | Source | Observation |
+|---|---|---|---|
+{%- for e in (v.evidence or []) %}
+| {{ loop.index }} | {{ e.claim }} | {{ e.source_type }}{{ " " ~ e.photo_guid[:8] if e.photo_guid }}{{ " " ~ e.field_key if e.field_key and e.source_type == "document" }} | {{ e.observation }} |
+{%- endfor %}
+
+## How the decision was made
+- Drafter ({{ final.models.drafter or "n/a" }}): {{ v.outcome or "no verdict" }}{{ " @ %.2f" | format(v.confidence) if v.confidence is not none }}.
+- Independent verifier: {{ (final.models.verifier ~ ": " ~ final.verifier.outcome ~ (" @ %.2f" | format(final.verifier.confidence) if final.verifier.confidence is not none else "")) if final.verifier else "not required (only fraud/GCFU/low-confidence/unverified-location drafts are re-reviewed)" }}.
+- Adjudication: {{ final.adjudication | join("; ") if final.adjudication else "verdict accepted as submitted" }}.
+- Gate events: {{ final.gate_events | selectattr("action", "ne", "accepted") | map(attribute="class") | join(", ") or "none (accepted first attempt)" }}.
+
+*Admin: cost ${{ "%.3f" | format(final.cost_usd) if final.cost_usd is not none else "unknown" }} · {{ final.latency_s ~ " s" if final.latency_s is not none else "latency n/a" }} · auto-decide line {{ final.thresholds_applied.auto_decide[final.drafter.outcome] if final.drafter and final.drafter.outcome and final.thresholds_applied else "n/a" }} · config {{ final.config_version }} · sessions {{ final.session_ids | join(", ") or "n/a" }} · audit {{ audit_path }}*
